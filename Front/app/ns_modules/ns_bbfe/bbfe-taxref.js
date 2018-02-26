@@ -123,7 +123,10 @@ define([
 
     fetchDisplayValue: function(val){
       var _this = this;
-      if (val instanceof Object && val.displayValue){
+      if(!val){
+        return;
+      }
+      if (val && val instanceof Object && val.displayValue){
         val = val.displayValue;
       }
       $.ajax({

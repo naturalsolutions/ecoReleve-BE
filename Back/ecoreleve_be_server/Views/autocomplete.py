@@ -76,14 +76,14 @@ def autocompleteTaxon(request):
         'chiroptera': Base.metadata.tables['chiroptera_view'],
     }
 
-    prop_name = {'vernaculaire': 'NOM_VERN',
-                 'latin': 'NOM_COMPLET'}
+    # prop_name = {'vernaculaire': 'NOM_VERN',
+    #              'latin': 'NOM_COMPLET'}
     criterias = dict(request.params)
     table = taxaViews.get(criterias['protocol'], None)
     if table is None:
         return None
 
-    prop_criteria = prop_name[criterias['type']]
+    prop_criteria = criterias['type']
 
     query = select([table]).where(
         func.lower(table.c[prop_criteria]).like(
@@ -92,9 +92,9 @@ def autocompleteTaxon(request):
 
     # result = session.execute(query).fetchall()
     return [{'label': row[prop_criteria],
-             'taxref_id': row['CD_NOM'],
-             'vernaculaire': row['NOM_VERN'],
-             'latin': row['NOM_COMPLET']
+             'taxref_id': row['taxref_id'],
+             'vernaculaire': row['vernaculaire'],
+             'latin': row['latin']
              } for row in session.execute(query).fetchall()]
 
 
@@ -112,5 +112,5 @@ def getTaxon(request):
     return {
             'taxref_id': result['CD_NOM'],
             'vernaculaire': result['NOM_VERN'],
-            'latin': result['NOM_COMPLET']
+            'latin': result['NOM_VALIDE']
             }
