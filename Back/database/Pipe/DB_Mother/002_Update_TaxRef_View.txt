@@ -1,14 +1,16 @@
+﻿ALTER TABLE public."TAXREFv10" RENAME TO "TAXREF";
+
 
 DROP VIEW public.amphibia_view ;
 CREATE OR REPLACE VIEW public.amphibia_view AS
- SELECT "TAXREFv10"."CD_NOM" as taxref_id,
-    "TAXREFv10"."NOM_VALIDE" as latin,
-    "TAXREFv10"."NOM_VERN" as vernaculaire
-   FROM "TAXREFv10"
-  WHERE "TAXREFv10"."GROUP2_INPN"::text = 'Amphibiens'::text 
-  AND "TAXREFv10"."FR"::text = 'P'::text 
-  AND "TAXREFv10"."CD_NOM"::integer = "TAXREFv10"."CD_REF"::integer
-  AND ("TAXREFv10"."RANG"::text = ANY (ARRAY['ES'::character varying, 'GN'::character varying]::text[]));
+ SELECT "TAXREF"."CD_NOM" as taxref_id,
+    "TAXREF"."NOM_VALIDE" as latin,
+    "TAXREF"."NOM_VERN" as vernaculaire
+   FROM "TAXREF"
+  WHERE "TAXREF"."GROUP2_INPN"::text = 'Amphibiens'::text 
+  AND "TAXREF"."FR"::text = 'P'::text 
+  AND "TAXREF"."CD_NOM"::integer = "TAXREF"."CD_REF"::integer
+  AND ("TAXREF"."RANG"::text = ANY (ARRAY['ES'::character varying, 'GN'::character varying]::text[]));
 
 ALTER TABLE public.amphibia_view
     OWNER TO postgres;
@@ -16,14 +18,14 @@ ALTER TABLE public.amphibia_view
 
 DROP VIEW public.bird_view;
 CREATE OR REPLACE VIEW public.bird_view AS
- SELECT "TAXREFv10"."CD_NOM" as taxref_id,
-    "TAXREFv10"."NOM_VALIDE" as latin,
-    "TAXREFv10"."NOM_VERN" as vernaculaire
-   FROM "TAXREFv10"
-  WHERE "TAXREFv10"."GROUP2_INPN"::text = 'Oiseaux'::text 
-  AND "TAXREFv10"."FR"::text = 'P'::text 
-  AND "TAXREFv10"."CD_NOM"::integer = "TAXREFv10"."CD_REF"::integer
-  AND ("TAXREFv10"."RANG"::text = ANY (ARRAY['ES'::character varying, 'GN'::character varying]::text[]));
+ SELECT "TAXREF"."CD_NOM" as taxref_id,
+    "TAXREF"."NOM_VALIDE" as latin,
+    "TAXREF"."NOM_VERN" as vernaculaire
+   FROM "TAXREF"
+  WHERE "TAXREF"."GROUP2_INPN"::text = 'Oiseaux'::text 
+  AND "TAXREF"."FR"::text = 'P'::text 
+  AND "TAXREF"."CD_NOM"::integer = "TAXREF"."CD_REF"::integer
+  AND ("TAXREF"."RANG"::text = ANY (ARRAY['ES'::character varying, 'GN'::character varying]::text[]));
 
 
 ALTER TABLE public.bird_view
@@ -34,15 +36,15 @@ ALTER TABLE public.bird_view
 
 DROP VIEW public.chiroptera_view;
 CREATE OR REPLACE VIEW public.chiroptera_view AS
- SELECT "TAXREFv10"."CD_NOM" as taxref_id,
-    "TAXREFv10"."NOM_VALIDE" as latin,
-    "TAXREFv10"."NOM_VERN" as vernaculaire
-   FROM "TAXREFv10"
-  WHERE "TAXREFv10"."GROUP2_INPN"::text = 'Mammifères'::text 
-  AND "TAXREFv10"."ORDRE"::text = 'Chiroptera'::text 
-  AND "TAXREFv10"."FR"::text = 'P'::text 
-  AND "TAXREFv10"."CD_NOM"::integer = "TAXREFv10"."CD_REF"::integer
-  AND ("TAXREFv10"."RANG"::text = ANY (ARRAY['ES'::character varying, 'GN'::character varying]::text[]));
+ SELECT "TAXREF"."CD_NOM" as taxref_id,
+    "TAXREF"."NOM_VALIDE" as latin,
+    "TAXREF"."NOM_VERN" as vernaculaire
+   FROM "TAXREF"
+  WHERE "TAXREF"."GROUP2_INPN"::text = 'Mammifères'::text 
+  AND "TAXREF"."ORDRE"::text = 'Chiroptera'::text 
+  AND "TAXREF"."FR"::text = 'P'::text 
+  AND "TAXREF"."CD_NOM"::integer = "TAXREF"."CD_REF"::integer
+  AND ("TAXREF"."RANG"::text = ANY (ARRAY['ES'::character varying, 'GN'::character varying]::text[]));
 
 
 ALTER TABLE public.chiroptera_view
@@ -53,14 +55,14 @@ ALTER TABLE public.chiroptera_view
 
 DROP VIEW public.insect_view;
 CREATE OR REPLACE VIEW public.insect_view AS
- SELECT "TAXREFv10"."CD_NOM" as taxref_id,
-    "TAXREFv10"."NOM_VALIDE" as latin,
-    "TAXREFv10"."NOM_VERN" as vernaculaire
-   FROM "TAXREFv10"
-  WHERE "TAXREFv10"."GROUP2_INPN"::text = 'Insectes'::text 
-  AND "TAXREFv10"."FR"::text = 'P'::text 
-  AND "TAXREFv10"."CD_NOM"::integer = "TAXREFv10"."CD_REF"::integer
-  AND ("TAXREFv10"."RANG"::text = ANY (ARRAY['ES'::character varying, 'GN'::character varying]::text[]));
+ SELECT "TAXREF"."CD_NOM" as taxref_id,
+    "TAXREF"."NOM_VALIDE" as latin,
+    "TAXREF"."NOM_VERN" as vernaculaire
+   FROM "TAXREF"
+  WHERE "TAXREF"."GROUP2_INPN"::text = 'Insectes'::text 
+  AND "TAXREF"."FR"::text = 'P'::text 
+  AND "TAXREF"."CD_NOM"::integer = "TAXREF"."CD_REF"::integer
+  AND ("TAXREF"."RANG"::text = ANY (ARRAY['ES'::character varying, 'GN'::character varying]::text[]));
 
 
 ALTER TABLE public.insect_view
@@ -71,16 +73,16 @@ ALTER TABLE public.insect_view
 
 DROP VIEW public.mammal_view;
 CREATE OR REPLACE VIEW public.mammal_view AS
- SELECT "TAXREFv10"."CD_NOM" as taxref_id,
-    "TAXREFv10"."NOM_VALIDE" as latin,
-    "TAXREFv10"."NOM_VERN" as vernaculaire
-   FROM "TAXREFv10"
-  WHERE "TAXREFv10"."GROUP2_INPN"::text = 'Mammifères'::text 
-  AND "TAXREFv10"."ORDRE"::text <> 'Cetartiodactyla'::text 
-  AND ("TAXREFv10"."FAMILLE"::text <> ALL (ARRAY['Balaenopteridae'::character varying, 'Delphinidae'::character varying, 'Ziphiidae'::character varying, 'Balaenidae'::character varying]::text[])) 
-  AND "TAXREFv10"."FR"::text = 'P'::text 
-  AND "TAXREFv10"."CD_NOM"::integer = "TAXREFv10"."CD_REF"::integer
-  AND ("TAXREFv10"."RANG"::text = ANY (ARRAY['ES'::character varying, 'GN'::character varying]::text[]));
+ SELECT "TAXREF"."CD_NOM" as taxref_id,
+    "TAXREF"."NOM_VALIDE" as latin,
+    "TAXREF"."NOM_VERN" as vernaculaire
+   FROM "TAXREF"
+  WHERE "TAXREF"."GROUP2_INPN"::text = 'Mammifères'::text 
+  AND "TAXREF"."ORDRE"::text <> 'Cetartiodactyla'::text 
+  AND ("TAXREF"."FAMILLE"::text <> ALL (ARRAY['Balaenopteridae'::character varying, 'Delphinidae'::character varying, 'Ziphiidae'::character varying, 'Balaenidae'::character varying]::text[])) 
+  AND "TAXREF"."FR"::text = 'P'::text 
+  AND "TAXREF"."CD_NOM"::integer = "TAXREF"."CD_REF"::integer
+  AND ("TAXREF"."RANG"::text = ANY (ARRAY['ES'::character varying, 'GN'::character varying]::text[]));
 
 
 ALTER TABLE public.mammal_view
@@ -91,14 +93,14 @@ ALTER TABLE public.mammal_view
 DROP VIEW public.reptil_view;
 
 CREATE OR REPLACE VIEW public.reptil_view AS
- SELECT "TAXREFv10"."CD_NOM" as taxref_id,
-    "TAXREFv10"."NOM_VALIDE" as latin,
-    "TAXREFv10"."NOM_VERN" as vernaculaire
-   FROM "TAXREFv10"
-  WHERE "TAXREFv10"."GROUP2_INPN"::text = 'Reptiles'::text 
-  AND "TAXREFv10"."FR"::text = 'P'::text 
-  AND "TAXREFv10"."CD_NOM"::integer = "TAXREFv10"."CD_REF"::integer
-  AND ("TAXREFv10"."RANG"::text = ANY (ARRAY['ES'::character varying, 'GN'::character varying]::text[]));
+ SELECT "TAXREF"."CD_NOM" as taxref_id,
+    "TAXREF"."NOM_VALIDE" as latin,
+    "TAXREF"."NOM_VERN" as vernaculaire
+   FROM "TAXREF"
+  WHERE "TAXREF"."GROUP2_INPN"::text = 'Reptiles'::text 
+  AND "TAXREF"."FR"::text = 'P'::text 
+  AND "TAXREF"."CD_NOM"::integer = "TAXREF"."CD_REF"::integer
+  AND ("TAXREF"."RANG"::text = ANY (ARRAY['ES'::character varying, 'GN'::character varying]::text[]));
 
 
 ALTER TABLE public.reptil_view
@@ -109,27 +111,16 @@ ALTER TABLE public.reptil_view
 --DROP VIEW public.phyto_view;
 
 CREATE OR REPLACE VIEW public.phyto_view AS
- SELECT "TAXREFv10"."CD_NOM" as taxref_id,
-    "TAXREFv10"."NOM_VALIDE" as latin,
-    "TAXREFv10"."NOM_VERN" as vernaculaire
-   FROM "TAXREFv10"
-  WHERE "TAXREFv10"."GROUP2_INPN"::text IN ('Gymnospermes'::text, 'Angiospermes'::text)
-  AND "TAXREFv10"."FR"::text = 'P'::text 
-  AND "TAXREFv10"."CD_NOM"::integer = "TAXREFv10"."CD_REF"::integer
-  AND ("TAXREFv10"."RANG"::text = ANY (ARRAY['ES'::character varying, 'GN'::character varying]::text[]));
+ SELECT "TAXREF"."CD_NOM" as taxref_id,
+    "TAXREF"."NOM_VALIDE" as latin,
+    "TAXREF"."NOM_VERN" as vernaculaire
+   FROM "TAXREF"
+  WHERE "TAXREF"."GROUP2_INPN"::text IN ('Gymnospermes'::text, 'Angiospermes'::text)
+  AND "TAXREF"."FR"::text = 'P'::text 
+  AND "TAXREF"."CD_NOM"::integer = "TAXREF"."CD_REF"::integer
+  AND ("TAXREF"."RANG"::text = ANY (ARRAY['ES'::character varying, 'GN'::character varying]::text[]));
 
 
 ALTER TABLE public.phyto_view
     OWNER TO postgres;
 
-
-
-
-
-
-
-
-INSERT INTO [dbo].[TVersion] (TVer_FileName,TVer_Date,TVer_DbName) VALUES ('2_Update_TaxRef_View',GETDATE(),(SELECT db_name()))
-
-
-GO

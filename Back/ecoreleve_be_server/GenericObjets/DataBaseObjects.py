@@ -51,7 +51,7 @@ class ConfiguredDbObjectMapped(object):
             # CurModuleForms = list(
             #     filter(lambda x: field.Name == x.key, self.__table__.columns))
             CurModuleForms = [1]
-            if (len(CurModuleForms) > 0):
+            if (len(CurModuleForms) > 0 and field.Name not in schema):
                 schema[field.Name] = field.GetDTOFromConf(
                     displayMode, isGrid=isGrid)
 

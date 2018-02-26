@@ -1,0 +1,92 @@
+
+INSERT INTO public."ModuleForms"(
+	"Module_ID", pt."ID", "Name", "Label", "Required", "FieldSizeEdit", "FieldSizeDisplay", "InputType", "editorClass", "displayClass", "EditClass", "FormRender", "FormOrder", "Legend", "Options", "Validators", "DefaultValue", "Rules")
+SELECT "Module_ID", "TypeObj", "Name", "Label", "Required", "FieldSizeEdit", "FieldSizeDisplay", "InputType", "editorClass", "displayClass", "EditClass", "FormRender", "FormOrder", "Legend", "Options", "Validators", "DefaultValue", "Rules"
+FROM public."ModuleForms" f
+JOIN public."ProtocoleType" pt ON 1=1 AND pt."Name"='Flore'
+    WHERE "Module_ID"=1 AND f."Name"='effectif';
+
+DELETE FROM public."ModuleForms"
+WHERE "Module_ID"=1 AND "Name"='effectif' 
+AND "TypeObj" IS NULL;
+
+
+UPDATE public."ModuleForms"
+	SET "Required"=1, "FormOrder"=1, "Legend"='Obligatoire'
+    WHERE "Module_ID"=1 AND "Name"='type_inventaire';
+    
+UPDATE public."ModuleForms"
+	SET "Required"=1, "FormOrder"=2, "Legend"='Obligatoire'
+    WHERE "Module_ID"=1 AND "Name"='taxon';
+ 
+UPDATE public."ModuleForms"
+	SET "Required"=1, "FormOrder"=3, "Legend"='Obligatoire'
+    WHERE "Module_ID"=1 AND "Name"='effectif' AND "TypeObj"!=6;
+
+UPDATE public."ModuleForms"
+	SET "Required"=1, "FormOrder"=4, "Legend"='Obligatoire'
+    WHERE "Module_ID"=1 AND "Name"='nb_contact';
+
+UPDATE public."ModuleForms"
+	SET "Required"=0, "FormOrder"=10, "Legend"='Facultatif'
+    WHERE "Module_ID"=1 AND "Name"='type_milieu';
+
+
+UPDATE public."ModuleForms"
+	SET "Required"=0, "FormOrder"=11, "Legend"='Facultatif'
+    WHERE "Module_ID"=1 AND "Name"='comportement';
+    
+UPDATE public."ModuleForms"
+	SET "Required"=0, "FormOrder"=12, "Legend"='Facultatif'
+    WHERE "Module_ID"=1 AND "Name"='sexe';
+
+UPDATE public."ModuleForms"
+	SET "Required"=0, "FormOrder"=15, "Legend"='Facultatif'
+    WHERE "Module_ID"=1 AND "Name"='reproduction';
+
+UPDATE public."ModuleForms"
+	SET "Required"=0, "FormOrder"=15, "Legend"='Facultatif'
+    WHERE "Module_ID"=1 AND "Name"='code_atlas';
+
+UPDATE public."ModuleForms"
+	SET "Required"=0, "FormOrder"=15, "Legend"='Facultatif'
+    WHERE "Module_ID"=1 AND "Name"='abondance_dominance';
+
+UPDATE public."ModuleForms"
+	SET "Required"=0, "FormOrder"=20, "Legend"='Facultatif'
+    WHERE "Module_ID"=1 AND "Name"='hauteur_vol';
+
+UPDATE public."ModuleForms"
+	SET "Required"=0, "FormOrder"=20, "Legend"='Facultatif'
+    WHERE "Module_ID"=1 AND "Name"='hauteur_detection';
+
+UPDATE public."ModuleForms"
+	SET "Required"=0, "FormOrder"=21, "Legend"='Facultatif'
+    WHERE "Module_ID"=1 AND "Name"='strate';
+
+UPDATE public."ModuleForms"
+	SET "Required"=0, "FormOrder"=22, "Legend"='Facultatif'
+    WHERE "Module_ID"=1 AND "Name"='surface';
+
+UPDATE public."ModuleForms"
+	SET "Required"=0, "FormOrder"=23, "Legend"='Facultatif'
+    WHERE "Module_ID"=1 AND "Name"='state';
+
+UPDATE public."ModuleForms"
+	SET "Required"=0, "FormOrder"=24, "Legend"='Facultatif'
+    WHERE "Module_ID"=1 AND "Name"='effectif' AND "TypeObj"=6;
+
+UPDATE public."ModuleForms"
+	SET "Required"=0, "FormOrder"=200, "Legend"='Facultatif'
+    WHERE "Module_ID"=1 AND "Name"='Comments';
+ 
+ DELETE
+FROM public."ModuleForms"
+    WHERE "Module_ID"=2 AND "Name" IN ('FieldWorkers','Name_DistanceFromObs','Place', 'FK_Region', 'FieldWorker','NbFieldWorker', 'Comments');
+ 
+
+
+INSERT INTO [dbo].[TVersion] (TVer_FileName,TVer_Date,TVer_DbName) VALUES ('4_Up_Conf_protocole_and_station',GETDATE(),(SELECT db_name()))
+
+
+GO

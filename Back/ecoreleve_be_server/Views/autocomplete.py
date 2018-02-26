@@ -74,6 +74,7 @@ def autocompleteTaxon(request):
         'mammal': Base.metadata.tables['mammal_view'],
         'insecte': Base.metadata.tables['insect_view'],
         'chiroptera': Base.metadata.tables['chiroptera_view'],
+        'flore': Base.metadata.tables['phyto_view'],
     }
 
     # prop_name = {'vernaculaire': 'NOM_VERN',
@@ -105,7 +106,7 @@ def autocompleteTaxon(request):
 def getTaxon(request):
     session = request.dbsession
     taxref_id = request.matchdict.get('taxref_id', None)
-    table = Base.metadata.tables['TAXREFv10']
+    table = Base.metadata.tables['TAXREF']
     query = select([table]).where(table.c['CD_NOM']==taxref_id)
     result = session.execute(query).fetchone()
 
