@@ -1,0 +1,41 @@
+.input-group-addon.picker{
+  cursor: pointer;
+}
+
+.modal-outer{
+  position: fixed;
+  display: none;
+  background: rgba(0,0,0,0.5);
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+  z-index: 10000;
+  padding: 100px;
+
+  .modal{
+    display: block;
+    position: relative;
+
+    #creation,#creationContainer{
+      z-index: 10;
+    }
+  }
+}
+
+#modal{
+  padding: 100px;
+  z-index: 10000;
+  display: none;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.7);
+  .modal-visible{
+    display: block;
+  }
+}

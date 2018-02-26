@@ -1,0 +1,120 @@
+
+.dyn-panel{
+	position: absolute!important;
+	right: -100%;
+	transition: .5s right;
+	&.active{
+		right: 0;
+	}
+}
+
+.functions{
+	position: absolute;
+	right: 15px;
+	bottom: 15px;
+	z-index: 10000;
+}
+
+
+.panel-group .panel{
+	margin-top: 10px;
+}
+
+.panel{
+	border-radius: 5px;
+}
+
+.panel-heading{
+	padding: 0px;
+	.btn-prevent-collapse{
+		position: absolute;
+		right: 50px;
+		bottom: 9px;
+	}
+	.panel-title{
+		a{
+			//background: #dff0d8;
+			//transition: .2s all;
+			padding: 15px;
+			display: block;
+			&:hover{
+				background: #dff0d8;
+			}
+			&:not(.collapsed){
+				background: #dff0d8;
+			}
+			i.glyphicon{
+				float: right;
+				&:after { content: "\e114"; }
+			}
+			&.collapsed{
+				i.glyphicon{
+					float: right;
+					&:after { content: "\e080"; }
+				}	
+			}
+		}
+	}
+}
+
+
+.ns-footer {
+    position: absolute;
+    left: 0;
+    background: #CCCCCC;
+    width: 100%;
+    bottom: 0;
+    padding: 15px 0px;
+    height: 5em;
+
+
+   	button{
+		margin-right: 15px;
+	}
+
+	.icon{
+		font-size: 20px;
+	}
+}
+
+.background-img{
+	background: url(./img/bg-home.jpg) center center no-repeat;
+	background-position-x: 10%;
+    background-position-y: 0;
+	//background-attachment: fixed;
+	//background-size: cover;
+}
+
+.ns-filter-action{
+	position: absolute;
+    left: 0;
+    width: 100%;
+    bottom: 0;
+    padding: 5% 10% ;
+    height: 5em;
+}
+
+
+
+.drag-zone-hover {
+    height: 500px;
+    width: 100%;
+    border: 5px dashed #ccc;
+    background: #eee;
+    border-radius: 5px;
+    position: relative;
+    text-align: center;
+    box-shadow: -1px 2px 20px 3px rgba(0, 0, 0, 0.2) inset;
+}
+.drag-zone-hover span.huge {
+    margin: auto;
+    top: 45%;
+    left: 0;
+    width: 100%;
+    position: absolute;
+    font-size: 200%;
+    font-weight: 800;
+    color: #aaa;
+    cursor: default;
+}
+
