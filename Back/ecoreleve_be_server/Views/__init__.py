@@ -499,6 +499,10 @@ class RESTView(object):
     @view_config(request_method='PUT', renderer='json', permission='update')
     def put(self):
         return self.context.update()
+    
+    @view_config(request_method='OPTIONS', renderer='json', permission=NO_PERMISSION_REQUIRED)
+    def options(self):
+        return
 
 
 def add_routes(config):
