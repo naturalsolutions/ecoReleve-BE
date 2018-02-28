@@ -98,7 +98,7 @@ define([
 
       this.$input.attr('data_value',value);
       this.matchedValue = value;
-      this.form.model.set('CD_NOM', value);
+      this.form.model.set('taxref_id', value);
       if(confirmChange){
         this.$input.change();
       }

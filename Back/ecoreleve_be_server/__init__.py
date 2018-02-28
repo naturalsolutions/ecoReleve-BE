@@ -101,6 +101,7 @@ def main(global_config, **settings):
     json_renderer.add_adapter(Decimal, decimal_adapter)
     json_renderer.add_adapter(datetime.time, time_adapter)
     json_renderer.add_adapter(datetime.date, date_adapter)
+    json_renderer.add_adapter(Exception, exception_adapter)
 
     from geoalchemy2 import WKBElement, WKTElement
     json_renderer.add_adapter(WKBElement, wkb_adapter)

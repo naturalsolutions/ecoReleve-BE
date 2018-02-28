@@ -1,6 +1,8 @@
 from shapely import wkt, wkb
 from geojson import Feature, FeatureCollection, dumps
-
+import traceback
+import sys
+import json
 
 def datetime_adapter(obj, request):
     """Json adapter for datetime objects."""
@@ -43,3 +45,14 @@ def wkt_adapter(obj, request):
     return Feature(
         geometry=wkt.loads(obj.data),
     )
+
+def exception_adapter(obj, request):
+    """Json adapter for Exception objects."""
+    exc_type, exc_value, exc_traceback = sys.exc_info()
+    errorDict = json.dumps({
+        'stackTrace': traceback.format_exc(),
+    })
+    logMsg = str(exc_value)
+    errorDict['message'] = logMsg
+    traceback.print_exc()
+    return errorDict
