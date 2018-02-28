@@ -17,12 +17,16 @@ define([
     },
     template: 
     '<div style="width:100%;" class="input-group">\
-            <input style="width:75%;" class="form-control" type="text" data_value="<%= data_value %>" name="<%= key %>" id="<%=id%>" value="<%=value%>" data_value="<%=data_value%>" initValue="<%=initValue%>"/>\
+            <input style="width:75%;" class="form-control" type="text" data_value="<%= data_value %>" name="<%= key %>" id="<%=id%>" value="<%=value%>" data_value="<%=data_value%>"/>\
             <select style="width:25%;background-color: #eeeeee;" id=typeList class="selectpicker form-control" data-live-search="true">\
-                <option value="latin">lat.</option>\
-                <option value="vernaculaire">vern.</option>\
+                <option value="latin">latin</option>\
+                <option value="vernaculaire">vernac.</option>\
             </select>\
     </div>',
+    keysByType: {
+      latin:'taxon',
+      vernaculaire:'nom_vernaculaire'
+    },
 
     initialize: function (options) {
         Form.editors.Base.prototype.initialize.call(this, options);
@@ -49,7 +53,7 @@ define([
             // }
             this.autocompleteSource.select = function(event,ui){
               event.preventDefault();
-              _this.setValue(ui.item.taxref_id,ui.item.label,true);
+              _this.setValue(ui.item,true);
               _this.matchedValue = ui.item;
               _this.isTermError = false;
               _this.displayErrorMsg(false);
@@ -88,17 +92,20 @@ define([
         console.log('select change', e, this.typeList)
         this.autocompleteSource.source = 'autocomplete/taxon?protocol='+this.taxaList+'&type='+this.type;
         this.$input.autocomplete(this.autocompleteSource);
-        this.fetchDisplayValue(this.getValue());
+        this.fetchDisplayValue(this.$input.attr('taxref_value'));
         
     },
 
-    setValue: function(value, displayValue, confirmChange) {
+    setValue: function(item, confirmChange) {
 
-      this.$input.val(displayValue);
+      this.$input.val(item[this.type]);
 
-      this.$input.attr('data_value',value);
-      this.matchedValue = value;
-      this.form.model.set('taxref_id', value);
+      this.$input.attr('data_value',item.latin);
+      this.$input.attr('taxref_value',item.taxref_id);
+      this.matchedValue = item;
+      this.form.model.set('taxref_id', item.taxref_id);
+      this.form.model.set('nom_vernaculaire', item.vernaculaire);
+      this.form.model.set('taxon', item.latin);
       if(confirmChange){
         this.$input.change();
       }
@@ -134,7 +141,7 @@ define([
         success : function(data){
           // _this.$input.attr('data_value',val);
           // _this.$input.val(data[_this.usedLabel]);
-          _this.setValue(val,data[_this.type],false);
+          _this.setValue(data,false);
           _this.displayErrorMsg(false);
           _this.isTermError = false;
         }
@@ -152,28 +159,27 @@ define([
 
     render: function () {
       var _this = this;
-      var value = this.model.get(this.key);
+      var taxref_value = this.model.get('taxref_id');
       var data_value;
-      if (value) {
-          var initValue = this.model.get(this.key);
-          $.ajax({
-              url : this.url+'/'+this.model.get(this.key),
-              context: this,
-              success : function(data){
-                  if(!data[this.type]){
-                    this.$input.val(data.latin);
-                    this.$el.find('#typeList').val('latin');
-                  } else{
-                    this.$input.val(data[this.type]);
-                  }
-              }
-          });
-      }
+      // if (value) {
+      //     $.ajax({
+      //         url : this.url+'/'+value,
+      //         context: this,
+      //         success : function(data){
+      //             if(!data[this.type]){
+      //               this.$input.val(data.latin);
+      //               this.$el.find('#typeList').val('latin');
+      //             } else{
+      //               this.$input.val(data[this.type]);
+      //             }
+      //         }
+      //     });
+      // }
+
       var $el = _.template( this.template, {
           id: this.cid,
-          value: value,
+          value: _this.model.get(_this.keysByType[_this.type]),
           data_value :_this.model.get(_this.key),
-          initValue:initValue,
           iconFont:_this.iconFont,
           key : this.options.schema.title
       });
@@ -187,6 +193,7 @@ define([
       _(function () {
           _this.$input.autocomplete(_this.autocompleteSource); // HERE
           _this.$el.find('#typeList').val(_this.type);
+          _this.$input.attr('taxref_value',taxref_value);
           if (_this.options.schema.editorAttrs && _this.options.schema.editorAttrs.disabled) {
               _this.$input.prop('disabled', true);
           }
