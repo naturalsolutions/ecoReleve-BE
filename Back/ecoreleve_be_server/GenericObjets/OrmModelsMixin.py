@@ -652,7 +652,7 @@ class HasDynamicProperties(HasStaticProperties):
         self.previousState = self.values.copy()
         if dict_.get('ID', None):
             del dict_['ID']
-        if self.fk_table_type_name not in dict_ and 'type_id' not in dict_ and not self.type_id:
+        if self.fk_table_type_name not in dict_ and 'type_id' not in dict_ and not self.type_id and 'type_name' not in dict_:
             raise Exception('object type not exists')
 
         if 'type_name' in dict_:
