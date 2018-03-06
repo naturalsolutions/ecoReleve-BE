@@ -1,7 +1,7 @@
-from sqlalchemy import select, join
+from sqlalchemy import select, join, exists, func
 import json
 import pandas as pd
-from ..Models import BaseExport
+from ..Models import BaseExport, Project, Observation, Station
 from ..utils.generator import Generator
 from ..renderers import CSVRenderer, PDFrenderer, GPXRenderer
 from pyramid.response import Response
@@ -9,6 +9,38 @@ import io
 from datetime import datetime
 from ..Views import CustomView
 from ..controllers.security import RootCore
+from ..GenericObjets.SearchEngine import DynamicPropertiesQueryEngine
+
+
+ProcoleType = Observation.TypeClass
+
+# class ObservationCollection(DynamicPropertiesQueryEngine):
+#     pass
+    
+class ObservationCollection(DynamicPropertiesQueryEngine):
+
+    def __init__(self, session, object_type=None, from_history=None):
+        DynamicPropertiesQueryEngine.__init__(self, session=session, model=Observation, object_type=object_type, from_history=from_history)
+
+    def _select_from(self):
+        table_join = DynamicPropertiesQueryEngine._select_from(self)
+        table_join = join(table_join, Station, Station.ID == Observation.FK_Station)
+
+        station_columns = [
+            Station.Name.label('Station_Name'),
+            Station.LAT.label('Station_Latitude'),
+            Station.LON.label('Station_Longitude'),
+            Station.StationDate.label('Station_Date')
+        ]
+        self.selectable.extend(station_columns)
+        return table_join
+    
+    def get_column_by_name(self, column_name):
+        try :
+            column = DynamicPropertiesQueryEngine.get_column_by_name(self, column_name)
+        except:
+            column = getattr(Station, column_name, None)
+        return column
 
 
 class CustomExportView(CustomView):
@@ -22,7 +54,7 @@ class CustomExportView(CustomView):
             pass
 
 
-class ExportQueryView(CustomExportView):
+class ExportObservationProjectView(CustomExportView):
 
     item = None
 
@@ -37,9 +69,8 @@ class ExportQueryView(CustomExportView):
                         'excel': self.export_excel,
                         'getFile': self.getFile
                         }
-        self.viewName = self.getViewName(ref)
-        self.generator = Generator(self.viewName, self.session)
-        self.table = BaseExport.metadata.tables[self.viewName]
+        self.type_obj = self.request.params.get('protocolType', None)
+        self.CollectionEngine = ObservationCollection(session=self.session, object_type=self.type_obj)
 
     def retrieve(self):
         return self.search()
@@ -59,23 +90,15 @@ class ExportQueryView(CustomExportView):
         count = self.generator.count_(criteria)
         return count
 
-    def getViewName(self, viewId):
-        return self.session.execute(select([self.parent.table.c['Relation']]
-                                           ).select_from(self.parent.table
-                                                         ).where(self.parent.table.c['ID'] == viewId)
-                                    ).scalar()
-
     def search(self):
-        data = self.request.params.mixed()
-        if 'criteria' in data:
-            criteria = json.loads(data['criteria'])
-        else:
-            criteria = {}
+        filters = [
+            {'Column':'FK_Project','Operator':'=', 'Value':self.parent.id_},
+        ]
+        params = self.request.params.mixed()
+        if 'criteria' in params:
+            filters.extend(json.loads(params['criteria']))
 
-        if 'geo' in self.request.params:
-            result = self.generator.get_geoJSON(criteria)
-        else:
-            result = self.generator.search(criteria, offset=0, per_page=20, order_by=[])
+        result = self.CollectionEngine.search(filters=filters)
 
         return result
 
@@ -104,26 +127,45 @@ class ExportQueryView(CustomExportView):
         return queryColumns
 
     def getFile(self):
-        try:
-            criteria = json.loads(self.request.params.mixed()['criteria'])
-            fileType = criteria['fileType']
-            # columns selection
-            columns = criteria['columns']
+        params = self.request.params.mixed()
+        # criteria = json.loads(params['criteria'])
+        fileType = self.request.params.get('fileType', None)
 
-            queryColumns = self.formatColumns(fileType, columns)
+        rows = self.search()
+        protocol_name = self.session.query(ProcoleType).get(self.type_obj).Name
+        project_name = self.session.query(Project).get(self.parent.id_).Name
 
-            query = self.generator.getFullQuery(criteria['filters'], columnsList=queryColumns)
-            rows = self.session.execute(query).fetchall()
 
-            filename = self.viewName + '.' + fileType
-            self.request.response.content_disposition = 'attachment;filename=' + filename
-            value = {'header': columns, 'rows': rows}
+        self.filename = project_name + '_'+ protocol_name + '.' + fileType
+        self.request.response.content_disposition = 'attachment;filename=' + self.filename
 
-            io_export = self.actions[fileType](value)
-            return io_export
+        columns = rows[0].keys()
+        value = {'header': columns, 'rows': rows}
 
-        except:
-            raise
+        io_export = self.actions[fileType](value)
+        return io_export
+
+    # def getFile(self):
+    #     try:
+    #         criteria = json.loads(self.request.params.mixed()['criteria'])
+    #         fileType = criteria['fileType']
+    #         # columns selection
+    #         columns = criteria['columns']
+
+    #         queryColumns = self.formatColumns(fileType, columns)
+
+    #         query = self.generator.getFullQuery(criteria['filters'], columnsList=queryColumns)
+    #         rows = self.session.execute(query).fetchall()
+
+    #         filename = self.viewName + '.' + fileType
+    #         self.request.response.content_disposition = 'attachment;filename=' + filename
+    #         value = {'header': columns, 'rows': rows}
+
+    #         io_export = self.actions[fileType](value)
+    #         return io_export
+
+    #     except:
+    #         raise
 
     def export_csv(self, value):
         csvRender = CSVRenderer()
@@ -153,74 +195,108 @@ class ExportQueryView(CustomExportView):
         return Response(
             file,
             content_disposition="attachment; filename="
-            + self.viewName + "_" + dt + ".xlsx",
+            + self.filename + dt + ".xlsx",
             content_type='application/vnd.openxmlformats-\
             officedocument.spreadsheetml.sheet')
 
 
-class ExportCollectionQueryView(CustomExportView):
+class ExportProtocoleTypeView(CustomExportView):
 
-    item = ExportQueryView
+    item = ExportObservationProjectView
 
     def __init__(self, ref, parent):
         CustomExportView.__init__(self, ref, parent)
-        self.table = BaseExport.metadata.tables['Views']
+        self.actions = {'getFields': self.getFields,
+                        'getFilters': self.getFilters
+        }
 
     def retrieve(self):
-        vi = BaseExport.metadata.tables['Views']
-        t_v = BaseExport.metadata.tables['Theme_View']
-        joinTable = join(vi, t_v, vi.c['ID'] == t_v.c['FK_View'])
-        query = select(vi.c).select_from(joinTable)
+        query = select([ProcoleType])
 
-        if self.integers(self.parent.__name__):
-            query = query.where(t_v.c['FK_Theme'] == self.parent.__name__)
+        table_join = join(Station, Observation, Station.ID == Observation.FK_Station)
+        subQuery = select([Observation]).select_from(table_join).where(Station.FK_Project==self.parent.id_)
 
+        ## Observation.fk_table_type_name point to FK_ProtocoleType
+        subQuery = subQuery.where(ProcoleType.ID== Observation.type_id)
+        query = query.where(exists(subQuery))
         result = [dict(row) for row in self.session.execute(query).fetchall()]
 
         return result
 
+    def getFilters(self):
+        return None
 
-class ExportThemeView(CustomExportView):
+    def getFields(self):
+        # table = Base.metadata.tables['Observation']
+        return None
 
-    item = ExportCollectionQueryView
+    # def get_col_observation(self):
+    #     for col in table.c:
+    #         field_name=col.name
+    #         field_label=col.name
+    #         field_type=self.table.c[col.name].type
+    #         if field_type in self.dictCell:
+    #             cell_type=self.dictCell[field_type]
+    #             cell_type='string'
+                
+    #         else:
+    #             cell_type='string'
+
+    #         final.append({'field':field_name,
+    #             'headerName':field_label,
+    #             'cell':cell_type,
+    #             'editable':False})
+    #         self.cols.append({'name':field_name,'type_grid':cell_type})
+
+
+    #     cols = [{'field':field_name,
+    #             'headerName':field_label,
+    #             'cell':cell_type,
+    #             'editable':False}
+    #             ]
+    #     return final
+
+
+class ExportProjectView(CustomExportView):
+
+    item = None
 
     def __init__(self, ref, parent):
         CustomExportView.__init__(self, ref, parent)
+        self.add_child('protocols', ExportProtocoleTypeView)
+        self.add_child('observations', ExportObservationProjectView)
         self.id_ = ref
 
     def retrieve(self):
-        table = BaseExport.metadata.tables['ThemeEtude']
-        query = select(table.c
-                       ).where(table.c['ID'] == self.id_)
-        result = [dict(row) for row in self.session.execute(query).fetchall()]
-        return result
+        query = select([func.count(Station.ID)]).where(Station.FK_Project== self.id_)
+        result = self.session.execute(query).scalar()
+        return {'nb stations': result}
+
+    def __getitem__(self, item):
+        return self.get(item)
 
 
-class ExportCollectionThemeView(CustomExportView):
+class ExportCollectionProjectView(CustomExportView):
 
-    item = ExportThemeView
-
+    item = ExportProjectView
     def retrieve(self):
-        table = BaseExport.metadata.tables['ThemeEtude']
-        query = select([table.c['ID'], table.c['Caption']]
-                       ).order_by(table.c['Caption'].asc())
+        query = select([Project]).order_by(Project.Name.asc())
         result = [dict(row) for row in self.session.execute(query).fetchall()]
         return result
-
 
 class ExportCoreView(CustomExportView):
 
-    item = ExportCollectionThemeView
+    item = None
 
-    def __getitem__(self, ref):
-        if ref == 'views':
-            return ExportCollectionQueryView(ref, self)
-        return self.item(ref, self)
+    def __init__(self, ref, parent):
+        CustomExportView.__init__(self, ref, parent)
+        self.add_child('projects', ExportCollectionProjectView)
+
+    def __getitem__(self, item):
+        return self.get(item)
 
     def retrieve(self):
-        return {'next items': {'views': {},
-                               'themes': {}
-                               }
+        return {'next items': 'views'
                 }
 
 

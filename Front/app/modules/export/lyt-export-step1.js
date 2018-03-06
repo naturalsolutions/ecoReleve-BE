@@ -30,7 +30,7 @@ define([
     initialize: function(options) {
       this.model = new Backbone.Model();
       this.themeColl = new Backbone.Collection();
-      this.themeColl.url = 'export/themes';
+      this.themeColl.url = 'export/projects';
       this.defered = this.themeColl.fetch();
 
       this.model.set('viewId', '');
@@ -41,7 +41,7 @@ define([
       var _this = this;
       $.when(this.defered).done(function() {
         _this.themeColl.each(function(model, index) {
-          var line = $('<li class="list-group-item" value="' + model.get('ID') + '">' + model.get('Caption') + '</li>');
+          var line = $('<li class="list-group-item" value="' + model.get('ID') + '">' + model.get('Name') + '</li>');
           _this.ui.themes.append(line);
         });
       });
@@ -59,14 +59,14 @@ define([
       this.ui.requirement.val('').change();
 
       this.viewColl = new Backbone.Collection();
-      var id = $(e.target).val();
-      this.viewColl.url = 'export/themes/' + id + '/views';
+      this.project_id = $(e.target).val();
+      this.viewColl.url = 'export/projects/' + this.project_id + '/protocols';
       var defered = this.viewColl.fetch();
 
       _this.ui.views.empty();
       $.when(defered).done(function() {
         _this.viewColl.each(function(model, index) {
-          var line = $('<li class="list-group-item" value="' + model.get('ID') + '">' + model.get('Caption') + '</li>');
+          var line = $('<li class="list-group-item" value="' + model.get('ID') + '">' + model.get('Name') + '</li>');
           _this.ui.views.append(line);
         });
       });
@@ -75,12 +75,13 @@ define([
     enableNext: function(e) {
       this.ui.views.find('.active').removeClass('active');
       $(e.target).addClass('active');
-      var viewId = $(e.target).val();
-      var viewName = $(e.target).html();
-      this.ui.requirement.val(viewId).change();
+      var protocolType_id = $(e.target).val();
+      var protocolType_name = $(e.target).html();
+      this.ui.requirement.val(protocolType_id).change();
 
-      this.model.set('viewId', viewId);
-      this.model.set('viewName', viewName);
+      this.model.set('project_id', this.project_id);
+      this.model.set('protocolType_id', protocolType_id);
+      this.model.set('protocolType_name', protocolType_name);
     },
 
     validate: function() {

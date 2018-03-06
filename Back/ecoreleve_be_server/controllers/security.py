@@ -151,6 +151,12 @@ class myJWTAuthenticationPolicy(JWTAuthenticationPolicy):
 
 
 context_permissions = {
+    'export': [
+        (Allow, 'group:admin', ALL_PERMISSIONS),
+        (Allow, 'group:superUser', ('create', 'update', 'read')),
+        (Allow, 'group:user', ('create', 'update', 'read'))
+    ],
+
     'stations': [
         (Allow, 'group:admin', ALL_PERMISSIONS),
         (Allow, 'group:superUser', ('create', 'update', 'read')),

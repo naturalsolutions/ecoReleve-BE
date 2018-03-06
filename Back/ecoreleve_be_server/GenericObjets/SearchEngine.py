@@ -209,6 +209,7 @@ class DynamicPropertiesQueryEngine(QueryEngine):
         '''
         QueryEngine.__init__(self, session, model)
         self.instance_model = self.model(session=self.session)
+        self.object_type = object_type
         if object_type:
             self.instance_model._type = self.session.query(self.model.TypeClass).get(object_type)
 
@@ -216,6 +217,12 @@ class DynamicPropertiesQueryEngine(QueryEngine):
 
         #perform datetime conversion if failed return the original from_history parameter
         self.from_history = parser(from_history)
+
+    def apply_filters(self, query, filters):
+        query = QueryEngine.apply_filters(self, query, filters)
+        if self.object_type:
+            query = query.where(self.model.type_id == self.object_type)
+        return query
 
     def get_full_history_values_view(self):
         '''
@@ -261,11 +268,12 @@ class DynamicPropertiesQueryEngine(QueryEngine):
         return self.dynamic_values_view
 
     def _where(self, query, criteria):
-        _property = self.get_dynamic_property_by_name(criteria['Column'])
-        if _property:
-            query = self._where_exists(query, criteria)
-        else:
+        # _property = self.get_dynamic_property_by_name(criteria['Column'])
+        column = self.get_column_by_name(criteria['Column'])
+        if column:
             query = QueryEngine._where(self, query, criteria)
+        else:
+            query = self._where_exists(query, criteria)
         return query
 
     def _where_exists(self, query, criteria):
