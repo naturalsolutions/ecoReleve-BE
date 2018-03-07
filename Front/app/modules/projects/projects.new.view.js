@@ -22,28 +22,6 @@ define([
       this.displayForm();
       this.displayMap();
       var _this = this;
-      this.map.map.on('draw:created', function (e) {
-          var type = e.layerType;
-          _this.currentLayer = e.layer;
-          // var latlon = _this.currentLayer.getLatLng();
-
-          _this.map.drawnItems.addLayer(_this.currentLayer);
-          // _this.$el.find('input[name="LAT"]').val(latlon.lat);
-          // _this.$el.find('input[name="LON"]').val(latlon.lng);
-          _this.map.toggleDrawing();
-        });
-        
-        
-        this.map.map.on('draw:edited', function (e) {
-          // var latlon = _this.currentLayer.getLatLng();
-          // _this.$el.find('input[name="LAT"]').val(latlon.lat);
-          // _this.$el.find('input[name="LON"]').val(latlon.lng);
-        });
-        
-        this.map.map.on('draw:deleted', function () {
-          _this.map.toggleDrawing();
-        });
-
       this.$el.i18n();
     },
 
@@ -57,6 +35,34 @@ define([
         // cluster: true,
         disableCentering: true,
         drawable: true,
+      });
+
+      this.map.map.on('draw:created', function (e) {
+        var type = e.layerType;
+        self.currentLayer = e.layer;
+        // var latlon = self.currentLayer.getLatLng();
+
+        self.map.drawnItems.addLayer(self.currentLayer);
+        if (self.map.getGeometry().features.length > 0){
+          var geom = self.map.getGeometry().features[0];
+        } else {
+          var geom = null;
+        }
+        self.nsForm.model.set('geom',geom);
+        // self.$el.find('input[name="LAT"]').val(latlon.lat);
+        // self.$el.find('input[name="LON"]').val(latlon.lng);
+        self.map.toggleDrawing();
+      });
+      
+      
+      // this.map.map.on('draw:edited', function (e) {
+      //   // var latlon = self.currentLayer.getLatLng();
+      //   // self.$el.find('input[name="LAT"]').val(latlon.lat);
+      //   // self.$el.find('input[name="LON"]').val(latlon.lng);
+      // });
+      
+      this.map.map.on('draw:deleted', function () {
+        self.map.toggleDrawing();
       });
 
     },
@@ -81,7 +87,7 @@ define([
         } else {
           geom = null;
         }
-        _this.nsForm.model.set('geom',geom)
+        _this.nsForm.model.set('geom',geom);
         NsForm.prototype.butClickSave.call(this, e);
       }
     },

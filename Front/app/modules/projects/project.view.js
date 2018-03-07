@@ -66,6 +66,17 @@ define([
         drawable: true,
       });
 
+      this.map.map.on('draw:created', function (e) {
+        var type = e.layerType;
+        self.currentLayer = e.layer;
+        // var latlon = self.currentLayer.getLatLng();
+
+        self.map.drawnItems.addLayer(self.currentLayer);
+        // self.$el.find('input[name="LAT"]').val(latlon.lat);
+        // self.$el.find('input[name="LON"]').val(latlon.lng);
+        self.map.toggleDrawing();
+      });
+
     },
 
     afterShow: function(){
