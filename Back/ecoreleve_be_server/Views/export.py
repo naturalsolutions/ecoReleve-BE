@@ -87,7 +87,7 @@ class ExportObservationProjectView(CustomExportView):
                         }
         self.type_obj = self.request.params.get('protocolType', None)
         if not self.type_obj:
-            self.type_obj = self.request.params.get('typeObj', None)
+            self.type_obj = self.request.params.get('typeObj', self.request.params.get('objectType',None))
         self.CollectionEngine = ObservationCollection(session=self.session, object_type=self.type_obj)
 
     def retrieve(self):
