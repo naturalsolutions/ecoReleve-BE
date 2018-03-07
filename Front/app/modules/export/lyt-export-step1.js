@@ -33,8 +33,8 @@ define([
       this.themeColl.url = 'export/projects';
       this.defered = this.themeColl.fetch();
 
-      this.model.set('viewId', '');
-      this.model.set('viewName', '');
+      this.model.set('protocolType_id', '');
+      this.model.set('protocolType_name', '');
     },
 
     onShow: function() {
@@ -55,7 +55,9 @@ define([
 
       this.ui.themes.find('.active').removeClass('active');
       $(e.target).addClass('active');
-
+      var project_name = $(e.target).html();
+      this.model.set('project_name', project_name);
+  
       this.ui.requirement.val('').change();
 
       this.viewColl = new Backbone.Collection();

@@ -61,7 +61,7 @@ class QueryEngine(object):
         @returning :: SQLAlchemy Query Object
 
         initialize "SELECT FROM" statement
-        @selectable corrsponding to the columns you need in the SELECT statement
+        @selectable corresponding to the columns you need in the SELECT statement
         '''
         self.selectable = []
         join_table = self._select_from()
@@ -90,7 +90,7 @@ class QueryEngine(object):
         '''
         return self.model
 
-    def search(self, filters, selectable=[], order_by=None, limit=None, offset=None):
+    def search(self, filters=[], selectable=[], order_by=None, limit=None, offset=None):
         '''
         @filters :: list(dict),
         @selectable :: list(string or SQLAlchemy Column Object),
@@ -103,14 +103,22 @@ class QueryEngine(object):
         method to call in views
         build query over parameters and execute query
         '''
+        query = self.build_query(filters, selectable, order_by, limit, offset)
+        self.before_exec_query()
+        queryResult = self.session.execute(query).fetchall()
+        return [dict(row) for row in queryResult]
+
+    def before_exec_query(self):
+        pass
+
+    def build_query(self, filters=[], selectable=[], order_by=None, limit=None, offset=None):
         query = self.init_query_statement(selectable)
         query = self.apply_filters(query, filters)
         query = self._order_by(query, order_by)
         query = self._limit(query, limit)
         query = self._offset(query, offset)
-
-        queryResult = self.session.execute(query).fetchall()
-        return [dict(row) for row in queryResult]
+        self.query = query
+        return query
 
     def apply_filters(self, query, filters):
         for criteria in filters:
@@ -343,10 +351,6 @@ class DynamicPropertiesQueryEngine(QueryEngine):
 
             self.selectable.append(column.label(prop['Name']))
         return join_table
-
-    # def search(self, filters, selectable=[], order_by=None, limit=None, offset=None):
-    #     #NOT overloaded 
-    #     return QueryEngine.search(self, filters, selectable, order_by, limit, offset)
 
     def get_alias_property_values(self, _property):
         '''

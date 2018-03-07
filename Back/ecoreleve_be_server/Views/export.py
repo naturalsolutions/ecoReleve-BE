@@ -1,7 +1,7 @@
 from sqlalchemy import select, join, exists, func
 import json
 import pandas as pd
-from ..Models import BaseExport, Project, Observation, Station
+from ..Models import BaseExport, Project, Observation, Station, Base
 from ..utils.generator import Generator
 from ..renderers import CSVRenderer, PDFrenderer, GPXRenderer
 from pyramid.response import Response
@@ -9,7 +9,7 @@ import io
 from datetime import datetime
 from ..Views import CustomView
 from ..controllers.security import RootCore
-from ..GenericObjets.SearchEngine import DynamicPropertiesQueryEngine
+from ..GenericObjets.SearchEngine import DynamicPropertiesQueryEngine, QueryEngine
 
 
 ProcoleType = Observation.TypeClass
@@ -98,9 +98,8 @@ class ExportObservationProjectView(CustomExportView):
         if 'criteria' in params:
             filters.extend(json.loads(params['criteria']))
 
-        result = self.CollectionEngine.search(filters=filters)
-
-        return result
+        query = self.CollectionEngine.build_query(filters=filters)
+        return self.session.execute(query).fetchall()
 
     def formatColumns(self, fileType, columns):
         queryColumns = []
@@ -135,8 +134,7 @@ class ExportObservationProjectView(CustomExportView):
         protocol_name = self.session.query(ProcoleType).get(self.type_obj).Name
         project_name = self.session.query(Project).get(self.parent.id_).Name
 
-
-        self.filename = project_name + '_'+ protocol_name + '.' + fileType
+        self.filename = project_name + '_'+ protocol_name + '_'
         self.request.response.content_disposition = 'attachment;filename=' + self.filename
 
         columns = rows[0].keys()

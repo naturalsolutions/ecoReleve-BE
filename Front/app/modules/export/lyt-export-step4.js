@@ -134,7 +134,7 @@ define([
           var url = URL.createObjectURL(new Blob([data], {'type': 'application/' + this.model.get('fileType')}));
           var link = document.createElement('a');
           link.href = url;
-          link.download = this.model.get('viewName') + '_' + new Moment().format('DD_MM_YY') + '.' + this.model.get('fileType');
+          link.download = this.model.get('project_name')+'_'+this.model.get('protocolType_name') + '_' + new Moment().format('DD-MM-YY') + '.' + this.model.get('fileType');
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
