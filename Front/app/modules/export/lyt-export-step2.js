@@ -39,8 +39,8 @@ define([
 
     onShow: function() {
       this.getFieldsListForSelectedView();
-      this.displayMap();
       this.displayFilters();
+      this.displayMap();
       this.$el.i18n();
       var stepName = i18n.translate('export.step2-label');
       $('.export-step2').html(stepName);
@@ -114,7 +114,7 @@ define([
 
     getFieldsListForSelectedView: function() {
       var _this = this;
-      var viewUrl = 'export/views/' + this.viewId + '/getFilters';
+      var viewUrl = 'export/projects/'+this.model.get('project_id')+'/observations/getFilters?protocolType='+this.model.get('protocolType_id');
       var jqxhr = $.ajax({
         url: viewUrl,
         context: this,
@@ -124,7 +124,7 @@ define([
         var exportFieldsList = [];
         _this.ui.filtersList.append('<option value="choose">Add a filter</option>');
         for (var i = 0; i < data.length; i++) {
-          var optionItem = '<option type=\'' + data[i].type + '\'>' + data[i].name + '</option>';
+          var optionItem = '<option type="' + data[i].type + '" value="'+data[i].name+'">' + data[i].label + '</option>';
           _this.ui.filtersList.append(optionItem);
           exportFieldsList.push(data[i].name);
           this.fieldsList[data[i].name] = data[i];
@@ -140,7 +140,7 @@ define([
         com: this.com,
         element: 'map',
         zoom: 2,
-        url: 'export/views/' + this.viewId + '/?geo=true',
+        url: 'export/projects/'+this.model.get('project_id')+'/observations?geo=true&protocolType='+this.model.get('protocolType_id'),
         totalElt: this.ui.total,
       });
     },

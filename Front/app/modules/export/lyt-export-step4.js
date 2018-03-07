@@ -84,14 +84,18 @@ define([
     getFile: function() {
       var _this = this;
       this.datas = {
-        fileType: this.model.get('fileType'),
+        // fileType: this.model.get('fileType'),
         // viewId: this.model.get('protocolType_id'),
-        // filters: this.model.get('filters'),
-        // columns: this.model.get('columns'),
+        filters: this.model.get('filters'),
+        columns: this.model.get('columns'),
       };
 
       if (this.model.get('fileType') == 'excel'){
-        var url =  Config.coreUrl+'export/projects/'+this.model.get('project_id')+'/observations/getFile?protocolType='+this.model.get('protocolType_id')+'&fileType='+this.model.get('fileType');
+        var url =  Config.coreUrl+'export/projects/'+this.model.get('project_id')
+                  +'/observations/getFile?protocolType='+this.model.get('protocolType_id')
+                  +'&fileType='+this.model.get('fileType')
+                  +'&criteria='+JSON.stringify(this.model.get('filters'))
+                  +'&columns='+JSON.stringify(this.model.get('columns'));
         var link = document.createElement('a');
         link.classList.add('DowloadLinka');
 
@@ -126,7 +130,7 @@ define([
         var route = 'export/projects/'+this.model.get('project_id')+'/observations/getFile?protocolType='+this.model.get('protocolType_id')+'&fileType='+this.model.get('fileType');
         $.ajax({
           url: route,
-          // data: {criteria: JSON.stringify(this.datas)},
+          data: {criteria: JSON.stringify(this.datas.filters), columns:JSON.stringify(this.datas.columns)},
           contentType: 'application/json',
           type: 'GET',
           context: this,

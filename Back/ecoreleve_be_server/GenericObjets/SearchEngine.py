@@ -67,7 +67,12 @@ class QueryEngine(object):
         join_table = self._select_from()
 
         if selectable:
-            self.selectable = selectable
+            self.selectable = []
+            for column in selectable:
+                if column.__class__.__name__ =='InstrumentedAttribute':
+                    self.selectable.append(column)
+                else:
+                    self.selectable.append(self.get_column_by_name(column))
         else:
             self.selectable.append(self.model)
 
@@ -143,7 +148,7 @@ class QueryEngine(object):
                 )
         return query
 
-    def _count(self, filters):
+    def _count(self, filters=[]):
         '''
         like search method but apply count statement,
         @returning :: interger
@@ -276,9 +281,10 @@ class DynamicPropertiesQueryEngine(QueryEngine):
         return self.dynamic_values_view
 
     def _where(self, query, criteria):
-        # _property = self.get_dynamic_property_by_name(criteria['Column'])
+        _property = self.get_dynamic_property_by_name(criteria['Column'])
         column = self.get_column_by_name(criteria['Column'])
-        if column:
+
+        if not _property:
             query = QueryEngine._where(self, query, criteria)
         else:
             query = self._where_exists(query, criteria)
@@ -386,6 +392,7 @@ class DynamicPropertiesQueryEngine(QueryEngine):
             _alias, column = self.get_alias_property_values(_property)
         else:
             column = QueryEngine.get_column_by_name(self, column_name)
+        return column
 
     def get_dynamic_property_by_name(self, property_name):
         return self.instance_model.get_property_by_name(property_name)
