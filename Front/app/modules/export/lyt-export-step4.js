@@ -84,14 +84,18 @@ define([
     getFile: function() {
       var _this = this;
       this.datas = {
-        fileType: this.model.get('fileType'),
-        viewId: this.model.get('viewId'),
+        // fileType: this.model.get('fileType'),
+        // viewId: this.model.get('protocolType_id'),
         filters: this.model.get('filters'),
         columns: this.model.get('columns'),
       };
 
       if (this.model.get('fileType') == 'excel'){
-        var url =  Config.coreUrl+'export/views/'+this.model.get('viewId')+'/getFile?criteria='+JSON.stringify(this.datas);
+        var url =  Config.coreUrl+'export/projects/'+this.model.get('project_id')
+                  +'/observations/getFile?protocolType='+this.model.get('protocolType_id')
+                  +'&fileType='+this.model.get('fileType')
+                  +'&criteria='+JSON.stringify(this.model.get('filters'))
+                  +'&columns='+JSON.stringify(this.model.get('columns'));
         var link = document.createElement('a');
         link.classList.add('DowloadLinka');
 
@@ -123,10 +127,10 @@ define([
         link.click();
       } else {
 
-        var route = 'export/views/'+ this.model.get('viewId') +'/getFile';
+        var route = 'export/projects/'+this.model.get('project_id')+'/observations/getFile?protocolType='+this.model.get('protocolType_id')+'&fileType='+this.model.get('fileType');
         $.ajax({
           url: route,
-          data: {criteria: JSON.stringify(this.datas)},
+          data: {criteria: JSON.stringify(this.datas.filters), columns:JSON.stringify(this.datas.columns)},
           contentType: 'application/json',
           type: 'GET',
           context: this,
@@ -134,7 +138,7 @@ define([
           var url = URL.createObjectURL(new Blob([data], {'type': 'application/' + this.model.get('fileType')}));
           var link = document.createElement('a');
           link.href = url;
-          link.download = this.model.get('viewName') + '_' + new Moment().format('DD_MM_YY') + '.' + this.model.get('fileType');
+          link.download = this.model.get('project_name')+'_'+this.model.get('protocolType_name') + '_' + new Moment().format('DD-MM-YY') + '.' + this.model.get('fileType');
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);

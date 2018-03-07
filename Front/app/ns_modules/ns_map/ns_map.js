@@ -1044,7 +1044,7 @@ define([
     },
 
     setTotal: function(geoJson) {
-      if(this.totalElt){
+      if(this.totalElt && geoJson && geoJson.total){
         this.total =  geoJson.total;
         this.totalElt.html(this.total);
       }

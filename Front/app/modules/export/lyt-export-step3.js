@@ -55,10 +55,14 @@ define([
         _this.displayColumnsPicker(this.gridOptions.columnApi.getAllGridColumns());
         _this.verififyCols();
       };
+      
+      var filters = this.model.get('filters');
+      filters.protocolType_id = this.model.get('protocolType_id');
       this.rgGrid.show(this.gridView = new GridView({
         clientSide: true,
-        filters: this.model.get('filters'),
-        url: 'export/views/' + this.model.get('viewId') + '/',
+        filters: filters,
+        objectType: this.model.get('protocolType_id'),
+        url: 'export/projects/'+this.model.get('project_id')+'/observations/',
         afterFirstRowFetch: afterFirstRowFetch
       }));
     },

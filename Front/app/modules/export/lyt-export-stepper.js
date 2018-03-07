@@ -18,6 +18,7 @@ define([
   return NewStepper.extend({
 
     initSteps: function() {
+      // this.steps = [Step1, Step2, Step3, Step4];
       this.steps = [Step1, Step2, Step3, Step4];
     },
 
