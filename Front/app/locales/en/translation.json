@@ -163,7 +163,7 @@
  		"locations" : "Positions"
  	},
  	"export" : {
- 		"legend-theme" : "Choose your theme",
+ 		"legend-theme" : "Choose your project",
  		"legend-view"  :"Choose your view",
  		"legend-columns" : "Choose your columns",
  		"legend-preview" : "Preview",
@@ -171,6 +171,7 @@
  		"pdf-file" : "Get PDF File",
  		"csv-file" :"Get CSV File",
  		"excel-file" : "Get Excel File",
+ 		"sinp-file" : "Get SNIP/GINCO File",
  		"gpx-file" : "Get GPX File",
  		"step1-label" :"Choose the view to export",
  		"step2-label" :"Filter",
