@@ -365,9 +365,9 @@ class DynamicObjectCollectionView(CustomView):
         return self.handleResult(result)
 
     def pagingSearch(self, searchInfo, params):
-        searchInfo['offset'] = json.loads(params['offset'], None)
-        searchInfo['per_page'] = json.loads(params['per_page'], None)
-        searchInfo['order_by'] = json.loads(params['order_by'], [])
+        searchInfo['offset'] = json.loads(params['offset'], None) if params.get('offset', None) else None
+        searchInfo['per_page'] = json.loads(params['per_page'], None) if params.get('per_page', None) else None
+        searchInfo['order_by'] = json.loads(params['order_by'], []) if params.get('order_by', None) else []
         return params
 
     def create(self):

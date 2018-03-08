@@ -9,6 +9,7 @@ from collections import OrderedDict
 from sqlalchemy.exc import IntegrityError
 from ..controllers.security import context_permissions
 from ..Views import DynamicObjectView, DynamicObjectCollectionView
+from ..Views.project import ProjectsView
 from ..controllers.security import RootCore
 
 
@@ -19,6 +20,7 @@ class ClientView(DynamicObjectView):
     def __init__(self, ref, parent):
         DynamicObjectView.__init__(self, ref, parent)
         self.__acl__ = context_permissions['clients']
+        self.add_child('projects', ProjectsView)
         # self.actions = {'projects': self.getStations}
 
     def __getitem__(self, ref):

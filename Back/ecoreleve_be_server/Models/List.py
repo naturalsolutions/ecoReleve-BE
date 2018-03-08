@@ -22,8 +22,8 @@ from ..Models import (
     Sensor,
     # SensorType,
     MonitoredSite,
+    Project,
     Client,
-    Project
 )
 from ..utils import Eval
 from collections import OrderedDict
@@ -613,7 +613,7 @@ class ClientList(CollectionEngine):
 
     def __init__(self, frontModule, typeObj=None, startDate=None,
                  history=False, historyView=None):
-        super().__init__(Client, frontModule, startDate)
+        super().__init__(Client, frontModule,typeObj=typeObj, startDate=None)
 
 
 class ImportList(Generator):
