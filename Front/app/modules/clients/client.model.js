@@ -15,7 +15,7 @@ define([
       single: 'client',
       type: 'clients',
 
-      icon: 'reneco-site',
+      icon: 'reneco-observers',
 
       fk: 'FK_Client',
 
@@ -32,29 +32,29 @@ define([
 
       uiGridConfs: [
 
-        {
-          name: 'projects',
-          label: 'Projets'
-        },
+        // {
+        //   name: 'projects',
+        //   label: 'Projets'
+        // },
       ],
 
-      stationsColumnDefs: [{
-        field: 'ID',
-        headerName: 'ID',
-        hide: true,
-      },{
-        field: 'Name',
-        headerName: 'Name',
-        cellRenderer: function(params){
-            var url = '#projects/' + params.data.ID;
-            return  '<a target="_blank" href="'+ url +'" >' +
-            params.value + ' <span class="reneco reneco-info right"></span>' +
-            '</a>';
-        }
-      },{
-        field: 'Project_reference',
-        headerName: 'reference',
-      }]
+      // stationsColumnDefs: [{
+      //   field: 'ID',
+      //   headerName: 'ID',
+      //   hide: true,
+      // },{
+      //   field: 'Name',
+      //   headerName: 'Name',
+      //   cellRenderer: function(params){
+      //       var url = '#projects/' + params.data.ID;
+      //       return  '<a target="_blank" href="'+ url +'" >' +
+      //       params.value + ' <span class="reneco reneco-info right"></span>' +
+      //       '</a>';
+      //   }
+      // },{
+      //   field: 'Project_reference',
+      //   headerName: 'reference',
+      // }]
 
       //MonitoredSiteGridHistory
     }

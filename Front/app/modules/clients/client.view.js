@@ -39,12 +39,12 @@ define([
       this.map.url = false;
 
       this.displayForm();
-      this.displayGrids();
+      // this.displayGrids();
     },
 
     displayMap: function(geoJson) {
       this.map = new NsMap({
-        url: 'clients/' + this.model.get('id')  + '/projects?geo=true', ////only this one
+        // url: 'clients/' + this.model.get('id')  + '/projects?geo=true', ////only this one
         zoom: 4,
         element: 'map',
         popup: true,
