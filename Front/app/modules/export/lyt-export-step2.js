@@ -1,160 +1,165 @@
 define([
-	'jquery',
-	'underscore',
-	'backbone',
-	'marionette',
-	'ns_modules/ns_com',
-	//'ns_filter/model-filter_module',
-  'ns_filter_bower',
-	'ns_map/ns_map',
-	'i18n'
-], function($, _, Backbone, Marionette, Com, NsFilter, NsMap
-) {
+    'jquery',
+    'underscore',
+    'backbone',
+    'marionette',
+    'ns_modules/ns_com',
+    //'ns_filter/model-filter_module',
+    //'ns_filter_bower',
+    'ns_filter/filters',
+    'ns_map/ns_map',
+    'i18n'
+], function($, _, Backbone, Marionette, Com, NsFilter, NsMap) {
 
-  'use strict';
+    'use strict';
 
-  return Marionette.LayoutView.extend({
+    return Marionette.LayoutView.extend({
 
-    className: 'full-height',
-    template: 'app/modules/export/templates/tpl-export-step2.html',
+        className: 'full-height',
+        template: 'app/modules/export/templates/tpl-export-step2.html',
 
-    ui: {
-      'filtersList': 'select#filtersList',
-      'filters': 'div#filters',
-      'total': 'span#total'
-    },
-
-    events: {
-      'change select#filtersList': 'addFilter',
-      'click button#filter': 'filter',
-    },
-
-    name : '<span class="export-step2"></span>',
-
-    initialize: function(options) {
-      this.com = new Com();
-      this.viewId = options.model.get('viewId');
-      this.model.set('filters', []);
-    },
-
-    onShow: function() {
-      this.getFieldsListForSelectedView();
-      this.displayFilters();
-      this.displayMap();
-      this.$el.i18n();
-      var stepName = i18n.translate('export.step2-label');
-      $('.export-step2').html(stepName);
-    },
-
-    addFilter: function() {
-      var option = this.ui.filtersList.find('option:selected');
-
-      if (option.val() == 'choose')
-      return false;
-
-      var filterName = option.val();
-      var filterLabel = option.text();
-      var type = option.attr('type');
-      var options = this.fieldsList[filterName].options;
-
-      var filter = [{
-        editable: true,
-        fieldClass: [''],
-        title: filterLabel,
-        name: filterName,
-        options:options,
-        type: type,
-        validators: []
-      }];
-      this.filters.addFilter(filter);
-
-      this.ui.filtersList.val('choose');
-    },
-
-    displayFilters: function() {
-      var myFilter = NsFilter.extend({
-        getValueOptions: function (DataRow) {
-            var valueOptions;
-            switch (DataRow['type']) {
-                case "Select":
-                    return DataRow['options'];
-                    break;
-								case 'Checkboxes':
-                    return DataRow['options'];
-                    break;
-                case 'AutocompTreeEditor':
-                    return DataRow['options'];
-                    break;
-                case 'AutocompleteEditor':
-                    return DataRow['options'];
-                    break;
-                case "DATETIME":
-                    return valueOptions = [{
-                        dateFormat: 'd/m/yyyy',
-                        defaultValue: new Date().getDate() + "/" + (new Date().getMonth() + 1) + "/" + new Date().getFullYear()
-                    }];
-                    break;
-                case "DateTimePickerEditor" :
-                    DataRow['options'].format =  "DD/MM/YYYY";
-                    return DataRow['options'];
-                    break;
-                default:
-                    return valueOptions = DataRow['options'];
-                    break;
-            }
+        ui: {
+            'filtersList': 'select#filtersList',
+            'filters': 'div#filters',
+            'total': 'span#total'
         },
-      });
 
-      this.filters = new myFilter({
-        com: this.com,
-        filterContainer: this.ui.filters,
-        custom: true,
-      });
-    },
+        events: {
+            'change select#filtersList': 'addFilter',
+            'click button#filter': 'filter',
+        },
 
-    getFieldsListForSelectedView: function() {
-      var _this = this;
-      var viewUrl = 'export/projects/'+this.model.get('project_id')+'/observations/getFilters?protocolType='+this.model.get('protocolType_id');
-      var jqxhr = $.ajax({
-        url: viewUrl,
-        context: this,
-        dataType: 'json'
-      }).done(function(data) {
-        this.fieldsList = {};
-        var exportFieldsList = [];
-        _this.ui.filtersList.append('<option value="choose">Add a filter</option>');
-        for (var i = 0; i < data.length; i++) {
-          var optionItem = '<option type="' + data[i].type + '" value="'+data[i].name+'">' + data[i].label + '</option>';
-          _this.ui.filtersList.append(optionItem);
-          exportFieldsList.push(data[i].name);
-          this.fieldsList[data[i].name] = data[i];
-        }
-        $('#filter-btn').removeClass('masqued');
-      }).fail(function(msg) {
-			});
-    },
+        name: '<span class="export-step2"></span>',
 
-    displayMap: function(geoJson) {
-      this.map = new NsMap({
-        cluster: true,
-        com: this.com,
-        element: 'map',
-        zoom: 2,
-        url: 'export/projects/'+this.model.get('project_id')+'/observations?geo=true&protocolType='+this.model.get('protocolType_id'),
-        totalElt: this.ui.total,
-      });
-    },
+        initialize: function(options) {
+            this.com = new Com();
+            this.viewId = options.model.get('viewId');
+            this.model.set('filters', []);
+        },
 
-    filter: function() {
-      this.model.set('filters', this.filters.update());
-    },
+        onShow: function() {
+            this.getFieldsListForSelectedView();
+            this.displayFilters();
+            this.displayMap();
+            this.$el.i18n();
+            var stepName = i18n.translate('export.step2-label');
+            $('.export-step2').html(stepName);
+        },
 
-    validate: function() {
-      return this.model;
-    },
+        addFilter: function() {
+            var option = this.ui.filtersList.find('option:selected');
 
-    check: function() {
-      return true;
-    },
-  });
+            if (option.val() == 'choose')
+                return false;
+
+            var filterName = option.val();
+            var filterLabel = option.text();
+            var type = option.attr('type');
+            var options = this.fieldsList[filterName].options;
+
+            var filter = [{
+                editable: true,
+                fieldClass: [''],
+                title: filterLabel,
+                name: filterName,
+                options: options,
+                type: type,
+                validators: []
+            }];
+            this.filters.addFilter(filter);
+
+            this.ui.filtersList.val('choose');
+        },
+
+        displayFilters: function() {
+            var myFilter = NsFilter.extend({
+                getValueOptions: function(DataRow) {
+                    var valueOptions;
+                    switch (DataRow['type']) {
+                        case "Select":
+                            return DataRow['options'];
+                            break;
+                        case 'Checkboxes':
+                            return DataRow['options'];
+                            break;
+                        case 'AutocompTreeEditor':
+                            return DataRow['options'];
+                            break;
+                        case 'AutocompleteEditor':
+                            return DataRow['options'];
+                            break;
+                        case "DATETIME":
+                            return valueOptions = [{
+                                dateFormat: 'd/m/yyyy',
+                                defaultValue: new Date().getDate() + "/" + (new Date().getMonth() + 1) + "/" + new Date().getFullYear()
+                            }];
+                            break;
+                        case "DateTimePickerEditor":
+                            if (DataRow['options']) {
+                                DataRow['options'].format = "DD/MM/YYYY";
+                                return DataRow['options'];
+                                break;
+                            } else {
+                                return null;
+                                break;
+                            }
+
+                        default:
+                            return valueOptions = DataRow['options'];
+                            break;
+                    }
+                },
+            });
+
+            this.filters = new myFilter({
+                com: this.com,
+                filterContainer: this.ui.filters,
+                custom: true,
+            });
+        },
+
+        getFieldsListForSelectedView: function() {
+            var _this = this;
+            var viewUrl = 'export/projects/' + this.model.get('project_id') + '/observations/getFilters?protocolType=' + this.model.get('protocolType_id');
+            var jqxhr = $.ajax({
+                url: viewUrl,
+                context: this,
+                dataType: 'json'
+            }).done(function(data) {
+                this.fieldsList = {};
+                var exportFieldsList = [];
+                _this.ui.filtersList.append('<option value="choose">' + i18n.t('filter.addFilter') + '</option>');
+                for (var i = 0; i < data.length; i++) {
+                    var optionItem = '<option type="' + data[i].type + '" value="' + data[i].name + '">' + data[i].label + '</option>';
+                    _this.ui.filtersList.append(optionItem);
+                    exportFieldsList.push(data[i].name);
+                    this.fieldsList[data[i].name] = data[i];
+                }
+                $('#filter-btn').removeClass('masqued');
+            }).fail(function(msg) {});
+        },
+
+        displayMap: function(geoJson) {
+            this.map = new NsMap({
+                cluster: true,
+                com: this.com,
+                element: 'map',
+                zoom: 2,
+                url: 'export/projects/' + this.model.get('project_id') + '/observations?geo=true&protocolType=' + this.model.get('protocolType_id'),
+                totalElt: this.ui.total,
+            });
+        },
+
+        filter: function() {
+            this.model.set('filters', this.filters.update());
+        },
+
+        validate: function() {
+            return this.model;
+        },
+
+        check: function() {
+            return true;
+        },
+    });
 });
