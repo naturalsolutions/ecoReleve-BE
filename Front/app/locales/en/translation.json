@@ -39,7 +39,8 @@
         "logout": "logout",
         "back": "Back",
         "select-all": "Select all",
-        "unselect-all": "Unselect all"
+        "unselect-all": "Unselect all",
+        "create": "create"
 
     },
     "shared": {
@@ -61,6 +62,8 @@
         "gridPreview": "Preview (20 first rows)",
         "rowsPerPage": "rows per page",
         "individuals": "individuals",
+        "addProtocol": "Add a protocol",
+        "newLabel": "Creation of a new",
         "option": {
             "is": "Is",
             "isNot": "Is not",

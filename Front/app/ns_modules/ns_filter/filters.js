@@ -343,10 +343,8 @@
                     options.splice(0, 0, { label: 'All', val: -1, checked: true });
                     template = tplcheck;
                     editorClass = editorClass.split('form-control').join('');
-                } else if (type == 'Select') {
-
+                } else if ((type == 'Select') && (dataRow['options'])) {
                     dataRow['options'].splice(0, 0, { label: ' ', val: -1 });
-
                 }
             }
 
