@@ -9,53 +9,27 @@ import io
 from datetime import datetime
 from ..Views import CustomView
 from ..controllers.security import RootCore
-from ..GenericObjets.SearchEngine import DynamicPropertiesQueryEngine, QueryEngine
+from ..GenericObjets.SearchEngine import Query_engine
 from traceback import print_exc
 
 ProcoleType = Observation.TypeClass
 
 # class ObservationCollection(DynamicPropertiesQueryEngine):
 #     pass
-    
-class ObservationCollection(DynamicPropertiesQueryEngine):
 
-    def __init__(self, session, object_type=None, from_history=None):
-        DynamicPropertiesQueryEngine.__init__(self, session=session, model=Observation, object_type=object_type, from_history=from_history)
+@Query_engine(Observation)
+class ObservationCollection():
 
-    def _select_from(self):
-        table_join = DynamicPropertiesQueryEngine._select_from(self)
-        table_join = join(table_join, Station, Station.ID == Observation.FK_Station)
-
-        # station_columns = [
-        #     Station.Name.label('Station_Name'),
-        #     Station.LAT.label('Station_Latitude'),
-        #     Station.LON.label('Station_Longitude'),
-        #     Station.StationDate.label('Station_Date')
-        # ]
-        
+     def extend_from(self, _from):
         station_columns = [
             Station.Name,
             Station.LAT,
             Station.LON,
             Station.StationDate
-        ]
+            ]
 
         self.selectable.extend(station_columns)
-        return table_join
-    def init_count_statement(self):
-        '''
-        override DynamicPropertiesQueryEngine.init_count_statement
-        '''
-        table_join = join(self.model, Station, Station.ID == Observation.FK_Station)
-        query = select([func.count()]).select_from(table_join)
-        return query
-
-    def get_column_by_name(self, column_name):
-        try :
-            column = DynamicPropertiesQueryEngine.get_column_by_name(self, column_name)
-        except:
-            column = getattr(Station, column_name, None)
-        return column
+        return _from
 
 
 class CustomExportView(CustomView):
@@ -144,7 +118,7 @@ class ExportObservationProjectView(CustomExportView):
         params = self.request.params.mixed()
         if 'criteria' in params:
             filters.extend(json.loads(params['criteria']))
-
+        print(selectable)
         query = self.CollectionEngine.build_query(filters=filters, selectable=selectable)
         return self.session.execute(query).fetchall()
 
@@ -206,7 +180,8 @@ class ExportObservationProjectView(CustomExportView):
 
         station_fields = self.session.query(ModuleForms
                                     ).filter(ModuleForms.Module_ID == self.getConf('StationForm').ID
-                                    ).filter(or_(ModuleForms.TypeObj == self.type_obj, ModuleForms.TypeObj == None)
+                                    ).filter(or_(ModuleForms.TypeObj == 1, ModuleForms.TypeObj == None)
+                                    # ).filter(ModuleForms.TypeObj.in_(['1', None])
                                     ).filter(~ModuleForms.Name.in_(['ID', 'FK_Project'])
                                     ).order_by(ModuleForms.FormOrder).all()
 
@@ -234,6 +209,8 @@ class ExportObservationProjectView(CustomExportView):
         all_fields = self.getForm()
         filters = []
         for field in all_fields:
+            print(field.Name)
+            
             filters.append(self.GenerateFilter(field))
 
         return filters
