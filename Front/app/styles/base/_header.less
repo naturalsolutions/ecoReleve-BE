@@ -171,10 +171,10 @@ height: 2.4em;
 	// padding: 15px;
 	}
 	&:hover {
-	  background-color: darken(@select-background, 2);
+	  background-color: lighten(@select-background, 10);
 	}
 	&:active, &.active {
-	  background-color: darken(@select-background, 5);
+	  background-color: lighten(@select-background, 10);
 	  &:after {
 		top: 9px;
 		border-color: transparent transparent @select-color transparent;
@@ -184,6 +184,7 @@ height: 2.4em;
   
   .select-options {
 	display: none; 
+	overflow-y: auto;
 	position: absolute;
 	top: 100%;
 	right: 0;
@@ -192,19 +193,29 @@ height: 2.4em;
 	margin: 0;
 	padding: 0;
 	list-style: none;
-	background-color: darken(@select-background, 5);
-	li {
+	background-color: @select-background;
+	max-height: 350px;
+	li, input {
 	  margin: 0;
 	  padding: 12px 0;
 	  text-indent: 15px;
 	  border-top: 1px solid darken(@select-background, 10);
 	  transition : all 0.15s ease-in;
 	  &:hover {
-		color: @select-background;
-		background: @select-color;
+		// color: @select-background;
+		background: lighten(@select-background, 10); 
+
 	  }
 	  &[rel="hide"] {
 		display: none;
 	  }
 	}
-  }
+	}
+	
+	.select2-theme{
+		background-color: @select-background;
+		padding-top: 15px;
+		padding-bottom: 15px;
+		max-height: 50px;
+		
+	}
