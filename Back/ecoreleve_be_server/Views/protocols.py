@@ -21,6 +21,9 @@ class ObservationView(DynamicObjectView):
 
     model = Observation
 
+    def __init__(self, ref, parent):
+        DynamicObjectView.__init__(self, ref, parent)
+        
     def __getitem__(self, ref):
         if ref in self.actions:
             self.retrieve = self.actions.get(ref)
@@ -81,13 +84,15 @@ class ObservationsView(DynamicObjectCollectionView):
             (Allow, 'group:superUser', ALL_PERMISSIONS),
             (Allow, 'group:user', ALL_PERMISSIONS)
         ]
+        
 
     def __getitem__(self, ref):
         self.create = self.POSTactions.get(ref)
         return DynamicObjectCollectionView.__getitem__(self, ref)
 
     def retrieve(self):
-        if self.parent.__class__.__name__ == 'StationView':
+        # if self.parent.__class__.__name__ == 'StationView':
+        if True:
             if self.typeObj:
                 return self.getObservationsWithType()
             else:

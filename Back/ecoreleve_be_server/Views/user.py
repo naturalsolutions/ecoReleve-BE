@@ -42,7 +42,7 @@ def current_user(request, user_id=None):
             'lng': user_infos['userlanguage'],
             }
 
-    if 'project' not in user_infos: # and role == 'client':
+    if 'project' not in user_infos and role == 'client':
         claims = user_infos
 
         query = select([Project_User.FK_Project]).where(Project_User.FK_User == request.authenticated_userid['iss'])
