@@ -1,3 +1,12 @@
+
+@background: #449d44;
+@select-color: #fff;
+@select-background: #449d44;
+@select-width: 200px;
+// @select-height: 40px; 
+
+
+
 header{
 	background: @header-bg;
 	z-index: 10;
@@ -17,6 +26,20 @@ header{
 		margin: 0px;
 		border: none;
 	}
+
+	// .nav > select{
+	// 	cursor: pointer;
+	// 	display: inline-block;
+	// 	position: relative;
+	// 	font-size: 16px;
+	// 	background-color: #449d44;
+	// 	max-height: 50px;
+	// 	padding-top: 15px;
+	// 	padding-bottom: 15px;
+	// 	border: none;
+	// 	// width: $select-width;
+	// 	// height: $select-height;
+	// }
 	.nav > li > a{
 		color: white;
 		&:focus, &:hover{
@@ -105,3 +128,83 @@ height: 2.4em;
 		}
 }
 }
+
+.select-hidden {
+	display: none;
+	visibility: hidden;
+	padding-right: 10px;
+  }
+
+  .select {
+	cursor: pointer;
+	display: inline-block;
+	position: relative;
+	font-size: 16px;
+	color: @select-color;
+	width: @select-width;
+	// height: @select-height;
+  }
+  .select-styled {
+	// position: absolute; 
+	// top: 0;
+	// right: 0;
+	// bottom: 0;
+	// left: 0;
+	background-color: @select-background;
+	padding: 15px 15px;
+	// text-align: center;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	padding-left: 40px;
+	// margin-left: 5px;
+	max-height: 50px;
+	transition: all 0.2s ease-in;
+	&:after {
+	  content:"";
+	  width: 0;
+	  height: 0;
+	  border: 7px solid transparent;
+	  border-color: @select-color transparent transparent transparent;
+	  position: absolute;
+	  top: 25px;
+	  left: 10px;
+	// padding: 15px;
+	}
+	&:hover {
+	  background-color: darken(@select-background, 2);
+	}
+	&:active, &.active {
+	  background-color: darken(@select-background, 5);
+	  &:after {
+		top: 9px;
+		border-color: transparent transparent @select-color transparent;
+	  }
+	}
+  }
+  
+  .select-options {
+	display: none; 
+	position: absolute;
+	top: 100%;
+	right: 0;
+	left: 0;
+	z-index: 999;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	background-color: darken(@select-background, 5);
+	li {
+	  margin: 0;
+	  padding: 12px 0;
+	  text-indent: 15px;
+	  border-top: 1px solid darken(@select-background, 10);
+	  transition : all 0.15s ease-in;
+	  &:hover {
+		color: @select-background;
+		background: @select-color;
+	  }
+	  &[rel="hide"] {
+		display: none;
+	  }
+	}
+  }

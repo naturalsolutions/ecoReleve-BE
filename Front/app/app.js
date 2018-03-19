@@ -118,6 +118,7 @@ function( Marionette, LytRootView, Router, Controller,Swal,config, $, Backbone) 
     $('#header-loader').addClass('hidden');
   };
 
+  window.curent_project_url = '';
   $.xhrPool = {};
 
   $.xhrPool.calls = []; // array of uncompleted requests
@@ -139,7 +140,11 @@ function( Marionette, LytRootView, Router, Controller,Swal,config, $, Backbone) 
       if(options.url.indexOf('http://') !== -1) {
         options.url = options.url;
       } else {
-        options.url = config.coreUrl + options.url;
+        if(options.url.indexOf('stations') !== -1){
+          options.url = config.coreUrl + window.curent_project_url+ options.url;
+        } else {
+          options.url = config.coreUrl + window.curent_project_url+ options.url;
+        }
       }
       if(options.type === 'GET' || options.url.indexOf('http://') !==-1 ){ //should be a GET!! (thesaurus calls)
         $.xhrPool.calls.push(jqxhr);
