@@ -22,7 +22,7 @@ class ObservationCollection():
 
      def extend_from(self, _from):
         station_columns = [
-            Station.Name,
+            # Station.Name,
             Station.LAT,
             Station.LON,
             Station.StationDate
@@ -92,13 +92,14 @@ class ExportObservationProjectView(CustomExportView):
                 if geoJson_properties != None :
                     for col in geoJson_properties :
                         properties[col] = row[col]
-                geoJson.append({'type':'Feature',
-                                'properties':properties,
-                                'geometry':
-                                    {'type':'Point',
-                                     'coordinates':[row['LAT'],row['LON']]
-                                    }
-                                })
+                if row['LAT'] and row['LON']:
+                    geoJson.append({'type':'Feature',
+                                    'properties':properties,
+                                    'geometry':
+                                        {'type':'Point',
+                                        'coordinates':[row['LAT'],row['LON']]
+                                        }
+                                    })
         else :
             exceed = True
         return {'type':'FeatureCollection', 'features': geoJson,'exceed': exceed, 'total':countResult}
@@ -106,7 +107,7 @@ class ExportObservationProjectView(CustomExportView):
     def count_(self):
         data = self.request.params.mixed()
         filters = [
-            {'Column':'FK_Project','Operator':'=', 'Value':self.parent.id_},
+            {'Column':'Station@FK_Project','Operator':'=', 'Value':self.parent.id_},
         ]
         if 'criteria' in data:
             filters.extend(json.loads(data['criteria']))
@@ -116,12 +117,12 @@ class ExportObservationProjectView(CustomExportView):
 
     def search(self, selectable=[]):
         filters = [
-            {'Column':'FK_Project','Operator':'=', 'Value':self.parent.id_},
+            {'Column':'Station@FK_Project','Operator':'=', 'Value':self.parent.id_},
         ]
         params = self.request.params.mixed()
         if 'criteria' in params:
             filters.extend(json.loads(params['criteria']))
-        print(selectable)
+
         query = self.CollectionEngine.build_query(filters=filters, selectable=selectable)
         return self.session.execute(query).fetchall()
 
@@ -212,17 +213,17 @@ class ExportObservationProjectView(CustomExportView):
         all_fields = self.getForm()
         filters = []
         for field in all_fields:
-            print(field.Name)
-            
             filters.append(self.GenerateFilter(field))
 
         return filters
 
-
     def GenerateFilter(self, field):
         ''' return filter field to build Filter '''
+        prefix = ''
+        if field.Module_ID == 2:
+            prefix = 'Station@'
         filter_ = {
-            'name': field.Name,
+            'name': prefix+field.Name,
             'type': field.InputType,
             'label': field.Label,
             'title': field.Label,
@@ -253,10 +254,31 @@ class ExportObservationProjectView(CustomExportView):
 
         return filter_
 
+    # def export_csv(self, value):
+    #     csvRender = CSVRenderer()
+    #     csv = csvRender(value, {'request': self.request})
+    #     return Response(csv)
+
     def export_csv(self, value):
-        csvRender = CSVRenderer()
-        csv = csvRender(value, {'request': self.request})
-        return Response(csv)
+        # df = pd.DataFrame(data=value['rows'], columns=value['header'])
+        df = pd.DataFrame.from_records(value['rows'],
+                                       columns=value['rows'][0].keys(),
+                                       coerce_float=True)
+
+        # fout = io.BytesIO()
+        # writer = pd.ExcelWriter(fout)
+        # df.to_excel(writer, sheet_name='Sheet1', index=False)
+        # writer.save()
+        # file = fout.getvalue()
+        fout = io.StringIO()
+        file = df.to_csv(sep=';',index=False)
+        dt = datetime.now().strftime('%d-%m-%Y')
+        return Response(
+            file,
+            content_disposition="attachment; filename="
+            + self.filename + dt + ".csv",
+            content_type='text/csv')
+    
 
     def export_pdf(self, value):
         pdfRender = PDFrenderer()
@@ -269,7 +291,10 @@ class ExportObservationProjectView(CustomExportView):
         return Response(gpx)
 
     def export_excel(self, value):
-        df = pd.DataFrame(data=value['rows'], columns=value['header'])
+        # df = pd.DataFrame(data=value['rows'], columns=value['header'])
+        df = pd.DataFrame.from_records(value['rows'],
+                                       columns=value['rows'][0].keys(),
+                                       coerce_float=True)
 
         fout = io.BytesIO()
         writer = pd.ExcelWriter(fout)
