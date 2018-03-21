@@ -97,4 +97,4 @@
 #         return result
 
 
-# RootCore.listChildren.append(('importHistory', ImportHistoryView))
+# RootCore.children.append(('importHistory', ImportHistoryView))

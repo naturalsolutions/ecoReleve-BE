@@ -43,6 +43,7 @@ class ProjectStationsView(StationsView):
 class ProjectView(DynamicObjectView):
 
     model = Project
+    children = [('stations', ProjectStationsView)]
 
     def __init__(self, ref, parent):
         DynamicObjectView.__init__(self, ref, parent)
@@ -60,6 +61,8 @@ class ProjectsView(DynamicObjectCollectionView):
 
     Collection = ProjectList
     item = ProjectView
+    children = [('{int}', ProjectView)]
+    
     moduleFormName = 'ProjectForm'
     moduleGridName = 'ProjectGrid'
 
@@ -68,4 +71,4 @@ class ProjectsView(DynamicObjectCollectionView):
         self.__acl__ = context_permissions[ref]
 
 
-RootCore.listChildren.append(('projects', ProjectsView))
+RootCore.children.append(('projects', ProjectsView))

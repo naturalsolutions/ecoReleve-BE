@@ -16,11 +16,12 @@ from ..controllers.security import RootCore
 class ClientView(DynamicObjectView):
 
     model = Client
+    children = [('projects', ProjectsView)]
 
     def __init__(self, ref, parent):
         DynamicObjectView.__init__(self, ref, parent)
         self.__acl__ = context_permissions['clients']
-        self.add_child('projects', ProjectsView)
+        # self.add_child('projects', ProjectsView)
         # self.actions = {'projects': self.getStations}
 
     def __getitem__(self, ref):
@@ -34,6 +35,8 @@ class ClientsView(DynamicObjectCollectionView):
 
     Collection = ClientList
     item = ClientView
+    children = [('{int}', ClientView)]
+    
     moduleFormName = 'ClientForm'
     moduleGridName = 'ClientGrid'
 
@@ -42,4 +45,4 @@ class ClientsView(DynamicObjectCollectionView):
         self.__acl__ = context_permissions[ref]
 
 
-RootCore.listChildren.append(('clients', ClientsView))
+RootCore.children.append(('clients', ClientsView))

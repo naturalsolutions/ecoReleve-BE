@@ -287,5 +287,5 @@ class IndividualLocationsView(SecurityRoot):
         return result
 
 
-RootCore.listChildren.append(('individuals', IndividualsView))
-RootCore.listChildren.append(('individualsValues', IndividualValuesView))
+RootCore.children.append(('individuals', IndividualsView))
+RootCore.children.append(('individualsValues', IndividualValuesView))

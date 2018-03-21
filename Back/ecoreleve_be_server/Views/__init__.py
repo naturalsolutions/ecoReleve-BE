@@ -45,7 +45,12 @@ class CustomView(SecurityRoot):
         if ref in self.actions:
             self.retrieve = self.actions.get(ref)
             return self
-        return self.item(ref, self)
+
+        elif ref.isdigit():
+            next_resource = self.get('{int}')
+            return next_resource(ref, self)
+        else:
+            return super().__getitem__(ref)
 
     @property
     def actions(self):
@@ -55,9 +60,9 @@ class CustomView(SecurityRoot):
     def actions(self, dictActions):
         self.__actions__.update(dictActions)
 
-    @property
-    def item(self):
-        raise Exception('method has to be overriden')
+    # @property
+    # def item(self):
+    #     raise Exception('method has to be overriden')
 
     def retrieve(self):
         raise Exception('method has to be overriden')
@@ -247,16 +252,16 @@ class DynamicObjectCollectionView(CustomView):
                             'count': self.count_,
                             }
 
-    def __getitem__(self, ref):
-        ''' return the next item in the traversal tree if ref is an id
-        else override the retrieve functions by the action name '''
-        if self.integers(ref):
-            return self.item(ref, self)
-        elif ref == 'autocomplete':
-            return AutocompleteView(ref, self)
-        else:
-            self.retrieve = self.actions.get(ref)
-            return self
+    # def __getitem__(self, ref):
+    #     ''' return the next item in the traversal tree if ref is an id
+    #     else override the retrieve functions by the action name '''
+    #     if self.integers(ref):
+    #         return self.item(ref, self)
+    #     elif ref == 'autocomplete':
+    #         return AutocompleteView(ref, self)
+    #     else:
+    #         self.retrieve = self.actions.get(ref)
+    #         return self
 
     @property
     def moduleFormName(self):
@@ -280,8 +285,6 @@ class DynamicObjectCollectionView(CustomView):
         data = {}
         for items, value in self.request.json_body.items():
             data[items] = value
-        # self.setType(data[self.objectDB.getTypeObjectFKName()])
-        # self.objectDB.init_on_load()
         self.objectDB.values = data
         self.session.add(self.objectDB)
         self.session.flush()
@@ -407,7 +410,6 @@ class DynamicObjectCollectionView(CustomView):
         if not type_:
             type_ = self.typeObj
 
-        # gridCols = self.getConfigJSON(moduleName, type_)
         gridCols = None
         if not gridCols:
             gridCols = self.objectDB.getGrid(
@@ -424,7 +426,6 @@ class DynamicObjectCollectionView(CustomView):
         if not type_:
             type_ = self.typeObj
 
-        # filters = self.getConfigJSON(moduleName+'Filter', type_)
         filters = None
         if not filters:
             filtersList = self.objectDB.getFilters(
@@ -444,9 +445,6 @@ class DynamicObjectCollectionView(CustomView):
             self.configJSON[moduleName] = {}
         self.configJSON[moduleName][typeObj] = configObject
 
-    # def setType(self, objectType=1):
-    #     setattr(self.objectDB, self.objectDB.getTypeObjectFKName(), objectType)
-
     def getType(self):
         table = self.objectDB.TypeClass.__table__
         query = select([table.c['ID'].label('val'),
@@ -456,7 +454,6 @@ class DynamicObjectCollectionView(CustomView):
         return response
 
     def export(self):
-
         dataResult = self.search(paging=False, noCount=True)
         df = pd.DataFrame.from_records(dataResult,
                                        columns=dataResult[0].keys(),
@@ -475,7 +472,8 @@ class DynamicObjectCollectionView(CustomView):
             content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
 
-class RESTView(object):
+
+class CRUDView(object):
     def __init__(self, context, request):
         self.request = request
         self.context = context

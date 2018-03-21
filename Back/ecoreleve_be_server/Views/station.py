@@ -18,33 +18,36 @@ from ..utils.parseValue import parser
 from ..Views import DynamicObjectView, DynamicObjectCollectionView
 from ..controllers.security import RootCore
 from ..controllers.security import context_permissions
+from pyramid.security import NO_PERMISSION_REQUIRED
 
 
 class StationView(DynamicObjectView):
 
+    children = [('observations', ObservationsView)]
     model = StationDB
 
     def __init__(self, ref, parent):
+        print( 'init stations ID : ',ref)
         DynamicObjectView.__init__(self, ref, parent)
-        self.add_child('observations', ObservationsView)
 
-    def __getitem__(self, ref):
-        if ref in self.actions:
-            self.retrieve = self.actions.get(ref)
-            return self
-        return self.get(ref)
+    # def __getitem__(self, ref):
+    #     if ref in self.actions:
+    #         self.retrieve = self.actions.get(ref)
+    #         return self
+    #     return self.get(ref)
 
-    def getObs(self, ref):
-        return ObservationsView(ref, self)
+    # def getObs(self, ref):
+    #     return ObservationsView(ref, self)
 
 
 class StationsView(DynamicObjectCollectionView):
 
     Collection = StationList
     item = StationView
+    children = [('{int}', StationView)]
     moduleFormName = 'StationForm'
     moduleGridName = 'StationGrid'
-
+    
     def __init__(self, ref, parent):
         DynamicObjectCollectionView.__init__(self, ref, parent)
         self.actions = {'updateSiteLocation': self.updateMonitoredSite,
@@ -301,5 +304,4 @@ class StationsView(DynamicObjectCollectionView):
                     nbExc, 'new': len(data_to_insert) - nbExc}
         return response
 
-
-RootCore.listChildren.append(('stations', StationsView))
+RootCore.children.append(('stations', StationsView))

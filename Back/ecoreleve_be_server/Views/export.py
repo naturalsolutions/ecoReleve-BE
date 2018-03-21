@@ -34,6 +34,8 @@ class ObservationCollection():
 
 class CustomExportView(CustomView):
 
+    chidlren = []
+
     def __init__(self, ref, parent):
         CustomView.__init__(self, ref, parent)
         try:
@@ -47,6 +49,7 @@ class ExportObservationProjectView(CustomExportView):
 
     item = None
     moduleFormName = 'ObservationForm'
+    chidlren = []
 
     def __init__(self, ref, parent):
         CustomExportView.__init__(self, ref, parent)
@@ -242,17 +245,6 @@ class ExportObservationProjectView(CustomExportView):
             filter_['options'] = [
                 {'label': 'True', 'val': 1}, {'label': 'False', 'val': 0}]
 
-        # if (field.FilterType == 'AutocompTreeEditor'
-        #         and field.Options is not None and field.Options != ''):
-        #     filter_['options'] = {
-        #         'startId': field.Options,
-        #         'wsUrl': dbConfig['wsThesaurus']['wsUrl'],
-        #         'lng': threadlocal.get_current_request().authenticated_userid['userlanguage'],
-        #         'displayValueName': 'valueTranslated'}
-        #     filter_['options']['startId'] = field.Options
-        #     filter_['options']['ValidationRealTime'] = False
-        #     filter_['options']['iconFont'] = 'reneco reneco-THE-thesaurus'
-
         if (field.InputType == 'TaxRefEditor'
                 and field.Options is not None and field.Options != ''):
             option = json.loads(field.Options)
@@ -260,29 +252,6 @@ class ExportObservationProjectView(CustomExportView):
             filter_['options']['iconFont'] = 'reneco reneco-autocomplete'
 
         return filter_
-
-
-    # def getFile(self):
-    #     try:
-    #         criteria = json.loads(self.request.params.mixed()['criteria'])
-    #         fileType = criteria['fileType']
-    #         # columns selection
-    #         columns = criteria['columns']
-
-    #         queryColumns = self.formatColumns(fileType, columns)
-
-    #         query = self.generator.getFullQuery(criteria['filters'], columnsList=queryColumns)
-    #         rows = self.session.execute(query).fetchall()
-
-    #         filename = self.viewName + '.' + fileType
-    #         self.request.response.content_disposition = 'attachment;filename=' + filename
-    #         value = {'header': columns, 'rows': rows}
-
-    #         io_export = self.actions[fileType](value)
-    #         return io_export
-
-    #     except:
-    #         raise
 
     def export_csv(self, value):
         csvRender = CSVRenderer()
@@ -320,7 +289,8 @@ class ExportObservationProjectView(CustomExportView):
 class ExportProtocoleTypeView(CustomExportView):
 
     item = ExportObservationProjectView
-
+    children = [('{int}', ExportObservationProjectView)]
+    
     def __init__(self, ref, parent):
         CustomExportView.__init__(self, ref, parent)
         self.actions = {'getFields': self.getFields,
@@ -377,11 +347,10 @@ class ExportProtocoleTypeView(CustomExportView):
 class ExportProjectView(CustomExportView):
 
     item = None
-
+    children = [('protocols', ExportProtocoleTypeView), ('observations', ExportObservationProjectView)]
+    
     def __init__(self, ref, parent):
         CustomExportView.__init__(self, ref, parent)
-        self.add_child('protocols', ExportProtocoleTypeView)
-        self.add_child('observations', ExportObservationProjectView)
         self.id_ = ref
 
     def retrieve(self):
@@ -389,13 +358,12 @@ class ExportProjectView(CustomExportView):
         result = self.session.execute(query).scalar()
         return {'nb stations': result}
 
-    def __getitem__(self, item):
-        return self.get(item)
-
 
 class ExportCollectionProjectView(CustomExportView):
 
     item = ExportProjectView
+    children = [('{int}', ExportProjectView)]
+    
     def retrieve(self):
         query = select([Project]).order_by(Project.Name.asc())
         result = [dict(row) for row in self.session.execute(query).fetchall()]
@@ -404,17 +372,13 @@ class ExportCollectionProjectView(CustomExportView):
 class ExportCoreView(CustomExportView):
 
     item = None
-
+    children = [('projects', ExportCollectionProjectView)]
     def __init__(self, ref, parent):
         CustomExportView.__init__(self, ref, parent)
-        self.add_child('projects', ExportCollectionProjectView)
-
-    def __getitem__(self, item):
-        return self.get(item)
 
     def retrieve(self):
         return {'next items': 'views'
                 }
 
 
-RootCore.listChildren.append(('export', ExportCoreView))
+RootCore.children.append(('export', ExportCoreView))

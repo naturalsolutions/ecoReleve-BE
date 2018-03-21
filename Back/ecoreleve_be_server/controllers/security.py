@@ -15,17 +15,30 @@ COOKIE_NAME = AppConfig['app:main']['cookieName']
 
 class Resource(dict):
 
-    def __init__(self, ref, parent):
+    children = []
+
+    def __init__(self, ref, parent=None):
         self.__name__ = ref
         self.__parent__ = parent
+        self.add_children()
 
     def __repr__(self):
         # use standard object representation (not dict's)
         return object.__repr__(self)
 
+    def __getitem__(self, item):
+        next_resource = self.get(item, None)
+        if next_resource is not None:
+            return next_resource(item, self)
+        else:
+            return self
+
     def add_child(self, ref, klass):
-        resource = klass(ref=ref, parent=self)
-        self[ref] = resource
+        self[ref] = klass
+
+    def add_children(self):
+        for ref, klass in self.children:
+            self.add_child(ref, klass)
 
     def integers(self, ref):
         try:
@@ -37,7 +50,26 @@ class Resource(dict):
         return True
 
 
+class RootCore(Resource):
+
+    children = []
+    __acl__ = [
+        (Allow, Authenticated, 'read'),
+        (Allow, Authenticated, 'all'),
+        (Allow, 'group:admin', 'admin'),
+        (Allow, 'group:admin', 'superUser'),
+        (Allow, 'group:admin', 'all'),
+        (Allow, 'group:superUser', 'superUser'),
+        (Allow, 'group:superUser', 'all')
+        ]
+    def retrieve(self):
+        return {'next items': str(self)}
+
+
 class SecurityRoot(Resource):
+
+    children = [('ecoReleve-Core', RootCore)]
+
     __acl__ = [
         (Allow, Authenticated, 'read'),
         (Allow, Authenticated, 'all'),
@@ -52,28 +84,6 @@ class SecurityRoot(Resource):
         Resource.__init__(self, ref='', parent=None)
         self.request = request
 
-    def __getitem__(self, item):
-        if item == 'ecoReleve-Core':
-            return RootCore(item, self)
-
-
-class RootCore(SecurityRoot):
-
-    listChildren = []
-
-    def __init__(self, ref, parent):
-        Resource.__init__(self, ref, parent)
-        self.add_children()
-
-    def add_children(self):
-        for ref, klass in self.listChildren:
-            self.add_child(ref, klass)
-
-    def __getitem__(self, item):
-        return self.get(item)
-
-    def retrieve(self):
-        return {'next items': self}
 
 
 class myJWTAuthenticationPolicy(JWTAuthenticationPolicy):
