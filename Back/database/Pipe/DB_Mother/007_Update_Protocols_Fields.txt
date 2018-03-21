@@ -1,0 +1,93 @@
+/* champ type_milieu */
+
+UPDATE public."ModuleForms"
+    SET  "Options" = E'["Autre","Cavité/Grotte","Cours d\'eau permanent","Cours d\'eau temporaire","Culture extensive","Culture intensive","Etang/Mare/Marais","Forêt de conifères","Forêt de feuillus","Forêt mixte","Friche/Lande","Haie","Maquis/Garrigue","Mer/Océan","Milieu bocager","Milieu rupestre","Milieu urbain/Bâtis","Pelouse naturelle","Plage/Vasière/Lagune","Plantation d\'arbres","Plaine céréalière","Prairie/Pâture","Ripisylve","Rivière/Canal","Roselière/Mégaphorbiaie","Tourbière","Verger/Vignoble"]'
+    WHERE   "Name"  LIKE 'type_milieu';
+
+
+/* mammo */
+
+UPDATE public."ModuleForms"
+    SET  "Options" = '["ADNe","Affût","Analyse de pelotes de réjection","Comptage au phare","IKA","Observation fortuite","Piège non vulnérant","Piège photographique","Recherche à vue ou écoute"]'
+    WHERE   "Name"  LIKE 'type_inventaire'
+    AND "TypeObj" = 4 ;
+
+/* herpeto */
+
+UPDATE public."ModuleForms"
+    SET  "Options" = '["Accouplement/amplexus","Autre","Déplacement","Hivernage","Mort","Mue","Ponte","Repos/basking","Têtard/larve"]'
+    WHERE   "Name"  LIKE 'comportement'
+    AND "TypeObj" = 3 ;
+
+/* ajout champ "stade" pour le proto plantes  */
+
+INSERT INTO public."ObservationDynProp" 
+("Name", "TypeProp") 
+
+VALUES ('stade','String') ; 
+
+INSERT INTO public."ModuleForms" 
+("Module_ID", "TypeObj","Name","Label","Required","FieldSizeEdit","FieldSizeDisplay","InputType","editorClass","FormRender", "FormOrder" , "Legend","Options") 
+VALUES 
+(1,6,'stade', 'Stade végétatif',0,6,6,'Select','form-control',7,24,'Facultatif','["végétatif","en fleur","en fruits","fané","mort sur pied"]' ) ; 
+
+
+/* nommage des labels */
+
+UPDATE public."ModuleForms"
+    SET  "Label" = 'Type de milieu'
+    WHERE   "Name" = 'type_milieu';
+
+UPDATE public."ModuleForms"
+    SET  "Label" = E'Type d\'inventaire'
+    WHERE   "Name" = 'type_inventaire';
+
+UPDATE public."ModuleForms"
+    SET  "Label" = 'Sexe'
+    WHERE   "Name" = 'sexe';
+
+UPDATE public."ModuleForms"
+    SET  "Label" = 'Reproduction'
+    WHERE   "Name" = 'reproduction';  
+
+ UPDATE public."ModuleForms"
+    SET  "Label" = 'Comportement'
+    WHERE   "Name" = 'comportement';     
+ 
+ UPDATE public."ModuleForms"
+    SET  "Label" = 'Effectif'
+    WHERE   "Name" = 'effectif'; 
+      
+ UPDATE public."ModuleForms"
+    SET  "Label" = 'Nombre de contacts'
+    WHERE   "Name" = 'nb_contact';    
+    
+     UPDATE public."ModuleForms"
+    SET  "Label" = 'Hauteur de détection'
+    WHERE   "Name" = 'hauteur_detection';    
+ 
+      UPDATE public."ModuleForms"
+    SET  "Label" = 'Hauteur de vol'
+    WHERE   "Name" = 'hauteur_vol';   
+    
+       UPDATE public."ModuleForms"
+    SET  "Label" = 'Code atlas'
+    WHERE   "Name" = 'code_atlas';  
+
+    UPDATE public."ModuleForms"
+    SET  "Label" = 'Nom'
+    WHERE
+    "Name" = 'Name' AND "Module_ID" = 2;
+
+  UPDATE public."ModuleForms"
+    SET  "Label" = 'Projet'
+    WHERE
+    "Name" = 'FK_Project';
+
+/* enlever sites monitorés et fieldworkers des filtres */
+ DELETE FROM public."ModuleGrids" WHERE "Name" LIKE 'FK_MonitoredSite' OR "Name" LIKE 'FK_MonitoredSiteName';
+
+ DELETE FROM public."ModuleGrids" WHERE "Name" = 'FK_FieldWorker';
+
+
+INSERT INTO [dbo].[TVersion] (TVer_FileName,TVer_Date,TVer_DbName) VALUES ('7_Update_Protocols_Fields',GETDATE(),(SELECT db_name()))

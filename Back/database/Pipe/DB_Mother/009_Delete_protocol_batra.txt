@@ -1,0 +1,26 @@
+/* delete config form  */
+
+DELETE FROM public."ModuleForms" WHERE "TypeObj" = 2;
+
+/* delete dynprop values */
+
+DELETE FROM public."ObservationDynPropValue" WHERE "FK_Observation" IN (
+    
+SELECT "ID" FROM public."Observation" WHERE "FK_ProtocoleType" = 2
+    
+)
+
+
+/* delete observations */
+DELETE FROM public."Observation" WHERE "FK_ProtocoleType" = 2;
+
+/* delete protocol */
+
+DELETE FROM public."ProtocoleType_ObservationDynProp" WHERE "FK_ProtocoleType" = 2;
+
+DELETE FROM public."ProtocoleType" WHERE "ID" = 2;
+
+
+
+
+INSERT INTO [dbo].[TVersion] (TVer_FileName,TVer_Date,TVer_DbName) VALUES ('9_Delete_Protocol_Batra',GETDATE(),(SELECT db_name()))

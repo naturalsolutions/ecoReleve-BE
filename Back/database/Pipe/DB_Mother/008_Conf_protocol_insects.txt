@@ -1,0 +1,31 @@
+/* new protocol insectes  */
+
+INSERT INTO public."ProtocoleType" 
+("Name", "Status" , "obsolete", "Label")
+VALUES
+('Insectes', 4 , false, 'Insectes');
+
+
+/* new dynpropb  */
+INSERT INTO public."ObservationDynProp"(
+	 "Name", "TypeProp")
+	VALUES ( 'plante_hote', 'String');
+
+
+/* form config  */
+
+INSERT INTO public."ModuleForms"(
+	"Module_ID", "TypeObj", "Name", "Label", "Required", "FieldSizeEdit", "FieldSizeDisplay", "InputType", "editorClass", "FormRender", "FormOrder", "Legend", "Options")
+	VALUES 
+(1, 7, 'type_inventaire', 'Type inventaire', 1, 6, 6, 'Select', 'form-control',7, 1, 'Obligatoire', '["A vue","ADNe","Biocénomètre","Filet/parapluie japonais","Nasse/piège aquatique","Observation fortuite","Troubleau"]'),
+(1, 7, 'taxon', 'Taxon', 1, 6, 6, 'TaxRefEditor', 'form-control',7, 2, 'Obligatoire', '{"type":"vernaculaire", "taxaList":"insecte"}'), 
+(1, 7, 'effectif', 'Effectif', 1, 6, 6, 'Number', 'form-control',7, 3, 'Obligatoire', ''),
+(1, 7, 'comportement', 'Comportement', 0, 6, 6, 'Select', 'form-control',7, 6, 'Facultatif', '["Accouplement","Alimentation","Autre","Chant","Exuvie/chrysalide","Mort","Posé/repos","Vol de chasse"]'),
+(1, 7, 'sexe', 'Sexe', 0, 6, 6, 'Select', 'form-control',7, 7, 'Facultatif', '["mâle","femelle","larves","oeufs"]'),  
+(1, 7, 'reproduction', 'Reproduction', 0, 6, 6, 'Text', 'form-control',7, 8, 'Facultatif', '["non","possible","probable","certain"]'),
+(1, 7, 'plante_hote', 'Plante hôte', 0, 6, 6, 'Text', 'form-control',7, 9, 'Facultatif', '')
+
+);
+
+
+INSERT INTO [dbo].[TVersion] (TVer_FileName,TVer_Date,TVer_DbName) VALUES ('8_Insert_Protocol_Insectes',GETDATE(),(SELECT db_name()))

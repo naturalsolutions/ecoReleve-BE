@@ -189,6 +189,7 @@ class ObservationsView(DynamicObjectCollectionView):
 
         try:
             if 'FormName' in self.request.params:
+                # ON recupere les obs exixtante de la station 
                 listObs = list(self.session.query(Observation).filter(
                     and_(Observation.FK_Station == sta_id, Observation.Parent_Observation == None)))
                 listType = list(self.session.query(FieldActivity_ProtocoleType
@@ -204,7 +205,7 @@ class ObservationsView(DynamicObjectCollectionView):
                         if typeID in listProto:
                             listProto[typeID]['obs'].append(curObs.ID)
                         else:
-                            typeName = curObsType.Name.replace('_', ' ')
+                            typeName = curObsType.Label.replace('_', ' ')
                             if curObsType.Status == 10:
                                 curObsForm = curObs.getForm(
                                     displayMode=DisplayMode)
@@ -221,6 +222,7 @@ class ObservationsView(DynamicObjectCollectionView):
                                 'obs': [curObs.ID]
                             }
 
+                # ON complete la liste des obs avec les type de protocole requis pour la field activity
                 if listType:
                     listVirginProto = list(
                         filter(lambda proto: proto.FK_ProtocoleType not in listProto, listType))
@@ -231,7 +233,7 @@ class ObservationsView(DynamicObjectCollectionView):
 
                         curVirginObs = Observation(type_id=typeID)
                         curVirginObsType = curVirginObs._type
-                        typeName = curVirginObsType.Name.replace('_', ' ')
+                        typeName = curVirginObsType.Label.replace('_', ' ')
                         protoStatus = curVirginObsType.obsolete
 
                         if protoStatus != 1:
@@ -253,6 +255,7 @@ class ObservationsView(DynamicObjectCollectionView):
 
                 globalListProto = [{'ID': typeID,
                                     'Name': listProto[typeID]['Name'],
+                                    # 'Label' : listProto[typeID]['Label'],
                                     'schema':listProto[typeID]['schema'],
                                     'fieldsets':listProto[typeID]['fieldsets'],
                                     'grid':listProto[typeID]['grid'],
@@ -279,7 +282,7 @@ class ObservationsView(DynamicObjectCollectionView):
                                         FieldActivity_ProtocoleType.FK_fieldActivity == fieldActivityID)
                                    ).select_from(join_table)
         else:
-            query = select([ProtocoleType.ID, ProtocoleType.Name]).where(
+            query = select([ProtocoleType.ID, ProtocoleType.Label]).where(
                 ProtocoleType.Status.in_([4, 8, 10]))
         query = query.where(ProtocoleType.obsolete == False)
         result = self.session.execute(query).fetchall()
@@ -287,7 +290,7 @@ class ObservationsView(DynamicObjectCollectionView):
         for row in result:
             elem = {}
             elem['ID'] = row['ID']
-            elem['Name'] = row['Name'].replace('_', ' ')
+            elem['Name'] = row['Label'].replace('_', ' ')
             res.append(elem)
         res = sorted(res, key=lambda k: k['Name'])
         return res

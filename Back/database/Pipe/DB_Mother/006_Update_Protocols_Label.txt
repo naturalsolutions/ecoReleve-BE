@@ -1,0 +1,27 @@
+ALTER TABLE public."ProtocoleType"
+ADD COLUMN "Label" "text";
+
+
+UPDATE public."ProtocoleType"
+	SET "Label"= 'Oiseaux'
+WHERE "Name"='Avifaune';
+
+UPDATE public."ProtocoleType"
+	SET "Label"= 'Reptiles & amphibiens'
+WHERE "Name"='Herpeto';
+
+UPDATE public."ProtocoleType"
+	SET "Label"= 'Mammifères terrestres'
+WHERE "Name"='Mammo';
+
+UPDATE public."ProtocoleType"
+	SET "Label"= 'Chauves-souris'
+WHERE "Name"='Chiroptères';
+
+UPDATE public."ProtocoleType"
+	SET "Label"= 'Plantes'
+WHERE "Name"='Flore';
+
+
+
+INSERT INTO [dbo].[TVersion] (TVer_FileName,TVer_Date,TVer_DbName) VALUES ('6_Update_Protocols_Labels',GETDATE(),(SELECT db_name()))
