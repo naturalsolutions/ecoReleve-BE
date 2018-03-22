@@ -1,36 +1,38 @@
 /* champ type_milieu */
 
 UPDATE public."ModuleForms"
-    SET  "Options" = E'["Autre","Cavité/Grotte","Cours d\'eau permanent","Cours d\'eau temporaire","Culture extensive","Culture intensive","Etang/Mare/Marais","Forêt de conifères","Forêt de feuillus","Forêt mixte","Friche/Lande","Haie","Maquis/Garrigue","Mer/Océan","Milieu bocager","Milieu rupestre","Milieu urbain/Bâtis","Pelouse naturelle","Plage/Vasière/Lagune","Plantation d\'arbres","Plaine céréalière","Prairie/Pâture","Ripisylve","Rivière/Canal","Roselière/Mégaphorbiaie","Tourbière","Verger/Vignoble"]'
+    SET  "Options" = E'["Autre","Cavitï¿½/Grotte","Cours d\'eau permanent","Cours d\'eau temporaire","Culture extensive","Culture intensive","Etang/Mare/Marais","Forï¿½t de conifï¿½res","Forï¿½t de feuillus","Forï¿½t mixte","Friche/Lande","Haie","Maquis/Garrigue","Mer/Ocï¿½an","Milieu bocager","Milieu rupestre","Milieu urbain/Bï¿½tis","Pelouse naturelle","Plage/Vasiï¿½re/Lagune","Plantation d\'arbres","Plaine cï¿½rï¿½aliï¿½re","Prairie/Pï¿½ture","Ripisylve","Riviï¿½re/Canal","Roseliï¿½re/Mï¿½gaphorbiaie","Tourbiï¿½re","Verger/Vignoble"]'
     WHERE   "Name"  LIKE 'type_milieu';
 
 
 /* mammo */
 
 UPDATE public."ModuleForms"
-    SET  "Options" = '["ADNe","Affût","Analyse de pelotes de réjection","Comptage au phare","IKA","Observation fortuite","Piège non vulnérant","Piège photographique","Recherche à vue ou écoute"]'
+    SET  "Options" = '["ADNe","Affï¿½t","Analyse de pelotes de rï¿½jection","Comptage au phare","IKA","Observation fortuite","Piï¿½ge non vulnï¿½rant","Piï¿½ge photographique","Recherche ï¿½ vue ou ï¿½coute"]'
     WHERE   "Name"  LIKE 'type_inventaire'
     AND "TypeObj" = 4 ;
 
 /* herpeto */
 
 UPDATE public."ModuleForms"
-    SET  "Options" = '["Accouplement/amplexus","Autre","Déplacement","Hivernage","Mort","Mue","Ponte","Repos/basking","Têtard/larve"]'
+    SET  "Options" = '["Accouplement/amplexus","Autre","Dï¿½placement","Hivernage","Mort","Mue","Ponte","Repos/basking","Tï¿½tard/larve"]'
     WHERE   "Name"  LIKE 'comportement'
     AND "TypeObj" = 3 ;
 
 /* ajout champ "stade" pour le proto plantes  */
 
-INSERT INTO public."ObservationDynProp" 
-("Name", "TypeProp") 
+UPDATE public."ObservationDynProp" SET "Name" = 'stade'
+WHERE "Name" = 'state';
 
-VALUES ('stade','String') ; 
+DELETE FROM public."ModuleForms" WHERE "Name" = 'state';
 
 INSERT INTO public."ModuleForms" 
 ("Module_ID", "TypeObj","Name","Label","Required","FieldSizeEdit","FieldSizeDisplay","InputType","editorClass","FormRender", "FormOrder" , "Legend","Options") 
 VALUES 
-(1,6,'stade', 'Stade végétatif',0,6,6,'Select','form-control',7,24,'Facultatif','["végétatif","en fleur","en fruits","fané","mort sur pied"]' ) ; 
+(1,6,'stade', 'Stade vï¿½gï¿½tatif',0,6,6,'Select','form-control',7,24,'Facultatif','["vï¿½gï¿½tatif","en fleur","en fruits","fanï¿½","mort sur pied"]' ) ; 
 
+UPDATE public."ModuleForms" SET "Options" = '{"type":"latin", "taxaList":"chiroptera"}'
+WHERE "Name" = 'taxon' AND "TypeObj" = 5;
 
 /* nommage des labels */
 
@@ -63,7 +65,7 @@ UPDATE public."ModuleForms"
     WHERE   "Name" = 'nb_contact';    
     
      UPDATE public."ModuleForms"
-    SET  "Label" = 'Hauteur de détection'
+    SET  "Label" = 'Hauteur de dï¿½tection'
     WHERE   "Name" = 'hauteur_detection';    
  
       UPDATE public."ModuleForms"
@@ -84,7 +86,7 @@ UPDATE public."ModuleForms"
     WHERE
     "Name" = 'FK_Project';
 
-/* enlever sites monitorés et fieldworkers des filtres */
+/* enlever sites monitorï¿½s et fieldworkers des filtres */
  DELETE FROM public."ModuleGrids" WHERE "Name" LIKE 'FK_MonitoredSite' OR "Name" LIKE 'FK_MonitoredSiteName';
 
  DELETE FROM public."ModuleGrids" WHERE "Name" = 'FK_FieldWorker';
