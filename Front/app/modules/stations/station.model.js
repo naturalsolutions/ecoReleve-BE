@@ -1,48 +1,46 @@
 define([
-  'underscore',
-  'backbone'
+    'underscore',
+    'backbone'
 ], function(
-  _, Backbone
+    _, Backbone
 ) {
-  'use strict';
+    'use strict';
 
-  return Backbone.Model.extend({
-    defaults: {
-      displayMap: true,
+    return Backbone.Model.extend({
+        defaults: {
+            displayMap: true,
 
-      label: 'stations',
-      single: 'station',
-      type: 'stations',
+            label: 'stations',
+            single: 'station',
+            type: 'stations',
 
-      uiGridConfs: [
-        {
-          name: 'details',
-          label: 'Details'
-        },
-        {
-          name: 'protocols',
-          label: 'Protocols'
-        },
-      ],
+            uiGridConfs: [{
+                    name: 'details',
+                    label: 'détails'
+                },
+                {
+                    name: 'protocols',
+                    label: 'Protocoles'
+                },
+            ],
 
-      uiTabs: [
-        {
-          name: 'all',
-          label: 'All',
-        },
-        {
-          name: 'lastImported',
-          label: 'Last imported',
+            uiTabs: [{
+                    name: 'all',
+                    label: 'All',
+                },
+                {
+                    name: 'lastImported',
+                    label: 'Last imported',
+                }
+            ],
+
+            formConfig: {
+                name: 'StaForm',
+                modelurl: 'stations',
+                displayMode: 'display',
+                objectType: 1,
+                reloadAfterSave: true,
+            }
         }
-      ],
-
-      formConfig: {
-        name: 'StaForm',
-        modelurl: 'stations',
-        displayMode: 'display',
-        objectType: 1,
-        reloadAfterSave: true,
-      }
-    }
-  });
+    });
 });

@@ -1,0 +1,12 @@
+UPDATE public."ModuleForms"
+    SET  "Legend" = 'Informations de localisation'
+     WHERE   "Legend"  like 'Location Infos'
+
+UPDATE public."ModuleForms"
+    SET  "Legend" = 'Informations générales'
+     WHERE   "Legend"  like 'General Infos'
+
+INSERT INTO [dbo].[TVersion] (TVer_FileName,TVer_Date,TVer_DbName) VALUES ('5_Translate_fieldsets',GETDATE(),(SELECT db_name()))
+
+
+GO

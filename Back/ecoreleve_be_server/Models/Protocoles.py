@@ -65,6 +65,7 @@ class Observation(HasDynamicProperties, Base):
                 __name__ = 'ProtocoleType'
                 __tablename__ = 'ProtocoleType'
                 obsolete = Column(Boolean)
+                Label = Column(String)
                 parent = cls
             cls.TypeClass = type('ProtocoleType', (Type, ), {})
         return cls.TypeClass

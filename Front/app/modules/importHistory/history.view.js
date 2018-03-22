@@ -4,7 +4,7 @@ define([
     'backbone',
     'marionette',
     'sweetAlert',
-    'translater',
+
     'ns_modules/ns_com',
     'ns_grid/grid.view',
     'ns_filter/filters',
@@ -12,8 +12,8 @@ define([
     'tooltipster-list',
     'i18n'
 
-], function (
-    $, _, Backbone, Marionette, Swal, Translater,
+], function(
+    $, _, Backbone, Marionette, Swal,
     Com, GridView, NsFilter, Config
 ) {
 
@@ -46,11 +46,11 @@ define([
             rgGrid: '.js-rg-grid'
         },
 
-        translater: Translater.getTranslater(),
+        //translater: Translater.getTranslater(),
 
         ModelPrototype: Backbone.Model,
 
-        initialize: function (options) {
+        initialize: function(options) {
             //   this.model = new this.ModelPrototype();
             this.rootURL = 'importHistory/';
             this.com = new Com();
@@ -59,24 +59,25 @@ define([
             //   }
         },
 
-        back: function () {},
+        back: function() {},
 
-        onRender: function () {
+        onRender: function() {
             this.$el.i18n();
         },
 
-        onShow: function () {
+        onShow: function() {
             this.com = new Com();
             this.displayFilter();
             this.displayGridView();
             this.afterShow();
+            this.$el.i18n();
         },
 
-        afterShow: function () {
+        afterShow: function() {
             //console.warn('method not implemented');
         },
 
-        changePageSize: function (e) {
+        changePageSize: function(e) {
             this.gridView.changePageSize($(e.target).val());
         },
 
@@ -88,9 +89,9 @@ define([
         //   Backbone.history.navigate(url, {trigger: true});
         // },
 
-        displayGridView: function () {
+        displayGridView: function() {
             var _this = this;
-            var afterGetRows = function () {
+            var afterGetRows = function() {
                 _this.ui.totalRecords.html(this.model.get('totalRecords'));
             };
 
@@ -108,7 +109,7 @@ define([
             }));
         },
 
-        displayFilter: function () {
+        displayFilter: function() {
             this.filters = new NsFilter({
                 url: this.rootURL,
                 com: this.com,
@@ -119,11 +120,11 @@ define([
             });
         },
 
-        filter: function () {
+        filter: function() {
             this.filters.update();
         },
 
-        clearFilter: function () {
+        clearFilter: function() {
             this.filters.reset();
         },
 

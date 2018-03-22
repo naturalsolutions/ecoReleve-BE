@@ -1,13 +1,14 @@
-(function (root, factory) {
+(function(root, factory) {
 
     // Set up Backbone appropriately for the environment. Start with AMD.
     if (typeof define === 'function' && define.amd) {
         define(['jquery',
-    'underscore',
-    'backbone',
-    'backbone_forms',
-    'moment',
-        ], function ($, _, Backbone, BbForms, moment, exports) {
+            'underscore',
+            'backbone',
+            'backbone_forms',
+            'moment',
+            'i18n',
+        ], function($, _, Backbone, BbForms, moment, Translater, exports) {
             // Export global even in AMD case in case this script is loaded with
             // others that may still expect a global Backbone.
             var Retour = factory(root, exports, $, _, Backbone, BbForms, moment);
@@ -40,93 +41,93 @@
         //root.Backbone = factory(root, {}, root._, (root.jQuery || root.Zepto || root.ender || root.$));
     }
 
-}(this, function (root, NsFilter, $, _, Backbone, BbForms, moment) {
+}(this, function(root, NsFilter, $, _, Backbone, BbForms, moment) {
 
-    var tpl = '<form class="filter form-horizontal filter-form-<%=fieldname%>">'
-        + '<div   class="filter-container clearfix" >'
-        + '<span data-editors="Column"></span>'
-        + '<span class="col-xs-3 filter-label"><%= filterName %></span>'
-       + '<span data-editors="ColumnType"></span>'
+    var tpl = '<form class="filter form-horizontal filter-form-<%=fieldname%>">' +
+        '<div   class="filter-container clearfix" >' +
+        '<span data-editors="Column"></span>' +
+        '<span class="col-xs-3 filter-label"><%= filterName %></span>' +
+        '<span data-editors="ColumnType"></span>'
 
-       + '<span class="col-xs-3 no-padding" data-editors="Operator"></span>'
-        + '<span class="col-xs-6 filter" data-editors="Value"></span>'
-    + '</div>'
-    + '<div class="clear"></div>'
-    + '</form>'
-    + '<div class="clear"></div>';
+    +'<span class="col-xs-3 no-padding" data-editors="Operator"></span>' +
+    '<span class="col-xs-6 filter" data-editors="Value"></span>' +
+    '</div>' +
+    '<div class="clear"></div>' +
+    '</form>' +
+    '<div class="clear"></div>';
 
 
     var tplcheck =
-    '<form class="filter form-horizontal filter-form-<%=fieldname%>" style="position:relative">'
-    + '<div class="filter-container"  style="padding: 30px 0px;">'
-        + '<span data-editors="Column"></span>'
-        + '<span class="col-xs-3 filter-label"><%= filterName %></span>'
-        + '<span data-editors="ColumnType"></span>'
+        '<form class="filter form-horizontal filter-form-<%=fieldname%>" style="position:relative">' +
+        '<div class="filter-container"  style="padding: 30px 0px;">' +
+        '<span data-editors="Column"></span>' +
+        '<span class="col-xs-3 filter-label"><%= filterName %></span>' +
+        '<span data-editors="ColumnType"></span>'
 
-        + '<span class="hidden col-xs-4" data-editors="Operator"></span>'
-        + '<span class="col-xs-9" data-editors="Value"></span>'
-    + '</div>'
-    + '<div class="clear"></div>'
-    + '</form>'
-    + '<div class="clear"></div>'
+    +'<span class="hidden col-xs-4" data-editors="Operator"></span>' +
+    '<span class="col-xs-9" data-editors="Value"></span>' +
+    '</div>' +
+    '<div class="clear"></div>' +
+    '</form>' +
+    '<div class="clear"></div>'
 
     var tplinterval =
-   '<form class="filter form-horizontal filter-form-<%=fieldname%>" style="position:relative">'
-   + '<div   class="filter-container clearfix">'
-       + '<span data-editors="Column"></span>'
-       + '<span class="col-xs-3 filter-label"><%= filterName %></span>'
-       + '<span data-editors="ColumnType"></span>'
-       + '<span class="hidden col-xs-4" data-editors="Operator"></span>'
-       + '<span class="col-xs-3">From</span><span class="col-xs-6 filterinterval" data-editors="From"></span>'
-    + '</div>'
-    + '<div class="filter-container clearfix">'
-       + '<span class="col-xs-3 col-xs-offset-3">To</span><span class="col-xs-6 filterinterval" data-editors="To"></span>'
-   + '</div>'
-   + '</form>'
+        '<form class="filter form-horizontal filter-form-<%=fieldname%>" style="position:relative">' +
+        '<div   class="filter-container clearfix">' +
+        '<span data-editors="Column"></span>' +
+        '<span class="col-xs-3 filter-label"><%= filterName %></span>' +
+        '<span data-editors="ColumnType"></span>' +
+        '<span class="hidden col-xs-4" data-editors="Operator"></span>' +
+        '<span class="col-xs-3">From</span><span class="col-xs-6 filterinterval" data-editors="From"></span>' +
+        '</div>' +
+        '<div class="filter-container clearfix">' +
+        '<span class="col-xs-3 col-xs-offset-3">To</span><span class="col-xs-6 filterinterval" data-editors="To"></span>' +
+        '</div>' +
+        '</form>'
 
-    var tplAdded = '<div class="filter clearfix">'
-      + '<div class="filter-container clearfix">'
-        + '<div class="legend">'
-         + '<label class="col-xs-12"><%= filterName %></label>'
-          + '<span data-editors="Column"></span>'
-          + '<span data-editors="ColumnType"></span>'
-        + '</div>'
-        + '<div class="col-xs-12">'
-          + '<span class="col-xs-4 no-padding" data-editors="Operator"></span>'
-          + '<span class="col-xs-6 no-padding-left" data-editors="Value"></span>'
-          + '<span class="pull-right">'
-            + '<button class="btn btn-warning" id="removeFilter">'
-              + '<span class="reneco reneco-close"></span>'
-            + '</button>'
-          + '</span>'
-        + '</div>'
-      + '</div>'
-    + '</div>';
+    var tplAdded = '<div class="filter clearfix">' +
+        '<div class="filter-container clearfix">' +
+        '<div class="legend">' +
+        '<label class="col-xs-12"><%= filterName %></label>' +
+        '<span data-editors="Column"></span>' +
+        '<span data-editors="ColumnType"></span>' +
+        '</div>' +
+        '<div class="col-xs-12">' +
+        '<span class="col-xs-4 no-padding" data-editors="Operator"></span>' +
+        '<span class="col-xs-6 no-padding-left" data-editors="Value"></span>' +
+        '<span class="pull-right">' +
+        '<button class="btn btn-warning" id="removeFilter">' +
+        '<span class="reneco reneco-close"></span>' +
+        '</button>' +
+        '</span>' +
+        '</div>' +
+        '</div>' +
+        '</div>';
 
-    var tplAddedInterval = '<div class="filter clearfix">'
-     + '<div class="filter-container clearfix">'
-       + '<div class="legend">'
-        + '<label class="col-xs-12"><%= filterName %></label>'
-         + '<span data-editors="Column"></span>'
-         + '<span data-editors="ColumnType"></span>'
-       + '</div>'
-       + '<div class="col-xs-12">'
-         + '<span class="col-xs-4 no-padding" data-editors="Operator"></span>'
-         + '<span class="col-xs-6 no-padding-left" data-editors="Value"></span>'
-         + '<span class="pull-right">'
-           + '<button class="btn btn-warning" id="removeFilter">'
-             + '<span class="reneco reneco-close"></span>'
-           + '</button>'
-         + '</span>'
-       + '</div>'
-     + '</div>'
-   + '</div>';
+    var tplAddedInterval = '<div class="filter clearfix">' +
+        '<div class="filter-container clearfix">' +
+        '<div class="legend">' +
+        '<label class="col-xs-12"><%= filterName %></label>' +
+        '<span data-editors="Column"></span>' +
+        '<span data-editors="ColumnType"></span>' +
+        '</div>' +
+        '<div class="col-xs-12">' +
+        '<span class="col-xs-4 no-padding" data-editors="Operator"></span>' +
+        '<span class="col-xs-6 no-padding-left" data-editors="Value"></span>' +
+        '<span class="pull-right">' +
+        '<button class="btn btn-warning" id="removeFilter">' +
+        '<span class="reneco reneco-close"></span>' +
+        '</button>' +
+        '</span>' +
+        '</div>' +
+        '</div>' +
+        '</div>';
 
 
-    Backbone.Form.validators.INNumber = function (options) {
+    Backbone.Form.validators.INNumber = function(options) {
         return function INNumber(value) {
 
-            if (value == '') return null ;
+            if (value == '') return null;
             //return null;
             //var myRegEx = new RegExp('[\d*\s]*\d*$');
             var myRegEx = new RegExp('^([0-9]+(\.[0-9]+)?[\t|\,|\x20]*)+$');
@@ -134,10 +135,9 @@
 
             if (myRegEx.test(value)) {
                 return null;
-            }
-            else {
+            } else {
                 var retour = {
-                    type:'required',
+                    type: 'required',
                     message: 'Invalid format for IN clause '
                 };
 
@@ -164,7 +164,7 @@
         forms: [],
         filtersValues: null,
 
-        initialize: function (options) {
+        initialize: function(options) {
             this.filterContainer = options.filterContainer;
             this.channel = options.channel;
             this.clientSide = options.clientSide;
@@ -189,8 +189,7 @@
                     this.filters = options.filters;
                     this.filterFromAJAX = false;
                     this.initFilters(this.filters);
-                }
-                else {
+                } else {
                     // Otherwise initialized from AJAX call
                     this.getFilters();
                 }
@@ -203,24 +202,23 @@
                 this.filterLoaded = options.filterLoaded;
             }
         },
-        getContainer: function () {
-            if (typeof (this.filterContainer) === 'string') {
+        getContainer: function() {
+            if (typeof(this.filterContainer) === 'string') {
                 return $('#' + this.filterContainer);
             } else {
                 return this.filterContainer;
             }
 
         },
-        getValuesAsDic: function (filterArray) {
+        getValuesAsDic: function(filterArray) {
 
             var filterValues = {};
-            for (var i = 0 ; i < filterArray.length; i++) {
+            for (var i = 0; i < filterArray.length; i++) {
                 curFiltre = filterValues[filterArray[i]['Column']];
                 if (curFiltre == null) {
                     curFiltre = {}
                     curFiltre.operatorValue = filterArray[i].Operator;
-                }
-                else {
+                } else {
                     curFiltre.operatorValue = 'between';
                 }
                 curFiltre.value = filterArray[i].Value;
@@ -234,7 +232,7 @@
             }
             return filterValues;
         },
-        getFilters: function () {
+        getFilters: function() {
             var _this = this;
             this.forms = [];
             this.deferred = $.ajax({
@@ -246,19 +244,20 @@
                 contentType: 'application/json',
                 type: 'GET',
                 context: this,
-            }).done(function (data) {
+            }).done(function(data) {
                 this.initFilters(data);
                 this.datas = data;
-            }).fail(function (msg) {
+            }).fail(function(msg) {
                 console.log(msg);
             });
         },
 
-        filterLoaded: function () {
+        filterLoaded: function() {
 
         },
 
-        initFilters: function (data) {
+        initFilters: function(data) {
+            this.$el.i18n();
             var _this = this;
 
             var form;
@@ -270,7 +269,7 @@
 
                 if (data[key].type == 'Checkboxes') {
                     if (!this.filtersValues || !this.filtersValues[data[key].name]) {
-                        this.getContainer().find("input[type='checkbox']").each(function () {
+                        this.getContainer().find("input[type='checkbox']").each(function() {
                             $(this).prop('checked', true);
                         });
                     }
@@ -280,34 +279,33 @@
                 this.filterLoaded();
             };
 
-            this.getContainer().keypress(function (e) {
+            this.getContainer().keypress(function(e) {
 
-                    if (e.which == 13) {
-                        e.preventDefault();
-                        _this.update() ;
-                        //do something
-                    }
-                });
+                if (e.which == 13) {
+                    e.preventDefault();
+                    _this.update();
+                    //do something
+                }
+            });
 
             if (this.ToggleFilter) {
                 for (var i = 0; i < this.forms.length; i++) {
 
                     if (this.forms[i].model.get('Value') != null || this.forms[i].model.get('Value') == 0) {
                         if (
-                            (this.forms[i].model.get('ColumnType') == 'Select' && this.forms[i].model.get('Value') == '-1')
-                            || (this.forms[i].model.get('ColumnType') == 'Checkboxes' && this.forms[i].model.get('Value')[0] == '-1')
-                            || (this.forms[i].model.get('Value') != '0' && this.forms[i].model.get('Value') == '')
-                            ) {
+                            (this.forms[i].model.get('ColumnType') == 'Select' && this.forms[i].model.get('Value') == '-1') ||
+                            (this.forms[i].model.get('ColumnType') == 'Checkboxes' && this.forms[i].model.get('Value')[0] == '-1') ||
+                            (this.forms[i].model.get('Value') != '0' && this.forms[i].model.get('Value') == '')
+                        ) {
                             // pas de saisie
-                        }
-                        else {
+                        } else {
                             $('.filter-form-' + this.forms[i].model.get('Column') + ' .filter').addClass(this.ToggleFilter.classBefore);
                             var toggleInfo = {
                                 columnName: this.forms[i].model.get('Column'),
                                 classAfter: this.ToggleFilter.classAfter,
                                 classBefore: this.ToggleFilter.classBefore,
                             }
-                            setTimeout(function (toggleInfo) {
+                            setTimeout(function(toggleInfo) {
                                 $('.filter-form-' + toggleInfo.columnName + ' .filter').removeClass(toggleInfo.classBefore);
                                 $('.filter-form-' + toggleInfo.columnName + ' .filter').addClass(toggleInfo.classAfter);
                                 //}
@@ -318,9 +316,9 @@
             }
         },
 
-        initFilter: function (dataRow, added) {
+        initFilter: function(dataRow, added) {
             var form;
-            var _this = this ;
+            var _this = this;
             var type = dataRow['type'];
 
             var template = tpl;
@@ -345,8 +343,7 @@
                     options.splice(0, 0, { label: 'All', val: -1, checked: true });
                     template = tplcheck;
                     editorClass = editorClass.split('form-control').join('');
-                }
-                else if (type == 'Select') {
+                } else if ((type == 'Select') && (dataRow['options'])) {
                     dataRow['options'].splice(0, 0, { label: ' ', val: -1 });
                 }
             }
@@ -355,28 +352,30 @@
             if (isInterval) {
 
                 form = this.getBBFormFromInterval(dataRow, editorClass, type, tplinterval);
-            }
-            else {
+            } else {
 
                 form = this.getBBFormFromFilter(dataRow, editorClass, type, operators, template);
             }
 
             return form;
         },
-        getBBFormFromFilter: function (dataRow, editorClass, type, operators, template, indice) {
+        getBBFormFromFilter: function(dataRow, editorClass, type, operators, template, indice) {
             var _this = this;
             var fieldName = dataRow['name'];
 
-            var operatorList =  operators || this.getOpOptions(type);
+            var operatorList = operators || this.getOpOptions(type);
             var valueOptions = this.getValueOptions(dataRow);
-            if(valueOptions && type == 'AutocompTreeEditor'){
+            if (valueOptions && type == 'AutocompTreeEditor') {
                 valueOptions['disableValidators'] = true;
             }
             var schm = {
                 Column: { name: 'Column', type: 'Hidden', title: dataRow['label'], value: fieldName },
                 ColumnType: { name: 'ColumnType', title: '', type: 'Hidden', value: type },
                 Operator: {
-                    type: 'Select', title: dataRow['label'], options:operatorList, editorClass: 'form-control ',//+ classe,
+                    type: 'Select',
+                    title: dataRow['label'],
+                    options: operatorList,
+                    editorClass: 'form-control ', //+ classe,
                 },
 
                 //Value: dataRow
@@ -397,16 +396,15 @@
                 if (this.filtersValues[fieldName].operatorValue == 'IN') {
                     schm.value = this.initValuesShemaIn(schm, this.filtersValues[fieldName].operatorValue);
                 }
-            }
-            else {
+            } else {
                 operatorValue = schm.Operator.options[0].label;
             }
 
-            if (this.firstOperator ) {
+            if (this.firstOperator) {
                 operatorValue = this.firstOperator;
-                if (this.firstOperator.indexOf('null') != 1){
+                if (this.firstOperator.indexOf('null') != 1) {
                     valeur = null;
-                    if (type == 'Number' || type == 'Select' || type == 'LongitudeEditor' || type == 'LatitudeEditor' ){
+                    if (type == 'Number' || type == 'Select' || type == 'LongitudeEditor' || type == 'LatitudeEditor') {
                         valeur = 1;
                     }
                 }
@@ -438,19 +436,19 @@
                 templateData: { filterName: dataRow['title'], fieldname: fieldName }
             }).render();
             form.previousOperator = mod.get('Operator').val;
-            if (!form.previousOperator){
+            if (!form.previousOperator) {
                 form.previousOperator = mod.get('Operator');
             }
             form.indice = this.forms.length;
 
-            if (this.firstOperator ) {
+            if (this.firstOperator) {
                 operatorValue = this.firstOperator;
-                if (this.firstOperator.indexOf('null') != 1){
+                if (this.firstOperator.indexOf('null') != 1) {
                     form.$el.find('span.filter').addClass('hide');
                 }
             }
 
-            form.on('Operator:change', function (infos, editor) {
+            form.on('Operator:change', function(infos, editor) {
                 var NewOperator = editor.getValue();
 
                 if (this.previousOperator == 'IN' || NewOperator == 'IN') {
@@ -458,8 +456,7 @@
 
                     if (NewOperator == 'IN') {
                         this.schema.Value = _this.initValuesShemaIn(this.schema.Value);
-                    }
-                    else {
+                    } else {
                         this.schema.Value.type = this.model.get('ColumnType');
                         this.schema.Value.validators.pop();
                     }
@@ -472,23 +469,22 @@
                 }
                 elVal = _this.getContainer().find(' > .filter').eq(this.indice).find('span.filter');
 
-                if ((this.previousOperator && this.previousOperator.indexOf('null')!=-1 )|| NewOperator.indexOf('null')!=-1) {
-                    if (NewOperator.indexOf('null')!=-1) {
+                if ((this.previousOperator && this.previousOperator.indexOf('null') != -1) || NewOperator.indexOf('null') != -1) {
+                    if (NewOperator.indexOf('null') != -1) {
                         elVal.addClass('hide');
-                        if (this.model.get('ColumnType') != 'Number' || this.model.get('ColumnType') != 'LongitudeEditor' || this.model.get('ColumnType') != 'LatitudeEditor'){
-                            if (this.model.get('ColumnType') == 'AutocompTreeEditor'){
-                                elVal.find('input').val(null).attr('data_value',null).change();
+                        if (this.model.get('ColumnType') != 'Number' || this.model.get('ColumnType') != 'LongitudeEditor' || this.model.get('ColumnType') != 'LatitudeEditor') {
+                            if (this.model.get('ColumnType') == 'AutocompTreeEditor') {
+                                elVal.find('input').val(null).attr('data_value', null).change();
                             } else {
                                 elVal.find('input').val('null').change();
-                                
+
                             }
                         } else {
                             elVal.find('input').val(1).change();
                         }
 
-                    }
-                    else {
-                        elVal.find('input').val('').attr('data_value','').change();
+                    } else {
+                        elVal.find('input').val('').attr('data_value', '').change();
                         var errorEL = _this.getContainer().find(' > .filter').eq(this.indice).find('.error');
                         errorEL.removeClass('error');
                         elVal.removeClass('hide');
@@ -513,7 +509,7 @@
 
         },
 
-        getBBFormFromInterval: function (dataRow, editorClass, type, template) {
+        getBBFormFromInterval: function(dataRow, editorClass, type, template) {
 
             var fieldName = dataRow['name'];
 
@@ -522,7 +518,10 @@
                 ColumnType: { name: 'ColumnType', title: '', type: 'Hidden', value: type },
                 Operator: {
                     //type: 'Select', title: dataRow['label'], options: operators || this.getOpOptions(type), editorClass: 'form-control ',//+ classe,
-                    type: 'Select', title: dataRow['label'], options: [{ label: 'beetwenn', val: 'between' }], editorClass: 'form-control ',//+ classe,
+                    type: 'Select',
+                    title: dataRow['label'],
+                    options: [{ label: 'beetwenn', val: 'between' }],
+                    editorClass: 'form-control ', //+ classe,
                 },
                 From: {
                     name: 'From',
@@ -548,7 +547,8 @@
                     validators: []
                 }
             }
-            var ValeurFrom = '', ValeurTo = '';
+            var ValeurFrom = '',
+                ValeurTo = '';
             var valeur = null;
             if (this.filtersValues && this.filtersValues[fieldName]) {
                 ValeurFrom = this.filtersValues[fieldName].From || '';
@@ -589,9 +589,8 @@
             return form;
 
         },
-        changeInput: function (options) {
-        },
-        initValuesShemaIn: function (initialSchema) {
+        changeInput: function(options) {},
+        initValuesShemaIn: function(initialSchema) {
             var initialType = initialSchema.type;
             initialSchema.type = 'Text'
             if (initialSchema.validators == null) {
@@ -603,33 +602,32 @@
             return initialSchema;
         },
 
-        clickedCheck: function (e) {
+        clickedCheck: function(e) {
             // Keep the new check value
             var IsChecked = e.target.checked;
             if (e.target.value != -1) {
                 //'Not checkall', We change the checkall if new target value is uncheked
-                $(this).parent().parent().find('input:checkbox').each(function () {
+                $(this).parent().parent().find('input:checkbox').each(function() {
                     if (this.value == -1 && !IsChecked) {
                         $(this).prop('checked', IsChecked);
                     }
                 });
-            }
-            else {
+            } else {
                 // CheckAll, all check input affected to checkAll Value
-                $(this).parent().parent().find('input:checkbox').each(function () {
+                $(this).parent().parent().find('input:checkbox').each(function() {
                     $(this).prop('checked', IsChecked);
                 });
             }
         },
 
-        displayFilter: function () {
-        },
+        displayFilter: function() {},
 
-        getValueOptions: function (DataRow) {
+        getValueOptions: function(DataRow) {
 
             var valueOptions;
             switch (DataRow['type']) {
-                case "Select": case 'Checkboxes':
+                case "Select":
+                case 'Checkboxes':
                     return DataRow['options']
                     break;
                 case 'AutocompTreeEditor':
@@ -650,36 +648,44 @@
             }
         },
 
-        getOpOptions: function (type) {
+        getOpOptions: function(type) {
             var operatorsOptions;
             switch (type) {
-                case "Text": case "AutocompTreeEditor": case "AutocompleteEditor":
-                    return operatorsOptions = [{ label: 'Is', val: 'Is' }, { label: 'Is not', val: 'Is not' }, { label: 'Begins with', val: 'begins' }, { label: 'Not Begins with', val: 'not begin' }, { label: 'Ends with', val: 'ends' }, { label: 'Not ends with', val: 'not end' }, { label: 'Contains', val: 'Contains' }, { label: 'Not Contains', val: 'Not Contains' }, { label: 'In', val: 'IN' },{ label: 'Is null', val: 'is null' },{ label: 'Is not null', val: 'is not null' }, ];
+                case "Text":
+                case "AutocompTreeEditor":
+                case "AutocompleteEditor":
+                    return operatorsOptions = [{ label: i18n.t('filter.is'), val: 'Is' }, { label: i18n.t('filter.isNot'), val: 'Is not' }, { label: i18n.t('filter.beginsWith'), val: 'begins' }, { label: i18n.t('filter.notBeginsWith'), val: 'not begin' }, { label: i18n.t('filter.endsWith'), val: 'ends' }, { label: i18n.t('filter.notEndsWith'), val: 'not end' }, { label: i18n.t('filter.contains'), val: 'Contains' }, { label: i18n.t('filter.notContains'), val: 'Not Contains' }, { label: i18n.t('filter.in'), val: 'IN' }, { label: i18n.t('filter.isNull'), val: 'is null' }, { label: i18n.t('filter.isNotNull'), val: 'is not null' }, ];
+
+
+
+
                     break;
                 case "DateTimePickerEditor":
                     //return operatorsOptions = [{ label: '<', val: '<' }, { label: '>', val: '>' }, { label: '=', val: '=' }, { label: '<>', val: '<>' }, { label: '<=', val: '<=' }, { label: '>=', val: '>=' }];
-                    return operatorsOptions = [{label:'=',val:'='}, {label:'<>',val:'<>'}, {label:'<',val:'<'}, {label:'>',val:'>'}, {label:'<=',val:'<='}, {label:'>=',val:'>='}];
+                    return operatorsOptions = [{ label: '=', val: '=' }, { label: '<>', val: '<>' }, { label: '<', val: '<' }, { label: '>', val: '>' }, { label: '<=', val: '<=' }, { label: '>=', val: '>=' }];
                     break;
                 case "Select":
-                    return operatorsOptions = [{ label: 'Is', val: 'Is' }, { label: 'Is not', val: 'Is not' },{ label: 'Is null', val: 'is null' },{ label: 'Is not null', val: 'is not null' }];
+                    return operatorsOptions = [{ label: i18n.t('filter.is'), val: 'Is' }, { label: i18n.t('filter.isNot'), val: 'Is not' }, { label: i18n.t('filter.isNull'), val: 'is null' }, { label: i18n.t('filter.isNotNull'), val: 'is not null' }];
+
                     break;
                 case "Checkboxes":
                     return operatorsOptions = [{ label: 'Checked', val: 'Checked' }];
                     break;
                     break;
                 case "Number":
-                    return operatorsOptions = [{label:'=',val:'='}, {label:'<>',val:'<>'}, {label:'<',val:'<'}, {label:'>',val:'>'}, {label:'<=',val:'<='}, {label:'>=',val:'>='}, { label: 'In', val: 'IN' },{ label: 'Is null', val: 'is null' },{ label: 'Is not null', val: 'is not null' }];
+                    return operatorsOptions = [{ label: '=', val: '=' }, { label: '<>', val: '<>' }, { label: '<', val: '<' }, { label: '>', val: '>' }, { label: '<=', val: '<=' }, { label: '>=', val: '>=' }, { label: i18n.t('filter.in'), val: 'IN' }, { label: i18n.t('filter.isNull'), val: 'is null' }, { label: i18n.t('filter.isNotNull'), val: 'is not null' }];
                     break;
-                case "LongitudeEditor": case "LatitudeEditor":
-                    return operatorsOptions = [{label:'=',val:'='}, {label:'<>',val:'<>'}, {label:'<',val:'<'}, {label:'>',val:'>'}, {label:'<=',val:'<='}, {label:'>=',val:'>='},{ label: 'Is null', val: 'is null' },{ label: 'Is not null', val: 'is not null' }];
+                case "LongitudeEditor":
+                case "LatitudeEditor":
+                    return operatorsOptions = [{ label: '=', val: '=' }, { label: '<>', val: '<>' }, { label: '<', val: '<' }, { label: '>', val: '>' }, { label: '<=', val: '<=' }, { label: '>=', val: '>=' }, { label: i18n.t('filter.isNull'), val: 'is null' }, { label: i18n.t('filter.isNotNull'), val: 'is not null' }];
                     break;
                 default:
-                    return operatorsOptions = [{ label: 'Is', val: 'Is' }, { label: 'Is not', val: 'Is not' }, { label: 'Begins with', val: 'begins' }, { label: 'Not Begins with', val: 'not begin' }, { label: 'Ends with', val: 'ends' }, { label: 'Not ends with', val: 'not end' }, { label: 'Contains', val: 'Contains' }, { label: 'Not Contains', val: 'Not Contains' }, { label: 'In', val: 'IN' },{ label: 'Is null', val: 'is null' },{ label: 'Is not null', val: 'is not null' }, ];
+                    return operatorsOptions = [{ label: i18n.t('filter.is'), val: 'Is' }, { label: i18n.t('filter.isNot'), val: 'Is not' }, { label: i18n.t('filter.beginsWith'), val: 'begins' }, { label: i18n.t('filter.notBeginsWith'), val: 'not begin' }, { label: i18n.t('filter.endsWith'), val: 'ends' }, { label: i18n.t('filter.notEndsWith'), val: 'not end' }, { label: i18n.t('filter.contains'), val: 'Contains' }, { label: i18n.t('filter.notContains'), val: 'Not Contains' }, { label: i18n.t('filter.in'), val: 'IN' }, { label: i18n.t('filter.isNull'), val: 'is null' }, { label: i18n.t('filter.isNotNull'), val: 'is not null' }, ];
                     break;
             }
         },
 
-        update: function () {
+        update: function() {
 
             this.criterias = [];
             var currentForm, value;
@@ -707,9 +713,8 @@
                             currentForm.$el.find('input.filter').addClass('active');
                         }
 
-                    }
-                    else {
-                        if (  ( value.Value !== null && value.Value !== '')  || value.Operator.indexOf('null') != -1) {                            
+                    } else {
+                        if ((value.Value !== null && value.Value !== '') || value.Operator.indexOf('null') != -1) {
                             this.criterias.push(value);
                             currentForm.$el.find('input.filter').addClass('active');
                         }
@@ -720,7 +725,7 @@
             if (this.clientSide != null) {
                 this.clientFilter(this.criterias);
             } else {
-                if(this.extraFilters.length){
+                if (this.extraFilters.length) {
                     this.criterias = this.extraFilters.concat(this.criterias);
                 }
                 this.filters = this.criterias;
@@ -730,24 +735,22 @@
             return this.criterias;
         },
 
-        reset: function () {
+        reset: function() {
             this.getContainer().empty();
             this.filtersValues = null;
             if (this.clientSide != null) {
                 this.initFilters(this.filters);
-            }
-            else {
+            } else {
                 if (this.filterFromAJAX) {
                     // Otherwise initialized from AJAX call
                     this.getFilters();
-                }
-                else {
+                } else {
                     this.initFilters(this.filters);
                 }
             }
             this.update();
         },
-        addFilter: function (data) {
+        addFilter: function(data) {
             var _this = this;
             var form;
             var index = 0;
@@ -759,12 +762,12 @@
                 $(form.el).find('select').focus();
 
                 if (data[key].type == 'Checkboxes') {
-                    this.getContainer().find('input[type="checkbox"]').each(function () {
+                    this.getContainer().find('input[type="checkbox"]').each(function() {
                         $(this).prop('checked', true);
                     });
                 }
 
-                form.$el.find('button#removeFilter').on('click', function () {
+                form.$el.find('button#removeFilter').on('click', function() {
                     _this.getContainer().find(form.el).remove();
                     var i = _this.forms.indexOf(form);
                     if (i > -1) {
@@ -779,7 +782,7 @@
 
         ///////////////////////// FILTRE CLIENT //////////////////////////////
 
-        clientFilter: function (filters) {
+        clientFilter: function(filters) {
             var tmp = this.com.getMotherColl();
             var mod = [];
             var filter;
@@ -790,7 +793,7 @@
             var pass, rx, objVal;
             if (filters.length) {
                 var coll = _.clone(tmp);
-                _.filter(coll.models, function (obj) {
+                _.filter(coll.models, function(obj) {
                     pass = true;
 
                     for (var i = filters.length - 1; i >= 0; i--) {
@@ -806,15 +809,15 @@
                             //date
                             var dt = moment(val, 'DD/MM/YYYY HH:mm:ss');
                             var operator = false;
-                            if(['=', '>','<','>=','<=','<>'].indexOf(op) >= 0) {
+                            if (['=', '>', '<', '>=', '<=', '<>'].indexOf(op) >= 0) {
                                 operator = true;
                             }
-                            if (dt.isValid() && operator){
-                            //if (moment(val).isValid) {
-                                pass = ctx.testDate(objVal, op, val,format);
+                            if (dt.isValid() && operator) {
+                                //if (moment(val).isValid) {
+                                pass = ctx.testDate(objVal, op, val, format);
                             } else {
-                                if (objVal &&  val) {
-                                    pass = ctx.testMatch (objVal, op, val);
+                                if (objVal && val) {
+                                    pass = ctx.testMatch(objVal, op, val);
                                 } else {
                                     pass = false;
                                 }
@@ -833,7 +836,7 @@
         },
 
 
-        testMatch: function (val, op, objVal) {
+        testMatch: function(val, op, objVal) {
             var rx;
             switch (op.toLowerCase()) {
                 case 'is':
@@ -897,28 +900,28 @@
                     break;
                 case 'begins':
                     objVal = objVal.toUpperCase();
-                    rx = new  RegExp("^" + objVal, "i");
+                    rx = new RegExp("^" + objVal, "i");
                     if (!rx.test(val.toUpperCase())) {
                         return false;
                     };
                     break;
                 case 'not begin':
                     objVal = objVal.toUpperCase();
-                    rx = new  RegExp("^" + objVal, "i");
+                    rx = new RegExp("^" + objVal, "i");
                     if (rx.test(val.toUpperCase())) {
                         return false;
                     };
                     break;
                 case 'ends':
                     objVal = objVal.toUpperCase();
-                    rx = new  RegExp( objVal +  '$', "i");
+                    rx = new RegExp(objVal + '$', "i");
                     if (!rx.test(val.toUpperCase())) {
                         return false;
                     };
                     break;
-                 case 'not end':
+                case 'not end':
                     objVal = objVal.toUpperCase();
-                    rx = new  RegExp( objVal +  '$', "i");
+                    rx = new RegExp(objVal + '$', "i");
                     if (rx.test(val.toUpperCase())) {
                         return false;
                     };
@@ -927,15 +930,14 @@
                     var elems = objVal.split(',');
                     var elems2 = objVal.split(';');
                     var tab;
-                    if (elems.length >1){
+                    if (elems.length > 1) {
                         tab = elems;
-                    } else if(elems2.length >1){
+                    } else if (elems2.length > 1) {
                         tab = elems2;
-                    }
-                    else {
+                    } else {
                         return false;
                     }
-                    for (var i=0; i< tab.length;i++){
+                    for (var i = 0; i < tab.length; i++) {
                         var elem = tab[i].toUpperCase();
                         if ((elem == val)) {
                             return true;
@@ -952,12 +954,12 @@
             return true;
         },
 
-        testDate: function (val, op, objVal,format) {
-            var dateA = moment(val,'DD/MM/YYYY HH:mm:ss');
-            var dateB = moment(objVal,'DD/MM/YYYY HH:mm:ss');
+        testDate: function(val, op, objVal, format) {
+            var dateA = moment(val, 'DD/MM/YYYY HH:mm:ss');
+            var dateB = moment(objVal, 'DD/MM/YYYY HH:mm:ss');
 
             if (format) {
-                dateA = moment(val,format);
+                dateA = moment(val, format);
             }
 
 
@@ -1003,7 +1005,7 @@
 
         },
 
-        interaction: function (action, params) {
+        interaction: function(action, params) {
             if (this.com) {
                 this.com.action(action, params);
             } else {
@@ -1011,12 +1013,12 @@
             }
         },
 
-        action: function (action, params) {
+        action: function(action, params) {
             // Rien  faire
             return;
         },
 
-        updateQuery: function (e) {
+        updateQuery: function(e) {
             if (e.keyCode === 13) {
                 e.preventDefault();
                 this.update();
