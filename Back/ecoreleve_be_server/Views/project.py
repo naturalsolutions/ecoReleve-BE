@@ -10,15 +10,17 @@ from ..controllers.security import context_permissions
 from ..Views import DynamicObjectView, DynamicObjectCollectionView
 from ..controllers.security import RootCore
 from .station import StationsView
+from pyramid.security import Allow
 
 
 class ProjectStationsView(StationsView):
 
     def __init__(self, ref, parent):
         StationsView.__init__(self, ref, parent)
+        self.__acl__ = parent.__acl__
 
     def handleCriteria(self, params):
-        StationsView.handleCriteria(self, params)
+        params = StationsView.handleCriteria(self, params)
         if 'criteria' not in params:
             params['criteria'] = []
 
@@ -47,14 +49,13 @@ class ProjectView(DynamicObjectView):
 
     def __init__(self, ref, parent):
         DynamicObjectView.__init__(self, ref, parent)
-        self.__acl__ = context_permissions['projects']
-        self.add_child('stations', ProjectStationsView)
-
-    def __getitem__(self, ref):
-        if ref in self.actions:
-            self.retrieve = self.actions.get(ref)
-            return self
-        return self.get(ref)
+        user_infos = self.request.authenticated_userid
+        print('ini project ', user_infos, ' ref  : ', ref)
+        if user_infos['app_roles']['ecoreleve'].lower() == 'client' and int(ref) in user_infos['project']:
+            self.__acl__ = [(Allow, 'group:client', 'read')]
+        else :
+            print('not a client')
+            self.__acl__ = context_permissions['project']
 
 
 class ProjectsView(DynamicObjectCollectionView):
@@ -69,6 +70,21 @@ class ProjectsView(DynamicObjectCollectionView):
     def __init__(self, ref, parent):
         DynamicObjectCollectionView.__init__(self, ref, parent)
         self.__acl__ = context_permissions[ref]
+
+    def handleCriteria(self, params):
+        params = DynamicObjectCollectionView.handleCriteria(self, params)
+
+        if self.request.authenticated_userid['app_roles']['ecoreleve'].lower() == 'client':
+            params = self.addProjectFilter(params)
+        return params
+
+    def addProjectFilter(self, params):
+        criteria = [{'Column': 'ID',
+                    'Operator': 'IN',
+                    'Value': ', '.join(str(x) for x in self.request.authenticated_userid['project'])
+                    }]
+        params['criteria'].extend(criteria)
+        return params
 
 
 RootCore.children.append(('projects', ProjectsView))

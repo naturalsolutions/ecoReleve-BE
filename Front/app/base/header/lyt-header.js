@@ -32,7 +32,7 @@ define([
 
             onShow: function() {
             // activate pipefy if it is demo instance
-            this.loadSelectProject();
+            
             var _this = this;
             var isDomoInstance = config.instance ;
             if(isDomoInstance == 'demo') {
@@ -48,6 +48,7 @@ define([
                 $('body').addClass(window.app.user.get('role'));
                 $.xhrPool.allowAbort = true;
                 _this.ui.userName.html(window.app.user.get('fullname'));
+                _this.loadSelectProject();
                 }
             });
             },
@@ -59,7 +60,14 @@ define([
                 success: function(data){
                 console.log(data);
                 var project_list = data[1];
-                $('#js-select-project').append(new Option('Tous les projects',0));
+                
+                console.log(window.app.user)
+                if(window.app.user.get('role') != 'client'){
+
+                    $('#js-select-project').append(new Option('Tous les projects',0));
+                } else{
+                    window.curent_project_url = 'projects/'+project_list[0].ID+'/';
+                }
         
                 _.each(project_list,function(model) {
                     $('#js-select-project').append(new Option(model.Name,model.ID));
@@ -76,7 +84,7 @@ define([
                 $this.addClass('select-hidden'); 
                 $this.wrap('<div class="select nav"></div>');
                 $this.after('<div class="select-styled"></div>');
-            
+                
                 var $styledSelect = $this.next('div.select-styled');
                 $styledSelect.text($this.children('option').eq(0).text());
             

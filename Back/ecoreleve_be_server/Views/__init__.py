@@ -183,7 +183,7 @@ class DynamicObjectView(CustomView):
         #     self.objectDB.session = self.session
 
         '''Set security according to permissions'''
-        self.__acl__ = context_permissions[parent.__name__]
+        self.__acl__ = parent.__acl__
 
     @property
     def model(self):

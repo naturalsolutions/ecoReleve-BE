@@ -48,9 +48,11 @@ def current_user(request, user_id=None):
         query = select([Project_User.FK_Project]).where(Project_User.FK_User == request.authenticated_userid['iss'])
         result = request.dbsession.execute(query).fetchall()
         print(result)
-        projects_id = [row for row in result]
+        projects_id = [row['FK_Project'] for row in result]
         claims['project'] = projects_id
         body['project'] = projects_id
+
+        print(claims)
         jwt = make_jwt(request, claims)
         response = Response(body=json.dumps(body), content_type='text/plain')
         remember(response, jwt)

@@ -164,55 +164,79 @@ context_permissions = {
     'export': [
         (Allow, 'group:admin', ALL_PERMISSIONS),
         (Allow, 'group:superUser', ('create', 'update', 'read')),
-        (Allow, 'group:user', ('create', 'update', 'read'))
+        (Allow, 'group:user', ('create', 'update', 'read')),
+        (Deny, 'group:client', ALL_PERMISSIONS)
     ],
 
     'stations': [
         (Allow, 'group:admin', ALL_PERMISSIONS),
         (Allow, 'group:superUser', ('create', 'update', 'read')),
-        (Allow, 'group:user', ('create', 'update', 'read'))
+        (Allow, 'group:user', ('create', 'update', 'read')),
+        (Deny, 'group:client', ALL_PERMISSIONS)
     ],
 
     'observations': [
         (Allow, 'group:admin', ALL_PERMISSIONS),
         (Allow, 'group:superUser', ALL_PERMISSIONS),
-        (Allow, 'group:user', ALL_PERMISSIONS)
+        (Allow, 'group:user', ALL_PERMISSIONS),
+        (Deny, 'group:client', ALL_PERMISSIONS)
+        
     ],
 
     'individuals': [
         (Allow, 'group:admin', ('create', 'update', 'read')),
         (Allow, 'group:superUser', ('update', 'read')),
-        (Allow, 'group:user', 'read')
+        (Allow, 'group:user', 'read'),
+        (Deny, 'group:client', ALL_PERMISSIONS)
+        
     ],
 
     'monitoredSites': [
         (Allow, 'group:admin', ALL_PERMISSIONS),
         (Allow, 'group:superUser', ('create', 'update', 'read')),
-        (Allow, 'group:user', ('create', 'update', 'read'))
+        (Allow, 'group:user', ('create', 'update', 'read')),
+        (Deny, 'group:client', ALL_PERMISSIONS)
+        
     ],
 
     'sensors': [
         (Allow, 'group:admin', ALL_PERMISSIONS),
         (Allow, 'group:superUser', 'read'),
-        (Allow, 'group:user', 'read')
+        (Allow, 'group:user', 'read'),
+        (Deny, 'group:client', ALL_PERMISSIONS)
+        
     ],
 
     'release': [
         (Allow, 'group:admin', ALL_PERMISSIONS),
         (Deny, 'group:superUser', ALL_PERMISSIONS),
         (Deny, 'group:user', ALL_PERMISSIONS),
+        (Deny, 'group:client', ALL_PERMISSIONS)
+        
     ],
 
     'projects': [
         (Allow, 'group:admin', ALL_PERMISSIONS),
         (Allow, 'group:superUser', 'read'),
         (Allow, 'group:user', 'read'),
+        (Allow, 'group:client', 'read')
+        
+    ],
+
+    'project': [
+        (Allow, 'group:admin', ALL_PERMISSIONS),
+        (Allow, 'group:superUser', 'read'),
+        (Allow, 'group:user', 'read'),
+        (Deny, 'group:client', ALL_PERMISSIONS)
+        
     ],
 
     'clients': [
         (Allow, 'group:admin', ALL_PERMISSIONS),
         (Allow, 'group:superUser', 'read'),
         (Allow, 'group:user', 'read'),
+        (Deny, 'group:client', ALL_PERMISSIONS)
+        
     ],
 }
 
