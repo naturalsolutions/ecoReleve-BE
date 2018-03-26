@@ -53,7 +53,11 @@ def schema_downgrades():
 
 def data_upgrades():
     """Add any optional data upgrade migrations here!"""
-    pass
+    query = '''
+    UPDATE "ModuleForms" SET "Options" = REPLACE("Options",'latin', 'vernaculaire')
+    WHERE "Name" = 'taxon'
+    '''
+    op.execute(query)
 
 def data_downgrades():
     """Add any optional data downgrade migrations here!"""
