@@ -47,7 +47,7 @@ def data_upgrades():
 def data_downgrades():
     """Add any optional data downgrade migrations here!"""
     
-     op.execute('''
+    op.execute('''
         UPDATE "ModuleGrids" SET "ColumnParams" = NULL
         WHERE "Name" = 'StationDate'
     ''')
