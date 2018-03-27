@@ -17,6 +17,8 @@ from ..GenericObjets.OrmModelsMixin import HasDynamicProperties, GenericType
 
 class Client(HasDynamicProperties, Base):
     __tablename__ = 'Client'
+    moduleFormName = 'ClientForm'
+    moduleGridName = 'ClientGrid'
     ID = Column(Integer, Sequence('Client__id_seq'), primary_key=True)
     Name = Column(String(250))
     description = Column(String)

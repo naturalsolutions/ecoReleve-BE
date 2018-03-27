@@ -160,4 +160,4 @@ class MonitoredSitesView(DynamicObjectCollectionView):
         return response
 
 
-RootCore.listChildren.append(('monitoredSites', MonitoredSitesView))
+RootCore.children.append(('monitoredSites', MonitoredSitesView))

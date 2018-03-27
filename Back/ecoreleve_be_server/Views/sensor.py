@@ -24,17 +24,19 @@ class SensorValueView(DynamicObjectValue):
 class SensorValuesView(DynamicObjectValues):
     model = SensorDynPropValue
     item = SensorValueView
+    children = [('{int}', SensorValueView)]
 
 
 class SensorView(DynamicObjectView):
 
     model = Sensor
+    children = [('{int}', SensorValuesView)]
 
     def __init__(self, ref, parent):
         DynamicObjectView.__init__(self, ref, parent)
         self.actions = {'equipment': self.getEquipment,
                         'locations': self.getLocations}
-        self.add_child('history', SensorValuesView)
+        # self.add_child('history', SensorValuesView)
 
     def __getitem__(self, ref):
         if ref in self.actions:
@@ -79,6 +81,7 @@ class SensorsView(DynamicObjectCollectionView):
 
     Collection = SensorList
     item = SensorView
+    children = [('{int}', SensorView)]
     moduleFormName = 'SensorForm'
     moduleGridName = 'SensorFilter'
 
@@ -107,4 +110,4 @@ class SensorsView(DynamicObjectCollectionView):
         return response
 
 
-RootCore.listChildren.append(('sensors', SensorsView))
+RootCore.children.append(('sensors', SensorsView))

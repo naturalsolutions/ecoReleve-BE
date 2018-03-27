@@ -11,12 +11,12 @@ UPDATE public."ProtocoleType"
 WHERE "Name"='Herpeto';
 
 UPDATE public."ProtocoleType"
-	SET "Label"= 'Mammifères terrestres'
+	SET "Label"= 'Mammifï¿½res terrestres'
 WHERE "Name"='Mammo';
 
 UPDATE public."ProtocoleType"
 	SET "Label"= 'Chauves-souris'
-WHERE "Name"='Chiroptères';
+WHERE "Name"='Chiropteres';
 
 UPDATE public."ProtocoleType"
 	SET "Label"= 'Plantes'

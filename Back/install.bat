@@ -4,8 +4,7 @@
 CALL conda install conda-build --yes
 CALL conda env create -f environment.yml
 
-CALL activate erd_env
-CALL conda install pywin32=220 --yes
+CALL activate erd_be
 
 CALL python setup.py develop
 

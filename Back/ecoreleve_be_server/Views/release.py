@@ -342,7 +342,7 @@ class ReleaseView(CustomView):
         return result
 
 
-RootCore.listChildren.append(('release', ReleaseView))
+RootCore.children.append(('release', ReleaseView))
 
 
 def isavailableSensor(request, data):

@@ -84,11 +84,13 @@ def loadUserRole(session):
 
 USERS = {'Super Utilisateur': 'superUser',
          'Utilisateur': 'user',
-         'Administrateur': 'admin'}
+         'Administrateur': 'admin',
+         'Client': 'client'}
 
 GROUPS = {'superUser': ['group:superUser'],
           'user': ['group:user'],
-          'admin': ['group:admin']}
+          'admin': ['group:admin'],
+          'client': ['group:client']}
 
 
 def groupfinder(userid, request):
@@ -137,6 +139,7 @@ def db(request):
 
 from ..GenericObjets.FrontModules import *
 from .CustomTypes import *
+from .Client import *
 from .Project import *
 from .Protocoles import *
 from .User import User
@@ -151,4 +154,3 @@ from .Import import *
 from .SensorData import *
 from .List import *
 from .Log import sendLog
-from .Client import *

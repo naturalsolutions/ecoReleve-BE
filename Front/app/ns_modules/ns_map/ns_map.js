@@ -1096,7 +1096,10 @@ define([
 
         this.addClusterLayers();
 
-        this.initPlayer(geoJson);
+        if(this.player){
+          this.initPlayer(geoJson);
+
+        }
       } else {
         this.disablePlayer();
       }
@@ -1117,8 +1120,10 @@ define([
     },
 
     disablePlayer: function(){
-      this.hidePlayer();
-      $('.js-toggle-ctrl-player').addClass('hidden');
+      if(this.player){
+        this.hidePlayer();
+        $('.js-toggle-ctrl-player').addClass('hidden');
+      }
     },
 
     msToReadable: function(ms){
@@ -1275,7 +1280,9 @@ define([
     },
 
     computeInitialData: function(geoJson, x){
-
+      if(!this.player){
+        return;
+      }
       var dayInMs = 86400000;
 
       var relDayInMs = ( x || 1000)

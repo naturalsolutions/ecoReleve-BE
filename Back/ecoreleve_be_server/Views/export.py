@@ -9,56 +9,32 @@ import io
 from datetime import datetime
 from ..Views import CustomView
 from ..controllers.security import RootCore
-from ..GenericObjets.SearchEngine import DynamicPropertiesQueryEngine, QueryEngine
+from ..GenericObjets.SearchEngine import Query_engine
 from traceback import print_exc
 
 ProcoleType = Observation.TypeClass
 
 # class ObservationCollection(DynamicPropertiesQueryEngine):
 #     pass
-    
-class ObservationCollection(DynamicPropertiesQueryEngine):
 
-    def __init__(self, session, object_type=None, from_history=None):
-        DynamicPropertiesQueryEngine.__init__(self, session=session, model=Observation, object_type=object_type, from_history=from_history)
+@Query_engine(Observation)
+class ObservationCollection():
 
-    def _select_from(self):
-        table_join = DynamicPropertiesQueryEngine._select_from(self)
-        table_join = join(table_join, Station, Station.ID == Observation.FK_Station)
-
-        # station_columns = [
-        #     Station.Name.label('Station_Name'),
-        #     Station.LAT.label('Station_Latitude'),
-        #     Station.LON.label('Station_Longitude'),
-        #     Station.StationDate.label('Station_Date')
-        # ]
-        
+     def extend_from(self, _from):
         station_columns = [
-            Station.Name,
+            # Station.Name,
             Station.LAT,
             Station.LON,
             Station.StationDate
-        ]
+            ]
 
         self.selectable.extend(station_columns)
-        return table_join
-    def init_count_statement(self):
-        '''
-        override DynamicPropertiesQueryEngine.init_count_statement
-        '''
-        table_join = join(self.model, Station, Station.ID == Observation.FK_Station)
-        query = select([func.count()]).select_from(table_join)
-        return query
-
-    def get_column_by_name(self, column_name):
-        try :
-            column = DynamicPropertiesQueryEngine.get_column_by_name(self, column_name)
-        except:
-            column = getattr(Station, column_name, None)
-        return column
+        return _from
 
 
 class CustomExportView(CustomView):
+
+    chidlren = []
 
     def __init__(self, ref, parent):
         CustomView.__init__(self, ref, parent)
@@ -73,6 +49,7 @@ class ExportObservationProjectView(CustomExportView):
 
     item = None
     moduleFormName = 'ObservationForm'
+    chidlren = []
 
     def __init__(self, ref, parent):
         CustomExportView.__init__(self, ref, parent)
@@ -115,13 +92,14 @@ class ExportObservationProjectView(CustomExportView):
                 if geoJson_properties != None :
                     for col in geoJson_properties :
                         properties[col] = row[col]
-                geoJson.append({'type':'Feature',
-                                'properties':properties,
-                                'geometry':
-                                    {'type':'Point',
-                                     'coordinates':[row['LAT'],row['LON']]
-                                    }
-                                })
+                if row['LAT'] and row['LON']:
+                    geoJson.append({'type':'Feature',
+                                    'properties':properties,
+                                    'geometry':
+                                        {'type':'Point',
+                                        'coordinates':[row['LAT'],row['LON']]
+                                        }
+                                    })
         else :
             exceed = True
         return {'type':'FeatureCollection', 'features': geoJson,'exceed': exceed, 'total':countResult}
@@ -129,7 +107,7 @@ class ExportObservationProjectView(CustomExportView):
     def count_(self):
         data = self.request.params.mixed()
         filters = [
-            {'Column':'FK_Project','Operator':'=', 'Value':self.parent.id_},
+            {'Column':'Station@FK_Project','Operator':'=', 'Value':self.parent.id_},
         ]
         if 'criteria' in data:
             filters.extend(json.loads(data['criteria']))
@@ -139,7 +117,7 @@ class ExportObservationProjectView(CustomExportView):
 
     def search(self, selectable=[]):
         filters = [
-            {'Column':'FK_Project','Operator':'=', 'Value':self.parent.id_},
+            {'Column':'Station@FK_Project','Operator':'=', 'Value':self.parent.id_},
         ]
         params = self.request.params.mixed()
         if 'criteria' in params:
@@ -206,7 +184,8 @@ class ExportObservationProjectView(CustomExportView):
 
         station_fields = self.session.query(ModuleForms
                                     ).filter(ModuleForms.Module_ID == self.getConf('StationForm').ID
-                                    ).filter(or_(ModuleForms.TypeObj == self.type_obj, ModuleForms.TypeObj == None)
+                                    ).filter(or_(ModuleForms.TypeObj == 1, ModuleForms.TypeObj == None)
+                                    # ).filter(ModuleForms.TypeObj.in_(['1', None])
                                     ).filter(~ModuleForms.Name.in_(['ID', 'FK_Project'])
                                     ).order_by(ModuleForms.FormOrder).all()
 
@@ -238,11 +217,13 @@ class ExportObservationProjectView(CustomExportView):
 
         return filters
 
-
     def GenerateFilter(self, field):
         ''' return filter field to build Filter '''
+        prefix = ''
+        if field.Module_ID == 2:
+            prefix = 'Station@'
         filter_ = {
-            'name': field.Name,
+            'name': prefix+field.Name,
             'type': field.InputType,
             'label': field.Label,
             'title': field.Label,
@@ -265,17 +246,6 @@ class ExportObservationProjectView(CustomExportView):
             filter_['options'] = [
                 {'label': 'True', 'val': 1}, {'label': 'False', 'val': 0}]
 
-        # if (field.FilterType == 'AutocompTreeEditor'
-        #         and field.Options is not None and field.Options != ''):
-        #     filter_['options'] = {
-        #         'startId': field.Options,
-        #         'wsUrl': dbConfig['wsThesaurus']['wsUrl'],
-        #         'lng': threadlocal.get_current_request().authenticated_userid['userlanguage'],
-        #         'displayValueName': 'valueTranslated'}
-        #     filter_['options']['startId'] = field.Options
-        #     filter_['options']['ValidationRealTime'] = False
-        #     filter_['options']['iconFont'] = 'reneco reneco-THE-thesaurus'
-
         if (field.InputType == 'TaxRefEditor'
                 and field.Options is not None and field.Options != ''):
             option = json.loads(field.Options)
@@ -284,33 +254,31 @@ class ExportObservationProjectView(CustomExportView):
 
         return filter_
 
-
-    # def getFile(self):
-    #     try:
-    #         criteria = json.loads(self.request.params.mixed()['criteria'])
-    #         fileType = criteria['fileType']
-    #         # columns selection
-    #         columns = criteria['columns']
-
-    #         queryColumns = self.formatColumns(fileType, columns)
-
-    #         query = self.generator.getFullQuery(criteria['filters'], columnsList=queryColumns)
-    #         rows = self.session.execute(query).fetchall()
-
-    #         filename = self.viewName + '.' + fileType
-    #         self.request.response.content_disposition = 'attachment;filename=' + filename
-    #         value = {'header': columns, 'rows': rows}
-
-    #         io_export = self.actions[fileType](value)
-    #         return io_export
-
-    #     except:
-    #         raise
+    # def export_csv(self, value):
+    #     csvRender = CSVRenderer()
+    #     csv = csvRender(value, {'request': self.request})
+    #     return Response(csv)
 
     def export_csv(self, value):
-        csvRender = CSVRenderer()
-        csv = csvRender(value, {'request': self.request})
-        return Response(csv)
+        # df = pd.DataFrame(data=value['rows'], columns=value['header'])
+        df = pd.DataFrame.from_records(value['rows'],
+                                       columns=value['rows'][0].keys(),
+                                       coerce_float=True)
+
+        # fout = io.BytesIO()
+        # writer = pd.ExcelWriter(fout)
+        # df.to_excel(writer, sheet_name='Sheet1', index=False)
+        # writer.save()
+        # file = fout.getvalue()
+        fout = io.StringIO()
+        file = df.to_csv(sep=';',index=False)
+        dt = datetime.now().strftime('%d-%m-%Y')
+        return Response(
+            file,
+            content_disposition="attachment; filename="
+            + self.filename + dt + ".csv",
+            content_type='text/csv')
+    
 
     def export_pdf(self, value):
         pdfRender = PDFrenderer()
@@ -323,7 +291,10 @@ class ExportObservationProjectView(CustomExportView):
         return Response(gpx)
 
     def export_excel(self, value):
-        df = pd.DataFrame(data=value['rows'], columns=value['header'])
+        # df = pd.DataFrame(data=value['rows'], columns=value['header'])
+        df = pd.DataFrame.from_records(value['rows'],
+                                       columns=value['rows'][0].keys(),
+                                       coerce_float=True)
 
         fout = io.BytesIO()
         writer = pd.ExcelWriter(fout)
@@ -343,7 +314,8 @@ class ExportObservationProjectView(CustomExportView):
 class ExportProtocoleTypeView(CustomExportView):
 
     item = ExportObservationProjectView
-
+    children = [('{int}', ExportObservationProjectView)]
+    
     def __init__(self, ref, parent):
         CustomExportView.__init__(self, ref, parent)
         self.actions = {'getFields': self.getFields,
@@ -400,11 +372,10 @@ class ExportProtocoleTypeView(CustomExportView):
 class ExportProjectView(CustomExportView):
 
     item = None
-
+    children = [('protocols', ExportProtocoleTypeView), ('observations', ExportObservationProjectView)]
+    
     def __init__(self, ref, parent):
         CustomExportView.__init__(self, ref, parent)
-        self.add_child('protocols', ExportProtocoleTypeView)
-        self.add_child('observations', ExportObservationProjectView)
         self.id_ = ref
 
     def retrieve(self):
@@ -412,13 +383,12 @@ class ExportProjectView(CustomExportView):
         result = self.session.execute(query).scalar()
         return {'nb stations': result}
 
-    def __getitem__(self, item):
-        return self.get(item)
-
 
 class ExportCollectionProjectView(CustomExportView):
 
     item = ExportProjectView
+    children = [('{int}', ExportProjectView)]
+    
     def retrieve(self):
         query = select([Project]).order_by(Project.Name.asc())
         result = [dict(row) for row in self.session.execute(query).fetchall()]
@@ -427,17 +397,13 @@ class ExportCollectionProjectView(CustomExportView):
 class ExportCoreView(CustomExportView):
 
     item = None
-
+    children = [('projects', ExportCollectionProjectView)]
     def __init__(self, ref, parent):
         CustomExportView.__init__(self, ref, parent)
-        self.add_child('projects', ExportCollectionProjectView)
-
-    def __getitem__(self, item):
-        return self.get(item)
 
     def retrieve(self):
         return {'next items': 'views'
                 }
 
 
-RootCore.listChildren.append(('export', ExportCoreView))
+RootCore.children.append(('export', ExportCoreView))

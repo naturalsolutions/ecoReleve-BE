@@ -397,7 +397,7 @@
                     schm.value = this.initValuesShemaIn(schm, this.filtersValues[fieldName].operatorValue);
                 }
             } else {
-                operatorValue = schm.Operator.options[0].label;
+                operatorValue = schm.Operator.options[0].val;
             }
 
             if (this.firstOperator) {
