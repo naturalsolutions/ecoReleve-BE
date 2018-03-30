@@ -13,14 +13,13 @@ h2{
   font-size: 30px;
 }
 
-.tiles-left{
+.tiles-left,.tiles-right {
+  display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-}
-.tiles-right{
-  
-}
-  
-@media screen and (min-width: @screen-sm) and (max-width: 1199px){
+@media screen and (max-width: 1199px){
   .home-page{
     .mid-height{
       height: auto;
