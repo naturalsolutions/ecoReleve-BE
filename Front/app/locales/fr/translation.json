@@ -3,17 +3,17 @@
         "input": "Saisie",
         "manual-import": "Import",
         "history-import": "Historique des Imports",
-        "export": "Export",
+        "export": "Exporter",
         "sites": "Sites monitorés",
         "individuals": "Individus",
         "validation": "Validation",
-        "data": "Mes données",
+        "data": "Les observations",
         "stations": "Stations",
         "objects": "Objets",
         "new-station": "Nouvelle station",
         "sensors": "Capteurs",
         "release": "Relaché",
-        "projects": "Projets",
+        "projects": "Les projets",
         "clients": "Clients"
     },
     "stepper": {
@@ -62,6 +62,7 @@
         "individuals": "individus",
         "addProtocol": "Ajouter un protocole",
         "newLabel": "Creation de nouveau ",
+        "new": "Nouveau (elle) ",
         "option": {
             "is": "est",
             "isNot": "n'est pas",

@@ -95,7 +95,7 @@
 
         <% if (typeof(disabledNew)=== 'undefined' && typeof(availableOptions) === 'undefined') { %>
             <a href="#<%= type %>/new" class="js-admin js-link-new btn btn-success pull-right">
-                <span class="reneco reneco-entrykey"></span> &nbsp; New
+                <span class="reneco reneco-entrykey"></span> &nbsp;<span data-i18n="shared.new"></span>
                 <%= single %>
             </a>
             <% } else if(typeof(disabledNew)=== 'undefined'){ %>

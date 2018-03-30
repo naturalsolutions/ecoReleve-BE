@@ -35,8 +35,8 @@ define([
                 '<option value="7">In</option>' +
                 '</select>' +
                 '</div>' +
-                '<div>'+
-                '<input type="text" class="ag-filter-filter js-text-input form-control input-sm" >'+
+                '<div>' +
+                '<input type="text" class="ag-filter-filter js-text-input form-control input-sm" >' +
                 '</div>' +
                 '<div class="ag-filter-apply-panel" id="applyPanel">' +
                 '<button class="btn btn-block" type="button" id="applyButton">' + apply + '</button>' +
@@ -55,8 +55,8 @@ define([
             this.$filterType.addEventListener("change", this.onTypeChanged.bind(this));
             this.filterSelect = null;
             this.filterAutocomp = {
-              type : CONTAINS,
-              text : null
+                type: CONTAINS,
+                text: null
             };
 
 
@@ -66,21 +66,21 @@ define([
             this.valueGetter = params.valueGetter;
             this.tabOrdered = params.filterParams.tabToOrder.sort();
 
-            $( this.$autoComp ).autocomplete({
-              source: function(req, responseFn) {
-                  var re = $.ui.autocomplete.escapeRegex(req.term);
-                  var matcher = new RegExp( "^" + re, "i" );
-                  var a = $.grep( _this.tabOrdered, function(item,index){
-                      return matcher.test(item);
-                  });
-                  responseFn( a );
-              }
+            $(this.$autoComp).autocomplete({
+                source: function(req, responseFn) {
+                    var re = $.ui.autocomplete.escapeRegex(req.term);
+                    var matcher = new RegExp("^" + re, "i");
+                    var a = $.grep(_this.tabOrdered, function(item, index) {
+                        return matcher.test(item);
+                    });
+                    responseFn(a);
+                }
             });
-            $(this.$autoComp).keydown(function(event){
-              if(event.keyCode == 13) { //press enter
-                $(_this.$autoComp).blur();
-              }
-           });
+            $(this.$autoComp).keydown(function(event) {
+                if (event.keyCode == 13) { //press enter
+                    $(_this.$autoComp).blur();
+                }
+            });
             this.params = params;
 
             this.createGui();
@@ -119,8 +119,8 @@ define([
         },
 
         onTypeChanged: function() {
-          this.filterAutocomp.type = parseInt($(this.$filterType).val());
-          this.filterChanged();
+            this.filterAutocomp.type = parseInt($(this.$filterType).val());
+            this.filterChanged();
         },
 
         filterChanged: function() {
@@ -182,8 +182,8 @@ define([
                 return true;
             }
             var valTmp = this.valueGetter(params);
-            if( !valTmp ) {
-              return false;
+            if (!valTmp) {
+                return false;
             }
             var valTmpLowCase = valTmp.toString().toLowerCase();
 
@@ -201,14 +201,14 @@ define([
                     return index >= 0 && index === (valTmpLowCase.length - this.filterAutocomp.text.length);
                 case IN:
                     var tab = this.filterAutocomp.text.split(',');
-                    if(tab.length <= 1){
+                    if (tab.length <= 1) {
                         tab = this.filterAutocomp.text.split(';');
                     }
-                    if(tab.length <= 1){
+                    if (tab.length <= 1) {
                         tab = this.filterAutocomp.text.split(' ');
                     }
 
-                    for (var i=0; i< tab.length; i++){
+                    for (var i = 0; i < tab.length; i++) {
                         if ((tab[i].toLowerCase() == valTmpLowCase)) {
                             return true;
                         }

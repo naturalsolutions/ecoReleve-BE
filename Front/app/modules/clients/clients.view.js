@@ -1,12 +1,12 @@
 define([
-  'modules/objects/manager.view',
-  './client.model',
-  
+    'modules/objects/manager.view',
+    './client.model',
+
 ], function(ManagerView, ClientModel) {
 
-  'use strict';
+    'use strict';
 
-  return ManagerView.extend({
-  	ModelPrototype: ClientModel,
-  });
+    return ManagerView.extend({
+        ModelPrototype: ClientModel,
+    });
 });

@@ -1,37 +1,31 @@
 define([
-	'jquery',
-	'underscore',
-	'backbone',
-	'marionette',
+    'jquery',
+    'underscore',
+    'backbone',
+    'marionette',
 
-	'i18n'
+    'i18n'
 
-], function($, _, Backbone, Marionette
-) {
+], function($, _, Backbone, Marionette) {
 
-  'use strict';
+    'use strict';
 
-  return Marionette.LayoutView.extend({
+    return Marionette.LayoutView.extend({
 
-    className: 'full-height',
-    template: 'app/modules/importFile/gsm/templates/tpl-step2-gsm.html',
+        className: 'full-height',
+        template: 'app/modules/importFile/gsm/templates/tpl-step2-gsm.html',
 
-    name: 'step2 GSM',
+        name: 'step2 GSM',
 
-    initialize: function() {
-		},
+        initialize: function() {},
 
-    check: function() {
-		},
+        check: function() {},
 
-    onShow: function() {
-		},
+        onShow: function() {},
 
-    onDestroy: function() {
-		},
+        onDestroy: function() {},
 
-    validate: function() {
-		},
+        validate: function() {},
 
-  });
+    });
 });

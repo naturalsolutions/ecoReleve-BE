@@ -1,12 +1,12 @@
 define([
-  'jquery',
-  'backbone_forms',
-  'sweetAlert',
+    'jquery',
+    'backbone_forms',
+    'sweetAlert',
 ], function(
-  $, Form, Swal
-){
-  'use strict';
-  return Form.editors.ajaxButtonEditor = Form.editors.Base.extend({
+    $, Form, Swal
+) {
+    'use strict';
+    return Form.editors.ajaxButtonEditor = Form.editors.Base.extend({
 
 
 
@@ -27,8 +27,8 @@ define([
             Form.editors.Base.prototype.initialize.call(this, options);
             this.options = options.schema.options;
             this.editable = '';
-            if (options.schema.fieldClass.indexOf('hide') != -1 ) {
-              this.editable = 'disabled';
+            if (options.schema.fieldClass.indexOf('hide') != -1) {
+                this.editable = 'disabled';
             }
             var params = this.options.target_params;
             this.parentModel = options.model;
@@ -37,25 +37,25 @@ define([
             var _this = this;
         },
 
-        actionOnBtn: function(e){
+        actionOnBtn: function(e) {
             var _this = this;
             e.preventDefault();
-             Swal({
-              title: 'Warning',
-              text: 'Monitored Site coordinates will be updated, are you sure ? ',
-              type: 'warning',
-              showCancelButton: true,
-              CancelButtonColor:'red',
-              CancelButtonText: 'No',
-              confirmButtonColor: 'green',
-              confirmButtonText: 'Yes',
-              closeOnConfirm: true
-              },
-              function(isConfirm) {
-                  if (isConfirm){
-                    _this.callback();
-                  }
-              });
+            Swal({
+                    title: 'Warning',
+                    text: 'Monitored Site coordinates will be updated, are you sure ? ',
+                    type: 'warning',
+                    showCancelButton: true,
+                    CancelButtonColor: 'red',
+                    CancelButtonText: 'No',
+                    confirmButtonColor: 'green',
+                    confirmButtonText: 'Yes',
+                    closeOnConfirm: true
+                },
+                function(isConfirm) {
+                    if (isConfirm) {
+                        _this.callback();
+                    }
+                });
         },
 
         callback: function() {
@@ -65,43 +65,46 @@ define([
             $.ajax({
                 url: url,
                 context: this,
-                data:this.parentModel.toJSON(),
-                success: function(data){
+                data: this.parentModel.toJSON(),
+                success: function(data) {
                     _this.ajaxAlert(data);
                 },
-                error: function(data){
+                error: function(data) {
                     console.log(data)
                 }
             });
         },
 
-        ajaxAlert: function(data){
+        ajaxAlert: function(data) {
             setTimeout(function() {
                 Swal({
-                  title: 'Site position',
-                  text: data,
-                  type: 'info',
-                  showCancelButton: false,
-                  confirmButtonColor: 'rgb(201, 218, 225)',
-                  confirmButtonText: 'OK',
-                  closeOnConfirm: true,
+                    title: 'Site position',
+                    text: data,
+                    type: 'info',
+                    showCancelButton: false,
+                    confirmButtonColor: 'rgb(201, 218, 225)',
+                    confirmButtonText: 'OK',
+                    closeOnConfirm: true,
                 });
             }, 500);
         },
 
-        render: function(){
+        render: function() {
             var options = this.options;
             var _this = this;
 
             var $el = _.template(
-                this.template, {btnText:this.options.btnText ,iconFont:this.options.iconFont, editable: _this.editable
-            });
-           this.setElement($el);
+                this.template, {
+                    btnText: this.options.btnText,
+                    iconFont: this.options.iconFont,
+                    editable: _this.editable
+                });
+            this.setElement($el);
             //tmp solution ? datetimepicker remove the value
-/*            if(this.options){
-                var value = this.options.model.get(this.options.key);
-                $el.find('input').val(value);
-            }*/
+            /*            if(this.options){
+                            var value = this.options.model.get(this.options.key);
+                            $el.find('input').val(value);
+                        }*/
 
             return this;
         }
