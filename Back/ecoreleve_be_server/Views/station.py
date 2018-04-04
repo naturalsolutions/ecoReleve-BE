@@ -77,6 +77,16 @@ class StationsView(DynamicObjectCollectionView):
     def getFormImportGPX(self):
         return self.getForm(objectType=1, moduleName='ImportFileForm')
 
+    def insert(self):
+        data = {}
+        for items, value in self.request.json_body.items():
+            data[items] = value
+        data['creator'] = self.request.authenticated_userid['iss']
+        self.objectDB.values = data
+        self.session.add(self.objectDB)
+        self.session.flush()
+        return {'ID': self.objectDB.ID}
+
     def lastImported(self, obj, params):
         user = self.request.authenticated_userid['iss']
         obj['Operator'] = '='
