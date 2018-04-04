@@ -1,47 +1,45 @@
 define([
-	'jquery',
-	'underscore',
-	'backbone',
-	'marionette',
+    'jquery',
+    'underscore',
+    'backbone',
+    'marionette',
 
-	'i18n'
+    'i18n'
 
-], function($, _, Backbone, Marionette
-) {
+], function($, _, Backbone, Marionette) {
 
-  'use strict';
+    'use strict';
 
-  return Marionette.LayoutView.extend({
+    return Marionette.LayoutView.extend({
 
-    className: 'full-height',
-    template: 'app/modules/importFile/tpl-step0.html',
+        className: 'full-height',
+        template: 'app/modules/importFile/tpl-step0.html',
 
-    events: {
-      'change input': 'changeValue',
-    },
+        events: {
+            'change input': 'changeValue',
+        },
 
-    name : '<span class="import-step0"></span>',
+        name: '<span class="import-step0"></span>',
 
-    initialize: function() {
-		},
+        initialize: function() {},
 
-    onShow: function() {
-      this.$el.find('.tile-inside:first input').prop('checked', true).change();
-      this.$el.find('.tile-inside:first').addClass('active');
-      this.$el.i18n();
-      var stepName = i18n.translate('import.stepper.step0-label');
-      $('.import-step0').html(stepName);
-		},
+        onShow: function() {
+            this.$el.find('.tile-inside:first input').prop('checked', true).change();
+            this.$el.find('.tile-inside:first').addClass('active');
+            this.$el.i18n();
+            var stepName = i18n.translate('import.stepper.step0-label');
+            $('.import-step0').html(stepName);
+        },
 
-    validate: function() {
-      return this.$el.find('.tile-inside input[type="radio"]:checked').val();
-    },
+        validate: function() {
+            return this.$el.find('.tile-inside input[type="radio"]:checked').val();
+        },
 
-    changeValue: function(e) {
-      this.$el.find('label.tile-inside').each(function() {
-        $(this).removeClass('active');
-      });
-      $(e.target).parent().addClass('active');
-    },
-  });
+        changeValue: function(e) {
+            this.$el.find('label.tile-inside').each(function() {
+                $(this).removeClass('active');
+            });
+            $(e.target).parent().addClass('active');
+        },
+    });
 });

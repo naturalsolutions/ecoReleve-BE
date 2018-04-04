@@ -1,19 +1,19 @@
 define([
-  'jquery',
-  'underscore',
-  'backbone',
-  'marionette',
+    'jquery',
+    'underscore',
+    'backbone',
+    'marionette',
 
-  'modules/objects/object.new.view',
-  './client.model',
+    'modules/objects/object.new.view',
+    './client.model',
 ], function(
-  $, _, Backbone, Marionette,
-  NewView, ClientModel
-){
+    $, _, Backbone, Marionette,
+    NewView, ClientModel
+) {
 
-  'use strict';
-  return NewView.extend({
+    'use strict';
+    return NewView.extend({
 
-    ModelPrototype: ClientModel,
-  });
+        ModelPrototype: ClientModel,
+    });
 });

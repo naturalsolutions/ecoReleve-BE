@@ -1,12 +1,12 @@
 define([
-  'modules/objects/manager.view',
-  './sensor.model',
-  
+    'modules/objects/manager.view',
+    './sensor.model',
+
 ], function(ManagerView, SensorModel) {
 
-  'use strict';
+    'use strict';
 
-  return ManagerView.extend({
-  	ModelPrototype: SensorModel,
-  });
+    return ManagerView.extend({
+        ModelPrototype: SensorModel,
+    });
 });

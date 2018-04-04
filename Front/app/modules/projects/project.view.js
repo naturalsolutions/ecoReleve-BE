@@ -1,118 +1,118 @@
 define([
-  'jquery',
-  'underscore',
-  'backbone',
-  'marionette',
-  'sweetAlert',
-  'translater',
-  'L',
+    'jquery',
+    'underscore',
+    'backbone',
+    'marionette',
+    'sweetAlert',
+    'translater',
+    'L',
 
-  'ns_map/ns_map',
-  'ns_grid/grid.view',
-  'ns_form/NsFormsModuleGit',
+    'ns_map/ns_map',
+    'ns_grid/grid.view',
+    'ns_form/NsFormsModuleGit',
 
-  'modules/objects/detail.view',
-  './project.model',
+    'modules/objects/detail.view',
+    './project.model',
 
 
 ], function(
-  $, _, Backbone, Marionette, Swal, Translater, L,
-  NsMap, GridView, NsForm,
-  DetailView, ProjectModel
-){
+    $, _, Backbone, Marionette, Swal, Translater, L,
+    NsMap, GridView, NsForm,
+    DetailView, ProjectModel
+) {
 
-  'use strict';
+    'use strict';
 
-  return DetailView.extend({
-    ModelPrototype: ProjectModel,
-    events: {
-      'click button.NsFormModuleEdit': 'toggleMapControl'
-    },
+    return DetailView.extend({
+        ModelPrototype: ProjectModel,
+        events: {
+            'click button.NsFormModuleEdit': 'toggleMapControl'
+        },
 
-    toggleMapControl: function(e){
-      console.log('click Edit', e)
-      // this.map.toggleDrawing();
-      // this.map.setDrawControl();
-      
-    },
+        toggleMapControl: function(e) {
+            console.log('click Edit', e)
+                // this.map.toggleDrawing();
+                // this.map.setDrawControl();
 
-    displayGrids: function(){
-      this.displayStationsGrid();
-    },
+        },
 
-    reload: function(options) {
-      this.model.set('id', options.id);
+        displayGrids: function() {
+            this.displayStationsGrid();
+        },
 
-      this.com.addModule(this.map);
-      this.map.com = this.com;
-      this.map.url = this.model.get('type') + '/' + this.model.get('id')  + '/stations?geo=true'; //only this one
-      this.map.updateFromServ();
-      this.map.url = false;
+        reload: function(options) {
+            this.model.set('id', options.id);
 
-      this.displayForm();
-      this.displayGrids();
-      this.afterShow();
-    },
+            this.com.addModule(this.map);
+            this.map.com = this.com;
+            this.map.url = this.model.get('type') + '/' + this.model.get('id') + '/stations?geo=true'; //only this one
+            this.map.updateFromServ();
+            this.map.url = false;
 
-    displayMap: function(geoJson) {
-      var self = this;
-      this.map = new NsMap({
-        url: 'projects/' + this.model.get('id')  + '/stations?geo=true', ////only this one
-        zoom: 4,
-        element: 'map',
-        popup: true,
-        // cluster: true,
-        disableCentering: true,
-        drawable: true,
-      });
+            this.displayForm();
+            this.displayGrids();
+            this.afterShow();
+        },
 
-      this.map.map.on('draw:created', function (e) {
-        var type = e.layerType;
-        self.currentLayer = e.layer;
-        // var latlon = self.currentLayer.getLatLng();
+        displayMap: function(geoJson) {
+            var self = this;
+            this.map = new NsMap({
+                url: 'projects/' + this.model.get('id') + '/stations?geo=true', ////only this one
+                zoom: 4,
+                element: 'map',
+                popup: true,
+                // cluster: true,
+                disableCentering: true,
+                drawable: true,
+            });
 
-        self.map.drawnItems.addLayer(self.currentLayer);
-        // self.$el.find('input[name="LAT"]').val(latlon.lat);
-        // self.$el.find('input[name="LON"]').val(latlon.lng);
-        self.map.toggleDrawing();
-      });
+            this.map.map.on('draw:created', function(e) {
+                var type = e.layerType;
+                self.currentLayer = e.layer;
+                // var latlon = self.currentLayer.getLatLng();
 
-    },
+                self.map.drawnItems.addLayer(self.currentLayer);
+                // self.$el.find('input[name="LAT"]').val(latlon.lat);
+                // self.$el.find('input[name="LON"]').val(latlon.lng);
+                self.map.toggleDrawing();
+            });
 
-    afterShow: function(){
-      var _this = this;
-      $.when(this.nsForm.jqxhr).done(function(data){
-        var geom = data.data.geom;
-        if(_this.map.drawnItems){
-          _this.map.drawnItems.clearLayers();
-        }
-        if(geom){
-          _this.map.addGeometry(geom, true);
-        } 
-      });
+        },
+
+        afterShow: function() {
+            var _this = this;
+            $.when(this.nsForm.jqxhr).done(function(data) {
+                var geom = data.data.geom;
+                if (_this.map.drawnItems) {
+                    _this.map.drawnItems.clearLayers();
+                }
+                if (geom) {
+                    _this.map.addGeometry(geom, true);
+                }
+            });
 
 
-      this.nsForm.butClickSave = function(e){
-        var geom;
-        if (_this.map.getGeometry().features.length > 0){
-          geom = _this.map.getGeometry().features[0];
-        } else {
-          geom = null;
-        }
-        _this.nsForm.model.set('geom',geom)
-        NsForm.prototype.butClickSave.call(this, e);
-      }
-    },
+            this.nsForm.butClickSave = function(e) {
+                var geom;
+                if (_this.map.getGeometry().features.length > 0) {
+                    geom = _this.map.getGeometry().features[0];
+                } else {
+                    geom = null;
+                }
+                _this.nsForm.model.set('geom', geom)
+                NsForm.prototype.butClickSave.call(this, e);
+            }
+        },
 
-    displayStationsGrid: function() {
-      this.rgStationsGrid.show(this.stationsGrid = new GridView({
-        columns: this.model.get('stationsColumnDefs'),
-        type: this.model.get('type'),
-        url: this.model.get('type') + '/' + this.model.get('id')  + '/stations',
-        clientSide: true,
-      }));
-      this.gridViews.push(this.stationsGrid);
-    },
+        displayStationsGrid: function() {
+            this.rgStationsGrid.show(this.stationsGrid = new GridView({
+                columns: this.model.get('stationsColumnDefs'),
+                type: this.model.get('type'),
+                url: this.model.get('type') + '/' + this.model.get('id') + '/stations',
+                clientSide: true,
+            }));
+            this.gridViews.push(this.stationsGrid);
+        },
 
-  });
+    });
 });

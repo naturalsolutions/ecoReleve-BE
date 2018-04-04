@@ -1,6 +1,6 @@
 define([
-    'jquery','autocompTree',
-], function( $, autocompTree) {
+    'jquery', 'autocompTree',
+], function($, autocompTree) {
 
     'use strict';
 
@@ -16,7 +16,7 @@ define([
             this.eGui = document.createElement('div');
             this.eGui.innerHTML =
                 '<div class="js-select">' +
-                '<input type="text" class="ag-filter-filter js-autocomp-input form-control input-sm" id="prout" placeholder="'+placeholder+'">'+
+                '<input type="text" class="ag-filter-filter js-autocomp-input form-control input-sm" id="prout" placeholder="' + placeholder + '">' +
                 '</div>' +
                 '<div class="ag-filter-apply-panel" id="applyPanel">' +
                 '<button class="btn btn-block" type="button" id="applyButton">' + apply + '</button>' +
@@ -51,7 +51,7 @@ define([
                 startId: "204089",
                 timeout: undefined,
 
-                onItemClick: function (options) {
+                onItemClick: function(options) {
                     _this.onFilterChanged();
 
                 }

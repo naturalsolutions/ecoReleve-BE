@@ -1,11 +1,11 @@
 define([
-  'modules/objects/manager.view',
-  './monitored_site.model'
+    'modules/objects/manager.view',
+    './monitored_site.model'
 ], function(ManagerView, MonitoredSiteModel) {
 
-  'use strict';
+    'use strict';
 
-  return ManagerView.extend({
-  	ModelPrototype: MonitoredSiteModel,
-  });
+    return ManagerView.extend({
+        ModelPrototype: MonitoredSiteModel,
+    });
 });
