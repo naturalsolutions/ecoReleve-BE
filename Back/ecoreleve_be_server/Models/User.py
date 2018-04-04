@@ -21,20 +21,18 @@ class User(Base):
     Firstname = Column(String(50), nullable=False)
     CreationDate = Column(DateTime, nullable=False, server_default=func.now())
     Login = Column(String(250), nullable=False)
-    Password = Column(String, nullable=False)
     Language = Column(String(2))
-    ModificationDate = Column(DateTime, nullable=False,
-                              server_default=func.now())
-    if 'mssql' in dbConfig['cn.dialect']:
-        __table_args__ = (
-            Index('idx_Tuser_lastname_firstname', Lastname, Firstname,
-                  mssql_include=[id]), {'implicit_returning': False}
-        )
-    else:
-        __table_args__ = (
-            Index('idx_Tuser_lastname_firstname', Lastname,
-                  Firstname), {'implicit_returning': False}
-        )
+
+    # if 'mssql' in dbConfig['cn.dialect']:
+    #     __table_args__ = (
+    #         Index('idx_Tuser_lastname_firstname', Lastname, Firstname,
+    #               mssql_include=[id]), {'implicit_returning': False}
+    #     )
+    # else:
+    #     __table_args__ = (
+    #         Index('idx_Tuser_lastname_firstname', Lastname,
+    #               Firstname), {'implicit_returning': False}
+    #     )
 
     @hybrid_property
     def fullname(self):
