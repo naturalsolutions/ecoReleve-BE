@@ -209,8 +209,8 @@ define([
         },
         setDrawControl: function(drawOptions) {
             var _this = this;
-            if (drawOptions == undefined || drawOptions == null) {
-                drawOptions = {
+            if (this.drawOptions == undefined || this.drawOptions == null) {
+                this.drawOptions = {
                     circle: false,
                     rectangle: false,
                     polyline: false,
@@ -223,7 +223,7 @@ define([
                     featureGroup: _this.drawnItems,
                     // remove: false
                 },
-                draw: drawOptions,
+                draw: this.drawOptions,
                 position: 'topleft'
             });
             this.map.addControl(this.drawControl);
