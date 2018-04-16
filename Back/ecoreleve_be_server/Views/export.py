@@ -1,7 +1,7 @@
-from sqlalchemy import select, join, exists, func, and_, text, or_
+from sqlalchemy import select, join, exists, func, and_, text, or_, outerjoin
 import json
 import pandas as pd
-from ..Models import BaseExport, Project, Observation, Station, ModuleForms, FrontModules
+from ..Models import BaseExport, Project, Observation, Station, ModuleForms, FrontModules, Base, User, Client, Project
 from ..utils.generator import Generator
 from ..renderers import CSVRenderer, PDFrenderer, GPXRenderer
 from pyramid.response import Response
@@ -25,11 +25,39 @@ class ObservationCollection():
             # Station.Name,
             Station.LAT,
             Station.LON,
-            Station.StationDate
+            Station.StationDate,
+            Station.creator
             ]
 
         self.selectable.extend(station_columns)
         return _from
+
+
+@Query_engine(Observation)
+class SinpObservationCollection():
+
+     def extend_from(self, _from):
+        station_columns = [
+            # Station.Name,
+            Station.LAT,
+            Station.LON,
+            Station.StationDate,
+            Station.creator
+            ]
+        Taxref = Base.metadata.tables['TAXREF']
+        # taxref_id_column = self.get_column_by_name('taxref_id')
+        # join_table = outerjoin(_from, Taxref, taxref_id_column == Taxref.c['CD_NOM'])
+        join_table = outerjoin(_from, Station, Observation.FK_Station == Station.ID)
+        join_table = outerjoin(join_table, User, Station.creator == User.id)
+        join_table = outerjoin(join_table, Project, Station.FK_Project == Project.ID)
+        join_table = outerjoin(join_table, Client, Project.FK_Client == Client.ID)
+        self.fk_join_list.append(Station.__table__)
+        self.selectable.extend(station_columns)
+        self.selectable.extend([User.Lastname,
+                                User.Firstname,
+                                Client.Name.label('ClientName')])
+        print(self.selectable)
+        return join_table
 
 
 class CustomExportView(CustomView):
@@ -60,7 +88,8 @@ class ExportObservationProjectView(CustomExportView):
                         'pdf': self.export_pdf,
                         'gpx': self.export_gpx,
                         'excel': self.export_excel,
-                        'getFile': self.getFile
+                        'getFile': self.getFile,
+                        'sinp': self.export_sinp
                         }
         self.type_obj = self.request.params.get('protocolType', None)
         if not self.type_obj:
@@ -254,11 +283,6 @@ class ExportObservationProjectView(CustomExportView):
 
         return filter_
 
-    # def export_csv(self, value):
-    #     csvRender = CSVRenderer()
-    #     csv = csvRender(value, {'request': self.request})
-    #     return Response(csv)
-
     def export_csv(self, value):
         # df = pd.DataFrame(data=value['rows'], columns=value['header'])
         df = pd.DataFrame.from_records(value['rows'],
@@ -309,6 +333,68 @@ class ExportObservationProjectView(CustomExportView):
             + self.filename + dt + ".xlsx",
             content_type='application/vnd.openxmlformats-\
             officedocument.spreadsheetml.sheet')
+
+    def export_sinp(self, value):
+        params = self.request.params.mixed()
+        # rows = self.search()
+        filters = [
+            {'Column':'Station@FK_Project','Operator':'=', 'Value':self.parent.id_},
+        ]
+
+        CollectionEngine = SinpObservationCollection(session=self.session, object_type=self.type_obj)
+        query = CollectionEngine.build_query(selectable=['taxref_id', 'type_inventaire', 'taxon'], filters=filters)
+        
+        protocol_name = self.session.query(ProcoleType).get(self.type_obj).Name
+        project_name = self.session.query(Project).get(self.parent.id_).Name
+        dataframe = pd.read_sql(query, self.session.get_bind())
+        required_columns = [
+            'statObs', #default value = "Pr"
+            'nomCite', #nom complet taxon 
+            'cdNom',
+            'cdRef',
+            'datedet', #date de determination definitive du taxon
+            'dateDebut',
+            'dateFin',
+            'dSPublique', #default value = "Pr" (privé)
+            'orgGestDat', # normallement nom bureau d'étude, correspond à l'organisme qui gére et détient la donnée d'origine et qui en a la responsabilité ??? client de l'etude ?? 
+            'statSource', #type d'observation => terrain , default value = "Te"
+            'WKT', #Point, polygon ...
+            'natObjGeo', #default value = "St", si polygon => "In"
+            'obsNomOrg', #nom de l'organisme ayant effectué l'observation
+            'obsId', #nom de l'observateur, s'il ne veut pas etre renseigné mettre "ANONYME", format : NOM Prenom
+        ]
+
+        recommanded_columns = [
+            'ocMethDet', ## correspondra au type d'inventaire fourni par le bureau d'étude
+        ]
+
+        point_wkt = 'POINT({LONG} {LAT})'
+        out_dataframe = pd.DataFrame(columns=required_columns.extend(recommanded_columns))
+
+        out_dataframe['datedet'] = dataframe['StationDate'].apply(lambda x: x.strftime("%d/%m/%Y"))
+        out_dataframe['dateDebut'] = dataframe['StationDate'].apply(lambda x: x.strftime("%d/%m/%Y"))
+        out_dataframe['dateFin'] = dataframe['StationDate'].apply(lambda x: x.strftime("%d/%m/%Y"))
+        out_dataframe['WKT'] = dataframe[['LON', 'LAT']].apply(lambda r : point_wkt.format(LONG=r[0], LAT=r[1]), axis=1)
+        out_dataframe['statObs'] = 'Pr'
+        out_dataframe['dSPublique'] = 'Pr'
+        out_dataframe['orgGestDat'] = dataframe['ClientName'].apply(lambda x: self.without_accent(x))
+        out_dataframe['obsNomOrg'] = self.without_accent('Auddicé Environnement')
+        out_dataframe['obsId'] = dataframe[['Lastname','Firstname']].apply(lambda r: self.without_accent(r[0]).upper() +' '+ self.without_accent(r[1]).title(), axis=1)
+        out_dataframe['statSource'] = 'Te'
+        out_dataframe['natObjGeo'] = 'St'
+        out_dataframe['cdNom'] = dataframe['taxref_id']
+        out_dataframe['cdRef'] = dataframe['taxref_id']
+        out_dataframe['nomCite'] = dataframe['taxon']
+        out_dataframe['ocMethDet'] = dataframe['type_inventaire'].apply(lambda x: self.without_accent(x))
+
+        return out_dataframe.to_csv(index=False, sep=';')
+
+    def without_accent(self, text):
+        import unicodedata
+        text = unicodedata.normalize('NFD', text)
+        text = text.encode('ascii', 'ignore')
+        text = text.decode("utf-8")
+        return str(text)
 
 
 class ExportProtocoleTypeView(CustomExportView):

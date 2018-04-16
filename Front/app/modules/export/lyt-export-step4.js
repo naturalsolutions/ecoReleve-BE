@@ -126,7 +126,7 @@ define([
                 document.body.appendChild(link);
                 link.click();
             } else {
-
+                    
                 var route = 'export/projects/' + this.model.get('project_id') + '/observations/getFile?protocolType=' + this.model.get('protocolType_id') + '&fileType=' + this.model.get('fileType');
                 $.ajax({
                     url: route,
@@ -138,7 +138,9 @@ define([
                     var url = URL.createObjectURL(new Blob([data], { 'type': 'application/' + this.model.get('fileType') }));
                     var link = document.createElement('a');
                     link.href = url;
-                    link.download = this.model.get('project_name') + '_' + this.model.get('protocolType_name') + '_' + new Moment().format('DD-MM-YY') + '.' + this.model.get('fileType');
+                    var fileType = this.model.get('fileType') == 'sinp' ? 'csv' : this.model.get('fileType');
+
+                    link.download = this.model.get('project_name') + '_' + this.model.get('protocolType_name') + '_' + new Moment().format('DD-MM-YY') + '.' + fileType;
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);

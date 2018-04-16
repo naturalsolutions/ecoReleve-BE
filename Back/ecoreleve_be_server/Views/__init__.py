@@ -8,6 +8,9 @@ from collections import OrderedDict
 from sqlalchemy import select, join, desc, asc
 import json
 from datetime import datetime
+import pandas as pd
+import io
+from pyramid.response import Response
 
 
 def add_cors_headers_response_callback(event):
@@ -468,7 +471,7 @@ class DynamicObjectCollectionView(CustomView):
         dt = datetime.now().strftime('%d-%m-%Y')
         return Response(
             file,
-            content_disposition="attachment; filename=individuals_export_" + dt + ".xlsx",
+            content_disposition="attachment; filename="+self.__name__+"_export_" + dt + ".xlsx",
             content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
 
