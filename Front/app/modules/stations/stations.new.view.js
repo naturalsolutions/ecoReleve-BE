@@ -67,6 +67,7 @@ define([
                     circlemarker: false
                 }
             });
+
             this.map.map.on('draw:created', function(e) {
                 var type = e.layerType;
                 self.currentLayer = e.layer;
@@ -85,7 +86,6 @@ define([
                 self.removeLatLngMakrer(true);
               });
         },
-
         
         removeLatLngMakrer: function(reInitLatLng){
             if(this.currentLayer){
