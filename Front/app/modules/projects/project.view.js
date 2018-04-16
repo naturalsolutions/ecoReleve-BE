@@ -62,19 +62,26 @@ define([
                 self.map.drawnItems.addLayer(self.currentLayer);
                 self.map.toggleDrawing();
             });
+
+            this.map.map.on('draw:deleted', function(e) {
+                self.map.toggleDrawing();
+            });
         },
 
         afterShow: function() {
             var _this = this;
             $.when(this.nsForm.jqxhr).done(function(data) {
                 var geom = data.data.geom;
-                if (_this.map.drawnItems) {
-                    _this.map.drawnItems.clearLayers();
-                }
-                if (geom) {
-                    _this.map.addGeometry(geom, true);
-                    _this.map.disableDrawingControl();
-                }
+
+                $.when(_this.map.deffered).done(function(){
+                    if (_this.map.drawnItems) {
+                        _this.map.drawnItems.clearLayers();
+                    }
+                    if (geom) {
+                        _this.map.addGeometry(geom, true);
+                        _this.map.disableDrawingControl();
+                    }
+                });
             });
 
             this.nsForm.on('form_edit', function(){
@@ -88,7 +95,7 @@ define([
                     _this.map.disableDrawingControl();
                 }
             });
-            
+
             this.nsForm.butClickSave = function(e) {
                 var geom;
                 if (_this.map.getGeometry().features.length > 0) {
