@@ -30,6 +30,7 @@ define([
 
         events: {
             'click .tab-link': 'displayTab',
+            'change input[name="LAT"], input[name="LON"]': 'getLatLng',
         },
 
         ui: {
@@ -73,7 +74,7 @@ define([
             }
             if (this.map) {
                 $.when(this.nsForm.jqxhr).then(function() {
-                    _this.map.addMarker(null, this.model.get('LAT'), this.model.get('LON'));
+                    _this.initMarker();
                 });
             }
         },
@@ -86,15 +87,98 @@ define([
         },
 
         displayMap: function() {
+            var self = this;
             var map = this.map = new NsMap({
                 zoom: 3,
                 popup: true,
+                drawable: true,
+                drawOptions: {
+                    circle: false,
+                    rectangle: false,
+                    polyline: false,
+                    polygon: false,
+                    circlemarker: false
+                }
             });
-            $.when(this.nsForm.jqxhr).then(function() {
-                map.addMarker(null, this.model.get('LAT'), this.model.get('LON'));
+            $.when(this.nsForm.jqxhr && this.map.deffered).then(function() {
+                self.initMarker();
             });
+
+            this.map.map.on('draw:created', function(e) {
+                var type = e.layerType;
+                self.currentLayer = e.layer;
+                self.map.drawnItems.addLayer(self.currentLayer);
+                var latlon = self.currentLayer.getLatLng();
+                self.setLatLonForm(latlon.lat, latlon.lng);
+                self.map.toggleDrawing();
+            });
+
+            this.map.map.on('draw:edited', function (e) {
+                var latlon = self.currentLayer.getLatLng();
+                self.setLatLonForm(latlon.lat, latlon.lng);
+              });
+              
+              this.map.map.on('draw:deleted', function () {
+                self.removeLatLngMakrer(true);
+              });
         },
 
+        initMarker: function(){
+            var lat = this.nsForm.model.get('LAT');
+            var lon = this.nsForm.model.get('LON');
+            if(this.map && this.map.drawnItems && this.map.drawnItems.getLayers().length){
+                this.map.drawnItems.clearLayers();
+            }
+            if(lat && lon){
+                // this.map.toggleDrawing();
+                this.currentLayer = this.map.addMarker(null,
+                    this.nsForm.model.get('LAT'),
+                    this.nsForm.model.get('LON'),
+                    false,
+                    false,
+                    this.map.drawnItems);
+            }
+        },
+
+        removeLatLngMakrer: function(reInitLatLng){
+            if(this.currentLayer){
+            this.map.drawnItems.removeLayer(this.currentLayer);
+            this.currentLayer = null;
+            }
+            if(reInitLatLng){
+            this.$el.find('input[name="LAT"]').val('');
+            this.$el.find('input[name="LON"]').val('');
+            }
+            this.map.toggleDrawing();
+        },
+    
+        setLatLonForm: function(lat, lon){
+            var lat = this.$el.find('input[name="LAT"]').val(parseFloat(lat.toFixed(5)));
+            var lon = this.$el.find('input[name="LON"]').val(parseFloat(lon.toFixed(5)));
+        },
+    
+        getLatLng: function() {
+            var lat = this.$el.find('input[name="LAT"]').val();
+            var lon = this.$el.find('input[name="LON"]').val();
+            this.updateMarkerPos(lat, lon);
+        },
+
+        updateMarkerPos: function(lat, lon) {
+            if (lat && lon) {
+            // this.map.toggleDrawing(true);
+            if(this.currentLayer){
+                this.currentLayer.setLatLng(new L.LatLng(lat, lon));
+            } else {
+                this.currentLayer = new L.marker(new L.LatLng(lat, lon));
+                this.map.drawnItems.addLayer(this.currentLayer)
+            }
+    
+            var center = this.currentLayer.getLatLng();
+            this.map.map.panTo(center, {animate: false});
+            } else {
+            this.removeLatLngMakrer();
+            }
+        },
 
         displayTab: function(e) {
             e.preventDefault();
@@ -111,6 +195,11 @@ define([
 
             if (id === '#mapTab' && !this.map) {
                 this.displayMap();
+                if(this.nsForm.displayMode=='edit'){
+                    this.map.enableDrawingControl();
+                } else {
+                    this.map.disableDrawingControl();
+                }
             }
         },
 
@@ -140,7 +229,6 @@ define([
 
             this.nsForm = new NsForm(formConfig);
             this.nsForm.BeforeShow = function() {
-
             };
 
             this.nsForm.afterShow = function() {
@@ -154,25 +242,35 @@ define([
                         $('#dateTimePicker').data("DateTimePicker").format('DD/MM/YYYY').maxDate(new Date());
                     });
                 }
-
             };
 
             this.nsForm.afterSaveSuccess = function() {
-                if (_this.map) {
-                    _this.map.addMarker(null, this.model.get('LAT'), this.model.get('LON'));
-                }
-
+                // if (_this.map) {
+                //     _this.currentLayer = _this.map.addMarker(null, this.model.get('LAT'), this.model.get('LON'), _this.map.drawnItems);
+                // }
                 if (this.model.get('fieldActivityId') != _this.fieldActivityId) {
                     _this.displayProtos();
                     _this.fieldActivityId = _this.model.get('fieldActivityId');
-
                 }
+                _this.initMarker();
             };
 
             $.when(this.nsForm.jqxhr).then(function() {
                 _this.fieldActivityId = this.model.get('fieldActivityId');
                 _this.displayProtos();
-            })
+            });
+
+            this.nsForm.on('form_edit', function(){
+                if(_this.map){
+                    _this.map.enableDrawingControl();
+                }
+            });
+
+            this.nsForm.on('form_display', function(){
+                if(_this.map){
+                    _this.map.disableDrawingControl();
+                }
+            });
 
         },
 
