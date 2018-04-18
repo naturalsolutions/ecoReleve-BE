@@ -84,8 +84,7 @@ class Project (HasDynamicProperties, Base):
 class Project_User(Base):
     __tablename__ = 'Project_User'
 
-    ID = Column(Integer, Sequence('Project__id_seq'), primary_key=True)
+    ID = Column(Integer, Sequence('Project_User__id_seq'), primary_key=True)
     FK_Client = Column(Integer, ForeignKey('Client.ID'), nullable=False)
-    FK_Project = Column(Integer, ForeignKey('Project.ID'), nullable=False)
     FK_User = Column(Integer, nullable=False)
     Project_Role = Column(String(250))

@@ -9,15 +9,35 @@ from sqlalchemy.exc import IntegrityError
 from ..controllers.security import context_permissions
 from ..Views import DynamicObjectView, DynamicObjectCollectionView
 from ..controllers.security import RootCore
-from .station import StationsView
-from pyramid.security import Allow
+from .station import StationsView, StationView
+from pyramid.security import Allow, Deny, ALL_PERMISSIONS
+
+
+
+class ProjectStationView(StationView):
+
+    def __init__(self, ref, parent):
+        StationView.__init__(self, ref, parent)
+        user_infos = self.request.authenticated_userid
+        project_id = parent.parent.objectDB.ID
+        self.__acl__ = context_permissions['project']
+        if user_infos['app_roles']['ecoreleve'].lower() == 'client' and self.objectDB is not None and project_id == self.objectDB.FK_Project:
+            self.__acl__ = [(Allow, 'group:client', 'read')]
 
 
 class ProjectStationsView(StationsView):
 
+    children = [('{int}', ProjectStationView)]
+
+
     def __init__(self, ref, parent):
         StationsView.__init__(self, ref, parent)
         self.__acl__ = parent.__acl__
+    
+    def getForm(self, objectType=None, moduleName=None, mode='edit'):
+        form = StationsView.getForm(self, objectType=None, moduleName=None, mode='edit')
+        form['data']['FK_Project'] = self.parent.objectDB.ID
+        return form
 
     def handleCriteria(self, params):
         params = StationsView.handleCriteria(self, params)
