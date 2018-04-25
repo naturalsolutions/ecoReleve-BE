@@ -8,7 +8,9 @@ from sqlalchemy import (
     not_,
     or_,
     DATE,
-    outerjoin)
+    outerjoin,
+    literal_column
+    )
 from sqlalchemy.orm import aliased
 from ..GenericObjets.ListObjectWithDynProp import CollectionEngine
 from ..Models import (
@@ -31,6 +33,7 @@ from datetime import datetime
 from ..utils.datetime import parse
 from ..utils.generator import Generator
 from sqlalchemy.sql.expression import union_all
+from sqlalchemy.dialects.postgresql import aggregate_order_by
 
 SensorType = Sensor.TypeClass
 eval_ = Eval()
@@ -42,6 +45,22 @@ class StationList(CollectionEngine):
     def __init__(self, frontModule, typeObj=None, startDate=None,
                  history=False, historyView=None):
         super().__init__(Station, frontModule, startDate)
+
+
+    def GetJoinTable(self, searchInfo):
+        ObservationTable = Base.metadata.tables['Observation']
+        joinTable = super().GetJoinTable(searchInfo)
+        joinTable = outerjoin(joinTable,
+                                ObservationTable,
+                                ObservationTable.c['FK_Station'] == Station.ID)
+        joinTable = joinTable
+        self.selectable.append(
+            func.string_agg(
+            ObservationTable.c['taxon'],
+            aggregate_order_by(literal_column("','"), Station.ID
+        )).label('taxon'))
+
+        return joinTable
 
     def WhereInJoinTable(self, query, criteriaObj):
         ''' Override parent function to include management of Observation/Protocols and fieldWorkers '''
@@ -128,6 +147,11 @@ class StationList(CollectionEngine):
             query = query.where(~exists(subSelect2))
 
         return query
+
+    def GetFullQuery(self, searchInfo=None):
+        super().GetFullQuery(searchInfo)
+        self.fullQueryJoinOrdered = self.fullQueryJoinOrdered.group_by(Station.ID)
+        return self.fullQueryJoinOrdered
 
     def GetFlatDataList(self, searchInfo=None, getFieldWorkers=True):
         ''' Override parent function to include
