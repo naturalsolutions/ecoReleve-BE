@@ -25,16 +25,6 @@ define([
 
     return DetailView.extend({
         ModelPrototype: ProjectModel,
-        events: {
-            'click button.NsFormModuleEdit': 'toggleMapControl'
-        },
-
-        toggleMapControl: function(e) {
-            console.log('click Edit', e)
-                // this.map.toggleDrawing();
-                // this.map.setDrawControl();
-
-        },
 
         displayGrids: function() {
             this.displayStationsGrid();
@@ -69,28 +59,42 @@ define([
             this.map.map.on('draw:created', function(e) {
                 var type = e.layerType;
                 self.currentLayer = e.layer;
-                // var latlon = self.currentLayer.getLatLng();
-
                 self.map.drawnItems.addLayer(self.currentLayer);
-                // self.$el.find('input[name="LAT"]').val(latlon.lat);
-                // self.$el.find('input[name="LON"]').val(latlon.lng);
                 self.map.toggleDrawing();
             });
 
+            this.map.map.on('draw:deleted', function(e) {
+                self.map.toggleDrawing();
+            });
         },
 
         afterShow: function() {
             var _this = this;
             $.when(this.nsForm.jqxhr).done(function(data) {
                 var geom = data.data.geom;
-                if (_this.map.drawnItems) {
-                    _this.map.drawnItems.clearLayers();
-                }
-                if (geom) {
-                    _this.map.addGeometry(geom, true);
+
+                $.when(_this.map.deffered).done(function(){
+                    if (_this.map.drawnItems) {
+                        _this.map.drawnItems.clearLayers();
+                    }
+                    if (geom) {
+                        _this.map.addGeometry(geom, true);
+                        _this.map.disableDrawingControl();
+                    }
+                });
+            });
+
+            this.nsForm.on('form_edit', function(){
+                if(_this.map){
+                    _this.map.enableDrawingControl();
                 }
             });
 
+            this.nsForm.on('form_display', function(){
+                if(_this.map){
+                    _this.map.disableDrawingControl();
+                }
+            });
 
             this.nsForm.butClickSave = function(e) {
                 var geom;

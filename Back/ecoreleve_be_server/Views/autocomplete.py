@@ -11,6 +11,7 @@ dictObj = {
     'monitoredSites': 'MonitoredSite',
     'users': 'User',
     'regions': 'Region',
+    'projects': 'Project',
     'clients': 'Client'
 }
 

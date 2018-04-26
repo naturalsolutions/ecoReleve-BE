@@ -48,14 +48,85 @@ define([
 
         onShow: function() {
             this.refrechView('#stWithCoords');
+            this.displayMap();
+            this.$el.i18n();
+        },
+
+        displayMap: function(){
+            var self = this;
             this.map = new NsMap({
                 popup: true,
                 zoom: 2,
                 element: 'map',
+                drawable: true,
+                drawOptions: {
+                    circle: false,
+                    rectangle: false,
+                    polyline: false,
+                    polygon: false,
+                    circlemarker: false
+                }
             });
-            this.$el.i18n();
-        },
 
+            this.map.map.on('draw:created', function(e) {
+                var type = e.layerType;
+                self.currentLayer = e.layer;
+                self.map.drawnItems.addLayer(self.currentLayer);
+                var latlon = self.currentLayer.getLatLng();
+                self.setLatLonForm(latlon.lat, latlon.lng);
+                self.map.toggleDrawing();
+            });
+
+            this.map.map.on('draw:edited', function (e) {
+                var latlon = self.currentLayer.getLatLng();
+                self.setLatLonForm(latlon.lat, latlon.lng);
+              });
+              
+              this.map.map.on('draw:deleted', function () {
+                self.removeLatLngMakrer(true);
+              });
+        },
+        
+        removeLatLngMakrer: function(reInitLatLng){
+            if(this.currentLayer){
+            this.map.drawnItems.removeLayer(this.currentLayer);
+            this.currentLayer = null;
+            }
+            if(reInitLatLng){
+            this.$el.find('input[name="LAT"]').val('');
+            this.$el.find('input[name="LON"]').val('');
+            }
+            this.map.toggleDrawing();
+        },
+    
+        setLatLonForm: function(lat, lon){
+            var lat = this.$el.find('input[name="LAT"]').val(parseFloat(lat.toFixed(5)));
+            var lon = this.$el.find('input[name="LON"]').val(parseFloat(lon.toFixed(5)));
+        },
+    
+        getLatLng: function() {
+            var lat = this.$el.find('input[name="LAT"]').val();
+            var lon = this.$el.find('input[name="LON"]').val();
+            this.updateMarkerPos(lat, lon);
+        },
+    
+        updateMarkerPos: function(lat, lon) {
+            if (lat && lon) {
+            // this.map.toggleDrawing(true);
+            if(this.currentLayer){
+                this.currentLayer.setLatLng(new L.LatLng(lat, lon));
+            } else {
+                this.currentLayer = new L.marker(new L.LatLng(lat, lon));
+                this.map.drawnItems.addLayer(this.currentLayer)
+            }
+    
+            var center = this.currentLayer.getLatLng();
+            this.map.map.panTo(center, {animate: false});
+            } else {
+            this.removeLatLngMakrer();
+            }
+        },
+  
         onDestroy: function() {
             this.map.destroy();
             this.nsForm.destroy();

@@ -179,6 +179,7 @@ define([
             }
         },
 
+        
         initModel: function() {
             var _this = this;
 
@@ -195,7 +196,12 @@ define([
             var url = this.modelurl + '/' + id;
 
             this.name = '_' + this.objectType + '_';
-
+            
+            if(this.displayMode=='edit'){
+                this.trigger('form_edit');
+            } else {
+                this.trigger('form_display');
+            }
             //initialize model from AJAX call
             this.jqxhr = $.ajax({
                 url: url,
@@ -339,8 +345,6 @@ define([
 
             // Call extendable function before the show call
             this.BeforeShow();
-
-            var _this = this;
             this.initRules();
 
             if (this.formRegion.html) {
@@ -348,8 +352,6 @@ define([
             } else {
                 return;
             }
-
-
 
             if (this.buttonRegion) {
                 if (this.buttonRegion[0]) {
@@ -363,12 +365,9 @@ define([
                     }
                 }
             }
-
             if (this.afterShow) {
                 this.afterShow();
             }
-
-
         },
 
         showErrorForMaxLength: function(_this) {

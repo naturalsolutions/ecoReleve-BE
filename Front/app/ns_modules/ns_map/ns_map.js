@@ -154,7 +154,6 @@ define([
             });
         },
 
-
         fetchGeoJson: function(url) {
             var _this = this;
             var criterias = {
@@ -209,8 +208,8 @@ define([
         },
         setDrawControl: function(drawOptions) {
             var _this = this;
-            if (drawOptions == undefined || drawOptions == null) {
-                drawOptions = {
+            if (this.drawOptions == undefined || this.drawOptions == null) {
+                this.drawOptions = {
                     circle: false,
                     rectangle: false,
                     polyline: false,
@@ -223,7 +222,7 @@ define([
                     featureGroup: _this.drawnItems,
                     // remove: false
                 },
-                draw: drawOptions,
+                draw: this.drawOptions,
                 position: 'topleft'
             });
             this.map.addControl(this.drawControl);
@@ -273,6 +272,30 @@ define([
             // this.map.on('draw:deleted', function () {
             // });
 
+        },
+
+        enableDrawingControl: function(){
+            var button = $('.leaflet-draw-section');
+            var markerButtons = button.find('a');
+            button.removeClass('disabled-draw-control');
+            markerButtons.removeClass('leaflet-disabled');
+            button.removeAttr('disabled');
+
+            if(this.drawnItems.getLayers().length){
+                var draw_button = button.find("a[class^='leaflet-draw-draw'],a[class*=' leaflet-draw-draw']");
+                draw_button.addClass('leaflet-disabled');
+                draw_button.parent().attr('disabled', 'disabled');
+                draw_button.parent().addClass('disabled-draw-control');
+
+            }
+        },
+
+        disableDrawingControl: function(){
+            var button = $('.leaflet-draw-section');
+            var markerButtons = button.find('a');
+            button.addClass('disabled-draw-control');
+            button.attr('disabled', 'disabled');
+            markerButtons.addClass('leaflet-disabled');
         },
 
         toggleDrawing: function() {
@@ -336,7 +359,6 @@ define([
             var Geom = new L.geoJson(geom);
             if (this.drawable) {
                 // Geom.addTo(this.drawnItems);
-                console.log(Geom)
                 this.drawnItems.addLayer(Geom.getLayers()[0]);
             } else {
 
@@ -859,7 +881,7 @@ define([
         },
 
         /*==========  resetMarkers :: reset a list of markers  ==========*/
-        addMarker: function(m, lat, lng, popup, icon) {
+        addMarker: function(m, lat, lng, popup, icon, layer) {
             if (m) {
                 m.addTo(this.map);
             } else {
@@ -869,8 +891,12 @@ define([
                 }
                 if (icon) {
                     m.setIcon(icon);
+                } 
+                if(!layer){
+                    m.addTo(this.map);
+                } else{
+                    layer.addLayer(m);
                 }
-                m.addTo(this.map);
             }
 
             if (this.lastMarker) {
