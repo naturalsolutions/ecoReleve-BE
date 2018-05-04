@@ -161,12 +161,6 @@ define([
             this.updateMarkerPos(lat, lon);
         },
 
-        updateMarkerPos: function(lat, lon) {
-            if (lat && lon) {
-                this.map.addMarker(null, lat, lon);
-            }
-        },
-
         checkUsers: function(e) {
             var usersFields = $('select[name="FieldWorker"]');
             var selectedUser = $(e.target).val();
