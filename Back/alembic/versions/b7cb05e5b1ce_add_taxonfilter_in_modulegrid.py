@@ -42,9 +42,9 @@ def data_upgrades():
     INSERT INTO public."ModuleGrids"
     ("ID","Module_ID","TypeObj","Name","Label","GridRender","GridSize","CellType","GridOrder","QueryName","Options","FilterOrder","FilterSize","IsSearchable","FilterDefaultValue","FilterRender","FilterType","FilterClass","Status","ColumnParams")
 	VALUES
-    (183,3,NULL,'taxon','Taxon','1','" { "width" : 120 , "maxWidth" : 350 , "minWidth" : 100 } "','string',40,'Forced',NULL,120,2,false,NULL,0,'TaxRefEditor',NULL,NULL,NULL);
+    (183,3,NULL,'nom_vernaculaire','Nom vernaculaire','1','{"width": 120,"maxWidth": 350,"minWidth": 100}','string',40,'Forced',NULL,120,2,false,NULL,0,'TaxRefEditor',NULL,NULL,NULL);
     '''
-    op.execute(query)
+    op.execute(sa.text(query))
 
 def data_downgrades():
     """Add any optional data downgrade migrations here!"""

@@ -61,7 +61,7 @@ class StationList(CollectionEngine):
             func.string_agg(
             obsValTable.c['ValueString'],
             aggregate_order_by(literal_column("','"), Station.ID
-        )).label('taxon'))
+        )).label('nom_vernaculaire'))
 
 
 
