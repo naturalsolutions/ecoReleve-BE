@@ -49,16 +49,22 @@ class StationList(CollectionEngine):
 
     def GetJoinTable(self, searchInfo):
         ObservationTable = Base.metadata.tables['Observation']
+        obsValTable = Base.metadata.tables['observationdynpropvaluenow']
+
+        joinObsValNow = join( ObservationTable,obsValTable ,and_( ObservationTable.c['ID'] == obsValTable.c['FK_Observation'] , obsValTable.c['Name'] == 'nom_vernaculaire') )
+
         joinTable = super().GetJoinTable(searchInfo)
         joinTable = outerjoin(joinTable,
-                                ObservationTable,
-                                ObservationTable.c['FK_Station'] == Station.ID)
-        joinTable = joinTable
+                                joinObsValNow,
+                                joinObsValNow.c['Observation_FK_Station'] == Station.ID)
         self.selectable.append(
             func.string_agg(
-            ObservationTable.c['taxon'],
+            obsValTable.c['ValueString'],
             aggregate_order_by(literal_column("','"), Station.ID
         )).label('taxon'))
+
+
+
 
         return joinTable
 
