@@ -3,11 +3,15 @@ from ..Models import (
     Observation,
     Station,
     # ProtocoleType,
+    MediasFiles,
     FieldActivity_ProtocoleType,
     fieldActivity,
     ErrorAvailable,
-    sendLog
+    sendLog,
+    dbConfig
 )
+import os
+import base64
 from sqlalchemy import select, and_, join
 from traceback import print_exc
 from ..Views import DynamicObjectView, DynamicObjectCollectionView
@@ -129,12 +133,24 @@ class ObservationsView(DynamicObjectCollectionView):
 
         curObs = self.item.model(FK_Station=sta.ID)
         listOfSubProtocols = []
+        listOfPhotos = []
 
         #ToDO get form to retrieve if subObs exists in schema
         # Because next lines are very bad
         for items, value in data.items():
-            if isinstance(value, list) and items not in ('children', 'images'):
-                listOfSubProtocols = value
+            if isinstance(value, list) and items not in ('children'):
+                if items in ('images'):
+                    for photo in value:
+                        curMedia = MediasFiles(
+                            Path = photo['name'],
+                            Name = photo['name'],
+                            Extension = photo['name'].split(".")[-1],
+                            Creator = self.request.authenticated_userid['iss']
+                        )
+                        listOfPhotos.append((curMedia,photo['base64Data']))
+                        # pass
+                else:
+                    listOfSubProtocols = value
 
         data['Observation_childrens'] = listOfSubProtocols
         ###
@@ -145,8 +161,27 @@ class ObservationsView(DynamicObjectCollectionView):
             curObs.values = data
             curObs.Station = sta
             self.session.add(curObs)
+            self.session.commit()
+            idObs = curObs.ID
+            
+            for item,base64File in listOfPhotos:
+                item.Path = os.path.join(str(idObs),item.Path)
+                item.FK_Observation = idObs
+                try:
+                    self.session.add(item)
+                    self.session.commit()
+                    if item.Id:
+                        urlNewFile = os.path.join(dbConfig['mediasFiles']['path'],item.Path)
+                        os.makedirs(os.path.dirname(urlNewFile), exist_ok=True)
+                        with open(urlNewFile,"wb") as fh:
+                            fh.write( base64.b64decode(base64File.replace('data:image/jpeg;base64,','')) )                            
+                except Exception as e:
+                    raise 
             self.session.flush()
             responseBody['id'] = curObs.ID
+            # self.session.rollback()
+            # self.request.response.status_code = 409
+
         except Exception as e:
             self.session.rollback()
             self.request.response.status_code = 409
@@ -186,6 +221,7 @@ class ObservationsView(DynamicObjectCollectionView):
             curObs = listObs[i]
             # curObs.LoadNowValues()
             values.append(curObs.getDataWithSchema()['data'])
+
         return values
 
     def getProtocolsofStation(self):
@@ -200,7 +236,7 @@ class ObservationsView(DynamicObjectCollectionView):
                     and_(Observation.FK_Station == sta_id, Observation.Parent_Observation == None)))
                 listType = list(self.session.query(FieldActivity_ProtocoleType
                                                    ).filter(FieldActivity_ProtocoleType.FK_fieldActivity == curSta.fieldActivityId))
-
+                
                 listProto = {}
                 if listObs:
                     for i in range(len(listObs)):

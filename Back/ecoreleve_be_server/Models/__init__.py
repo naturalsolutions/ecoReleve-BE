@@ -154,3 +154,4 @@ from .Import import *
 from .SensorData import *
 from .List import *
 from .Log import sendLog
+from .MediasFiles import *

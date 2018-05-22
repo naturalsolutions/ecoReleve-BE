@@ -21,6 +21,7 @@ from .Views import add_routes, add_cors_headers_response_callback
 from pyramid.events import NewRequest
 from sqlalchemy.orm import sessionmaker, scoped_session
 from .utils.adapters import *
+import os
 
 
 def includeme(config):
@@ -79,6 +80,29 @@ def init_db(config, settings):
 
     return engine
 
+def addMediaFileModule(settings, dbConfig):
+    dbConfig['mediasFiles'] = {}
+    dbConfig['mediasFiles']['path'] = settings['mediasFiles.path']
+    if dbConfig['mediasFiles'] == {}:
+        print("media files protocole not activated")
+        raise SystemExit
+        return
+    if(os.path.exists(dbConfig['mediasFiles']['path']) ):
+        try :
+            os.access( dbConfig['mediasFiles']['path'], os.W_OK)
+            print("folder : %s exist" %(dbConfig['mediasFiles']['path']))
+        except :
+            print("app cant write in this directory ask your admin %s" %(dbConfig['mediasFiles']['path']) )
+            raise
+            #declenché erreur
+    else:
+        print ("folder %s doesn't exist we gonna try to create it" %(dbConfig['mediasFiles']['path']))
+        try:
+            os.makedirs(dbConfig['mediasFiles']['path'])
+            print("folder created : %s" %(dbConfig['mediasFiles']['path']))
+        except OSError as exception:
+            if exception.errno != errno.EEXIST:
+                raise
 
 def main(global_config, **settings):
     """ This function initialze DB conection and returns a Pyramid WSGI application. """
@@ -88,6 +112,8 @@ def main(global_config, **settings):
     dbConfig['wsThesaurus']['wsUrl'] = settings['wsThesaurus.wsUrl']
     dbConfig['wsThesaurus']['lng'] = settings['wsThesaurus.lng']
     dbConfig['data_schema'] = settings['data_schema']
+
+    addMediaFileModule(settings,dbConfig)
 
     config = Configurator(settings=settings)
     config.include('pyramid_tm')
