@@ -34,6 +34,31 @@ define([
             });
         },
 
+        displayGallery:function() {
+            var listOfImages = this.model.get('images');
+            var fieldSetElem = document.createElement('fieldset')
+            var legendElem = document.createElement('legend')
+            legendElem.innerHTML = 'Gallery'
+
+            var elemGallery = document.createElement('div');
+            elemGallery.className = 'gallery'
+
+            for( var i = 0 ; i < listOfImages.length ; i++ ) {
+                var imgCur = document.createElement('img')
+                imgCur.src = listOfImages[i];
+                imgCur.height = '200'
+                imgCur.width ='200'
+                elemGallery.appendChild(imgCur);
+                imgCur.onclick = function(){
+                    window.open(imgCur.src);
+                }
+            }
+            fieldSetElem.appendChild(legendElem)
+            fieldSetElem.appendChild(elemGallery)
+            this.form.BBForm.el.appendChild(fieldSetElem);
+
+        },
+
         displayForm: function() {
             var _this = this;
 
@@ -81,6 +106,7 @@ define([
                     Backbone.history.navigate(url, { trigger: true });
                 }
             });
+            this.displayGallery();
         },
 
         handleErrors: function(response) {

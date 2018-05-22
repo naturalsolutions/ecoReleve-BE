@@ -48,7 +48,7 @@ class Observation(HasDynamicProperties, Base):
         uselist=False)
     Station = relationship("Station")
     Individual = relationship('Individual')
-    # Images = relationship('ObservationImage', cascade="all, delete-orphan")
+    Images = relationship('MediasFiles', back_populates='Observation', cascade="all, delete-orphan")
 
     @declared_attr
     def table_type_name(cls):
@@ -171,6 +171,11 @@ class Observation(HasDynamicProperties, Base):
 
     def getValues(self):
         values = HasDynamicProperties.getValues(self)
+        if self.Images:
+            values['images'] = []
+            for image in self.Images:
+                imgUrl = 'mediasFiles/'+image.Path.replace('\\','/')
+                values['images'].append(imgUrl)
         if self.Observation_children:
             typeName = self.Observation_children[0]._type.Name
             subObsList = []
