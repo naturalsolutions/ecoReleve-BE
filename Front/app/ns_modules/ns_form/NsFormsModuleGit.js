@@ -346,7 +346,8 @@ define([
             // Call extendable function before the show call
             this.BeforeShow();
             this.initRules();
-
+            //TODO Here for photos
+            // take 1 h for mediasfiles erd
             if (this.formRegion.html) {
                 this.formRegion.html(this.BBForm.el);
             } else {
@@ -426,7 +427,7 @@ define([
         butClickSave: function(e) {
             var _this = this;
             var flagEmpty = false;
-            var errors = this.BBForm.commit();
+            var errors = this.BBForm.commit({validate : true});
             var jqhrx;
 
             if (!errors) {
