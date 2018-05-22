@@ -379,7 +379,7 @@ class ExportObservationProjectView(CustomExportView):
         out_dataframe['dSPublique'] = 'Pr'
         out_dataframe['orgGestDat'] = dataframe['ClientName'].apply(lambda x: self.without_accent(x))
         out_dataframe['obsNomOrg'] = self.without_accent('Auddicé Environnement')
-        out_dataframe['obsId'] = dataframe[['Lastname','Firstname']].apply(lambda r: self.without_accent(r[0]).upper() +' '+ self.without_accent(r[1]).title(), axis=1)
+        out_dataframe['obsId'] = dataframe[['Lastname','Firstname']].apply(lambda r: self.without_accent(r[0],True) + self.without_accent(r[1],title=True), axis=1)
         out_dataframe['statSource'] = 'Te'
         out_dataframe['natObjGeo'] = 'St'
         out_dataframe['cdNom'] = dataframe['taxref_id']
@@ -389,12 +389,19 @@ class ExportObservationProjectView(CustomExportView):
 
         return out_dataframe.to_csv(index=False, sep=';')
 
-    def without_accent(self, text):
+    def without_accent(self, text, upper=False, title=False):
         import unicodedata
-        text = unicodedata.normalize('NFD', text)
-        text = text.encode('ascii', 'ignore')
-        text = text.decode("utf-8")
-        return str(text)
+        if  text is not None :
+            text = unicodedata.normalize('NFD', text)
+            text = text.encode('ascii', 'ignore')
+            text = text.decode("utf-8")
+            if upper:
+                text = str(text).upper()
+            if title:
+                text = str(' '+text).title()
+            return str(text)
+        else:
+            return ''
 
 
 class ExportProtocoleTypeView(CustomExportView):
