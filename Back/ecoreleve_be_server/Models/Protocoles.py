@@ -174,8 +174,11 @@ class Observation(HasDynamicProperties, Base):
         if self.Images:
             values['images'] = []
             for image in self.Images:
+                obj = {}
                 imgUrl = 'mediasFiles/'+image.Path.replace('\\','/')
-                values['images'].append(imgUrl)
+                obj['id'] = image.Id
+                obj['url'] = imgUrl
+                values['images'].append(obj)
         if self.Observation_children:
             typeName = self.Observation_children[0]._type.Name
             subObsList = []
