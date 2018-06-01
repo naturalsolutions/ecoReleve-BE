@@ -351,6 +351,7 @@ define([
                 elemGallery.className = 'gallery'
                 for( var i = 0 ; i < listOfImages.length ; i++ ) {
                         var imgCur = document.createElement('img')
+                        imgCur.className = 'imgcontent';
                         imgCur.id = i;
                         imgCur.src = listOfImages[i].url;
                         imgCur.height = '200'
