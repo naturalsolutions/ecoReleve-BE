@@ -338,6 +338,64 @@ define([
                 }
             });
         },
+        
+        displayGallery:function() {
+            var _this = this;
+            var listOfImages = this.model.get('images');
+            if( listOfImages )  {
+                var fieldSetElem = document.createElement('fieldset')
+                var legendElem = document.createElement('legend')
+                legendElem.innerHTML = 'Gallery'
+    
+                var elemGallery = document.createElement('div');
+                elemGallery.className = 'gallery'
+                for( var i = 0 ; i < listOfImages.length ; i++ ) {
+                        var imgCur = document.createElement('img')
+                        imgCur.id = i;
+                        imgCur.src = listOfImages[i].url;
+                        imgCur.height = '200'
+                        imgCur.width ='200'
+                        imgCur.onclick = function(){
+                            window.open(imgCur.src);
+                        }
+
+                        if (this.displayMode == 'edit') {
+                            var wrapper = document.createElement('div');
+                            wrapper.className = 'wrapperimg';
+                            var spanRemove = document.createElement('span')
+                            spanRemove.className = 'removeimg'
+                            wrapper.appendChild(imgCur);
+                            wrapper.appendChild(spanRemove);
+                            elemGallery.appendChild(wrapper);
+                            spanRemove.onclick = function(){
+                               var res = confirm('remove img ?')
+                               if (res == true) {
+                                   var tmpTab = _this.model.get('images');
+                                   var indexImg = Number(this.previousElementSibling.id);
+                                //    tmpTab[indexImg]={
+                                //        url:tmpTab[indexImg],
+                                //        status:'deleted'
+                                //    };
+                                    tmpTab[indexImg].status = 'deleted';
+                                   _this.model.set('images',tmpTab);
+                                   this.parentElement.parentElement.removeChild(this.parentElement);
+                               }
+
+                            }
+                        }
+                        else {
+                            elemGallery.appendChild(imgCur);
+                        }
+                        
+                    }
+                    fieldSetElem.appendChild(legendElem)
+                    fieldSetElem.appendChild(elemGallery)
+
+                    this.BBForm.el.appendChild(fieldSetElem);
+                }
+            
+
+        },
 
         showForm: function() {
             var _this = this;
@@ -348,6 +406,8 @@ define([
             this.initRules();
             //TODO Here for photos
             // take 1 h for mediasfiles erd
+            this.displayGallery();
+
             if (this.formRegion.html) {
                 this.formRegion.html(this.BBForm.el);
             } else {
