@@ -43,16 +43,36 @@ class ObservationView(DynamicObjectView):
         curObs = self.objectDB
         listOfSubProtocols = []
         responseBody = {'id': curObs.ID}
+        listOfDeletedFiles = []
 
         for items, value in data.items():
             if isinstance(value, list) and items != 'children':
-                listOfSubProtocols = value
+                if items in ('images'):
+                    for photo in value:                     
+                        if photo['status'] == 'deleted':
+                            fileDeleted= {}
+                            fileDeleted['model'] = self.session.query(MediasFiles).filter(MediasFiles.Id == photo['id']).one()
+                            fileDeleted['status'] =  self.session.query(MediasFiles).filter(MediasFiles.Id == photo['id']).delete()           
+                            listOfDeletedFiles.append(fileDeleted)
+                else:
+                    listOfSubProtocols = value
 
         data['Observation_childrens'] = listOfSubProtocols
         curObs.values = data
         try:
             if curObs.Equipment is not None:
                 curObs.Station = curObs.Station
+            self.session.commit()
+            for item in listOfDeletedFiles:
+                if item['status'] == 1:
+                    removedModel = item['model']
+                    absUrl = os.path.abspath( os.path.join(dbConfig['mediasFiles']['path'],str(removedModel.FK_Observation),removedModel.Name))
+                    try:
+                        os.remove(absUrl)
+                    except OSError as  e:  ## if failed, report it back to the user ##
+                        print ("Error: %s - %s." % (e.filename, e.strerror))
+                        raise
+
         except ErrorAvailable as e:
             self.session.rollback()
             self.request.response.status_code = 409
@@ -176,6 +196,9 @@ class ObservationsView(DynamicObjectCollectionView):
                         with open(urlNewFile,"wb") as fh:
                             fh.write( base64.b64decode(base64File.replace('data:image/jpeg;base64,','')) )                            
                 except Exception as e:
+                    print("nop error ")
+                    print(e)
+
                     raise 
             self.session.flush()
             responseBody['id'] = curObs.ID
