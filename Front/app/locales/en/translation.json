@@ -76,7 +76,17 @@
             "fieldWorkerNameErr": "Name error",
             "finishMsg": "Finish",
             "redoMsg": "Redo",
-            "finishTitleMsg": " Well done !"
+            "finishTitleMsg": " Well done !",
+            "succes": "Success",
+            "createNew": "creating new",
+            "createAnother": "create another",
+            "areYouSure": "Are you sure?",
+            "yesDelete": "Yes, delete it!",
+            "error": "Error",
+            "errorContactAdmin": "An error occured. Please contact an administrator.",
+            "dataConflict": "Data conflicts",
+            "emptyObs": "Empty observation",
+            "emptyObsMsg": "The observation won't be recorded"
         }
     },
     "input": {

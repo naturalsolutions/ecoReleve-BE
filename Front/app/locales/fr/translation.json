@@ -74,7 +74,17 @@
             "fieldWorkerNameErr": "Erreur de nom",
             "finishMsg": "Fin",
             "redoMsg": "Refaire",
-            "finishTitleMsg": " Bien fait !"
+            "finishTitleMsg": " Bien fait !",
+            "succes": "Succès",
+            "createNew": "création de nouveau(elle)",
+            "createAnother": "céer autre ",
+            "areYouSure": "Vous êtes sur(e)?",
+            "yesDelete": "Oui, à supprimer.",
+            "error": "Erreur",
+            "errorContactAdmin": "Une erreur s'est produite. Merci de contacter l'administrateur.",
+            "dataConflict": "Conflits de données.",
+            "emptyObs": "Observation vide",
+            "emptyObsMsg": "L'observation n'a pas pu être sauvegardée"
         }
     },
     "input": {
@@ -188,7 +198,7 @@
         "pdf-file": "fichier PDF",
         "csv-file": "fichier CSV",
         "excel-file": "fichier Excel",
-        "sinp-file": "fichier SNIP/GINCO",
+        "sinp-file": "fichier SINP/GINCO",
         "gpx-file": "fichier GPX",
         "step1-label": "Choix de protocole",
         "step2-label": "Filtre",

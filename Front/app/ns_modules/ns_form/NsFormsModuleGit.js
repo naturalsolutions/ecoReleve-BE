@@ -9,6 +9,7 @@ define([
     'requirejs-text!./NsFormsModule.html',
     'fancytree',
     './NsFormsCustomFields',
+    'i18n'
 
 ], function($, _, Backbone, Marionette, BackboneForm, Swal, Ruler, tpl) {
     return Backbone.View.extend({
@@ -179,7 +180,7 @@ define([
             }
         },
 
-        
+
         initModel: function() {
             var _this = this;
 
@@ -196,8 +197,8 @@ define([
             var url = this.modelurl + '/' + id;
 
             this.name = '_' + this.objectType + '_';
-            
-            if(this.displayMode=='edit'){
+
+            if (this.displayMode == 'edit') {
                 this.trigger('form_edit');
             } else {
                 this.trigger('form_display');
@@ -338,63 +339,62 @@ define([
                 }
             });
         },
-        
-        displayGallery:function() {
+
+        displayGallery: function() {
             var _this = this;
             var listOfImages = this.model.get('images');
-            if( listOfImages )  {
+            if (listOfImages) {
                 var fieldSetElem = document.createElement('fieldset')
                 var legendElem = document.createElement('legend')
                 legendElem.innerHTML = 'Gallery'
-    
+
                 var elemGallery = document.createElement('div');
                 elemGallery.className = 'gallery'
-                for( var i = 0 ; i < listOfImages.length ; i++ ) {
-                        var imgCur = document.createElement('img')
-                        imgCur.className = 'imgcontent';
-                        imgCur.id = i;
-                        imgCur.src = listOfImages[i].url;
-                        imgCur.height = '200'
-                        imgCur.width ='200'
-                        imgCur.onclick = function(){
-                            window.open(imgCur.src);
-                        }
+                for (var i = 0; i < listOfImages.length; i++) {
+                    var imgCur = document.createElement('img')
+                    imgCur.className = 'imgcontent';
+                    imgCur.id = i;
+                    imgCur.src = listOfImages[i].url;
+                    imgCur.height = '200'
+                    imgCur.width = '200'
+                    imgCur.onclick = function() {
+                        window.open(imgCur.src);
+                    }
 
-                        if (this.displayMode == 'edit') {
-                            var wrapper = document.createElement('div');
-                            wrapper.className = 'wrapperimg';
-                            var spanRemove = document.createElement('span')
-                            spanRemove.className = 'removeimg'
-                            wrapper.appendChild(imgCur);
-                            wrapper.appendChild(spanRemove);
-                            elemGallery.appendChild(wrapper);
-                            spanRemove.onclick = function(){
-                               var res = confirm('remove img ?')
-                               if (res == true) {
-                                   var tmpTab = _this.model.get('images');
-                                   var indexImg = Number(this.previousElementSibling.id);
+                    if (this.displayMode == 'edit') {
+                        var wrapper = document.createElement('div');
+                        wrapper.className = 'wrapperimg';
+                        var spanRemove = document.createElement('span')
+                        spanRemove.className = 'removeimg'
+                        wrapper.appendChild(imgCur);
+                        wrapper.appendChild(spanRemove);
+                        elemGallery.appendChild(wrapper);
+                        spanRemove.onclick = function() {
+                            var res = confirm('remove img ?')
+                            if (res == true) {
+                                var tmpTab = _this.model.get('images');
+                                var indexImg = Number(this.previousElementSibling.id);
                                 //    tmpTab[indexImg]={
                                 //        url:tmpTab[indexImg],
                                 //        status:'deleted'
                                 //    };
-                                    tmpTab[indexImg].status = 'deleted';
-                                   _this.model.set('images',tmpTab);
-                                   this.parentElement.parentElement.removeChild(this.parentElement);
-                               }
-
+                                tmpTab[indexImg].status = 'deleted';
+                                _this.model.set('images', tmpTab);
+                                this.parentElement.parentElement.removeChild(this.parentElement);
                             }
-                        }
-                        else {
-                            elemGallery.appendChild(imgCur);
-                        }
-                        
-                    }
-                    fieldSetElem.appendChild(legendElem)
-                    fieldSetElem.appendChild(elemGallery)
 
-                    this.BBForm.el.appendChild(fieldSetElem);
+                        }
+                    } else {
+                        elemGallery.appendChild(imgCur);
+                    }
+
                 }
-            
+                fieldSetElem.appendChild(legendElem)
+                fieldSetElem.appendChild(elemGallery)
+
+                this.BBForm.el.appendChild(fieldSetElem);
+            }
+
 
         },
 
@@ -488,7 +488,7 @@ define([
         butClickSave: function(e) {
             var _this = this;
             var flagEmpty = false;
-            var errors = this.BBForm.commit({validate : true});
+            var errors = this.BBForm.commit({ validate: true });
             var jqhrx;
 
             if (!errors) {
@@ -496,8 +496,8 @@ define([
             }
             if (flagEmpty) {
                 this.swal({
-                    title: 'Empty observation',
-                    text: 'The observation won\'t be recorded',
+                    title: i18n.t("shared.alertMsg.emptyObs"),
+                    text: i18n.t("shared.alertMsg.emptyObsMsg"),
                     type: 'warning',
                     showCancelButton: false,
                     confirmButtonColor: '#DD6B55',
@@ -611,10 +611,10 @@ define([
         butClickDelete: function() {
             var _this = this;
             var opts = {
-                title: 'Are you sure?',
+                title: i18n.t("shared.alertMsg.areYouSure"),
                 showCancelButton: true,
                 type: 'warning',
-                confirmButtonText: 'Yes, delete it!',
+                confirmButtonText: i18n.t("shared.alertMsg.yesDelete"),
                 confirmButtonColor: '#DD6B55',
                 callback: function() {
                     _this.formChange = false;
@@ -639,7 +639,7 @@ define([
                 error: function(model, response) {
                     if (response.status === 409) {
                         Swal({
-                            title: 'Data conflicts',
+                            title: i18n.t("shared.alertMsg.dataConflict"),
                             text: response.responseText,
                             type: 'warning',
                             showCancelButton: false,
@@ -649,8 +649,8 @@ define([
                         });
                     } else {
                         var opts = {
-                            title: 'Error',
-                            text: 'An error occured. Please contact an administrator.',
+                            title: i18n.t("shared.alertMsg.error"),
+                            text: i18n.t("shared.alertMsg.errorContactAdmin"),
                             allowEscapeKey: false,
                             showCancelButton: false,
                             type: 'error',
@@ -737,7 +737,7 @@ define([
             var _this = this;
             if (response.status == 409) {
                 Swal({
-                    title: 'Data conflicts',
+                    title: i18n.t("shared.alertMsg.dataConflict"),
                     text: response.responseText,
                     type: 'warning',
                     showCancelButton: false,
@@ -747,8 +747,8 @@ define([
                 });
             } else {
                 var opts = {
-                    title: 'Error',
-                    text: 'An error occured. Please contact an administrator.',
+                    title: i18n.t("shared.alertMsg.error"),
+                    text: i18n.t("shared.alertMsg.errorContactAdmin"),
                     allowEscapeKey: false,
                     showCancelButton: false,
                     type: 'error',

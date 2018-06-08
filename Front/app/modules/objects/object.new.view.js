@@ -37,6 +37,7 @@ define([
         },
 
         displayForm: function() {
+
             var _this = this;
             this.nsForm = new NsForm({
                 modelurl: this.model.get('type'),
@@ -69,13 +70,13 @@ define([
         afterSaveSuccess: function() {
             var _this = this;
             Swal({
-                    title: 'Succes',
-                    text: 'creating new ' + _this.model.get('single'),
+                    title: i18n.t("shared.alertMsg.succes"),
+                    text: i18n.t("shared.alertMsg.createNew") + ' ' + _this.model.get('single'),
                     type: 'success',
                     showCancelButton: true,
                     confirmButtonColor: 'green',
-                    confirmButtonText: 'create another ' + _this.model.get('single'),
-                    cancelButtonText: 'cancel',
+                    confirmButtonText: i18n.t("shared.alertMsg.createAnother") + ' ' + _this.model.get('single'),
+                    cancelButtonText: i18n.t("button.cancel"),
                     closeOnConfirm: true,
                 },
                 function(isConfirm) {
