@@ -49,7 +49,7 @@ class ObservationView(DynamicObjectView):
             if isinstance(value, list) and items != 'children':
                 if items in ('images'):
                     for photo in value:                     
-                        if photo['status'] == 'deleted':
+                        if 'status' in photo and photo['status'] == 'deleted':
                             fileDeleted= {}
                             fileDeleted['model'] = self.session.query(MediasFiles).filter(MediasFiles.Id == photo['id']).one()
                             fileDeleted['status'] =  self.session.query(MediasFiles).filter(MediasFiles.Id == photo['id']).delete()           

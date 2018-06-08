@@ -357,7 +357,7 @@ define([
                         imgCur.height = '200'
                         imgCur.width ='200'
                         imgCur.onclick = function(){
-                            window.open(imgCur.src);
+                            window.open(this.src);
                         }
 
                         if (this.displayMode == 'edit') {
