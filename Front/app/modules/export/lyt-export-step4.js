@@ -24,7 +24,8 @@ define([
         },
 
         events: {
-            'change input': 'changeValue',
+            'change input.exportValue': 'changeValue',
+            'change #sinpref ': 'activateNext'
         },
 
         initialize: function(options) {
@@ -46,14 +47,32 @@ define([
         },
 
         changeValue: function(e) {
+            var exportType = $(e.target).val();
             this.$el.find('label.tile-inside').each(function() {
                 $(this).removeClass('active');
             });
 
             $(e.target).parent().addClass('active');
-            this.model.set('fileType', $(e.target).val());
-        },
+            this.model.set('fileType', exportType);
 
+            if (exportType === 'sinp') {
+                $('.sinpMetadata').removeClass('hidden');
+                $('#btnNext').attr('disabled', 'disabled');
+            } else {
+                $('.sinpMetadata').addClass('hidden');
+                $('#btnNext').removeAttr('disabled');
+                $('#sinpref').val('');
+            }
+
+
+        },
+        activateNext: function(e) {
+            var ref = $('#sinpref').val();
+            if (ref) {
+                $('#btnNext').removeAttr('disabled');
+            }
+
+        },
         validate: function() {
             return this.model;
         },
@@ -126,7 +145,7 @@ define([
                 document.body.appendChild(link);
                 link.click();
             } else {
-                    
+
                 var route = 'export/projects/' + this.model.get('project_id') + '/observations/getFile?protocolType=' + this.model.get('protocolType_id') + '&fileType=' + this.model.get('fileType');
                 $.ajax({
                     url: route,
