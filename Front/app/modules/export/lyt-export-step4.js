@@ -24,8 +24,9 @@ define([
         },
 
         events: {
-            'change input.exportValue': 'changeValue',
-            'change #sinpref ': 'activateNext'
+            'change input' :'changeValue',
+            // 'change input.exportValue': 'changeValue',
+            // 'change #sinpref ': 'activateNext'
         },
 
         initialize: function(options) {
@@ -47,30 +48,31 @@ define([
         },
 
         changeValue: function(e) {
-            var exportType = $(e.target).val();
+            // var exportType = $(e.target).val();
             this.$el.find('label.tile-inside').each(function() {
                 $(this).removeClass('active');
             });
 
             $(e.target).parent().addClass('active');
-            this.model.set('fileType', exportType);
+            this.model.set('fileType', $(e.target).val());
+            // this.model.set('fileType', exportType);
 
-            if (exportType === 'sinp') {
-                $('.sinpMetadata').removeClass('hidden');
-                $('#btnNext').attr('disabled', 'disabled');
-            } else {
-                $('.sinpMetadata').addClass('hidden');
-                $('#btnNext').removeAttr('disabled');
-                $('#sinpref').val('');
-            }
+            // if (exportType === 'sinp') {
+            //     $('.sinpMetadata').removeClass('hidden');
+            //     $('#btnNext').attr('disabled', 'disabled');
+            // } else {
+            //     $('.sinpMetadata').addClass('hidden');
+            //     $('#btnNext').removeAttr('disabled');
+            //     $('#sinpref').val('');
+            // }
 
 
         },
         activateNext: function(e) {
-            var ref = $('#sinpref').val();
-            if (ref) {
-                $('#btnNext').removeAttr('disabled');
-            }
+            // var ref = $('#sinpref').val();
+            // if (ref) {
+            //     $('#btnNext').removeAttr('disabled');
+            // }
 
         },
         validate: function() {
