@@ -16013,3 +16013,1196 @@ Traceback (most recent call last):
   File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 250, in _secured_view
     raise HTTPForbidden(msg, result=result)
 pyramid.httpexceptions.HTTPForbidden: debug_authorization of url http://localhost:6545/ecoReleve-Core/projects/?criteria=%5B%5D&page=1&per_page=200&offset=0&order_by=%5B%5D&typeObj=1 (view name '' against context <ecoreleve_be_server.Views.project.ProjectsView object at 0x7f1df53f4908>): ACLDenied permission 'read' via ACE '<default deny>' in ACL [('Allow', 'system.Authenticated', 'read'), ('Allow', 'system.Authenticated', 'all'), ('Allow', 'group:admin', 'admin'), ('Allow', 'group:admin', 'superUser'), ('Allow', 'group:admin', 'all'), ('Allow', 'group:superUser', 'superUser'), ('Allow', 'group:superUser', 'all')] on context <ecoreleve_be_server.Views.project.ProjectsView object at 0x7f1df53f4908> for principals ['system.Everyone']
+ecoReleve_Sensor.public
+folder : /var/www/mediasFiles exist
+
+            /!\================================/!            WARNING :
+            Export DataBase NOT loaded, Export Functionality will not working
+            /!\================================/!\ 
+
+Starting server in PID 29598.
+Serving on http://localhost:6545
+2018-05-22 18:35:39,830 ERROR [pyramid_debugtoolbar][waitress] Squashed Exception at http://localhost:6545/ecoReleve-Core/projects/?criteria=%5B%5D&page=1&per_page=200&offset=0&order_by=%5B%5D&typeObj=1
+traceback url: http://localhost:6545/_debug_toolbar/313430363534363434373139313230/exception
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 596, in __call__
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 329, in attr_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 305, in predicate_wrapper
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 287, in _authdebug_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 250, in _secured_view
+    raise HTTPForbidden(msg, result=result)
+pyramid.httpexceptions.HTTPForbidden: debug_authorization of url http://localhost:6545/ecoReleve-Core/projects/?criteria=%5B%5D&page=1&per_page=200&offset=0&order_by=%5B%5D&typeObj=1 (view name '' against context <ecoreleve_be_server.Views.project.ProjectsView object at 0x7fecb41c2598>): ACLDenied permission 'read' via ACE '<default deny>' in ACL [('Allow', 'system.Authenticated', 'read'), ('Allow', 'system.Authenticated', 'all'), ('Allow', 'group:admin', 'admin'), ('Allow', 'group:admin', 'superUser'), ('Allow', 'group:admin', 'all'), ('Allow', 'group:superUser', 'superUser'), ('Allow', 'group:superUser', 'all')] on context <ecoreleve_be_server.Views.project.ProjectsView object at 0x7fecb41c2598> for principals ['system.Everyone']
+2018-05-23 09:08:35,014 ERROR [pyramid_debugtoolbar][waitress] Squashed Exception at http://localhost:6545/ecoReleve-Core/security/has_access
+traceback url: http://localhost:6545/_debug_toolbar/313430363534363130383337333434/exception
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 287, in _authdebug_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 250, in _secured_view
+    raise HTTPForbidden(msg, result=result)
+pyramid.httpexceptions.HTTPForbidden: debug_authorization of url http://localhost:6545/ecoReleve-Core/security/has_access (view name '' against context <ecoreleve_be_server.controllers.security.SecurityRoot object at 0x7feca7fc1a98>): ACLDenied permission 'read' via ACE '<default deny>' in ACL [('Allow', 'system.Authenticated', 'read'), ('Allow', 'system.Authenticated', 'all'), ('Allow', 'group:admin', 'admin'), ('Allow', 'group:admin', 'superUser'), ('Allow', 'group:admin', 'all'), ('Allow', 'group:superUser', 'superUser'), ('Allow', 'group:superUser', 'all')] on context <ecoreleve_be_server.controllers.security.SecurityRoot object at 0x7feca7fc1a98> for principals ['system.Everyone']
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+init stations ID :  378
+init stations ID :  378
+init stations ID :  378
+init stations ID :  378
+init stations ID :  378
+init stations ID :  378
+init stations ID :  378
+init stations ID :  376
+init stations ID :  376
+init stations ID :  376
+init stations ID :  375
+init stations ID :  375
+init stations ID :  375
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+ini project  {'userlanguage': 'fr', 'login': 't@t.com', 'fullname': 'Adminstrator  ', 'app_roles': {'ecoreleve': 'Administrateur'}, 'iss': '23'}  ref  :  9
+not a client
+ini project  {'userlanguage': 'fr', 'login': 't@t.com', 'fullname': 'Adminstrator  ', 'app_roles': {'ecoreleve': 'Administrateur'}, 'iss': '23'}  ref  :  9
+not a client
+ini project  {'userlanguage': 'fr', 'login': 't@t.com', 'fullname': 'Adminstrator  ', 'app_roles': {'ecoreleve': 'Administrateur'}, 'iss': '23'}  ref  :  9
+not a client
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+ini project  {'userlanguage': 'fr', 'login': 't@t.com', 'fullname': 'Adminstrator  ', 'app_roles': {'ecoreleve': 'Administrateur'}, 'iss': '23'}  ref  :  13
+not a client
+init stations ID :  377
+init stations ID :  377
+init stations ID :  377
+2018-05-24 09:35:16,674 ERROR [pyramid_debugtoolbar][waitress] Squashed Exception at http://localhost:6545/ecoReleve-Core/projects/?criteria=%5B%5D&page=1&per_page=200&offset=0&order_by=%5B%5D&typeObj=1
+traceback url: http://localhost:6545/_debug_toolbar/313430363534343032303530333132/exception
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 596, in __call__
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 329, in attr_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 305, in predicate_wrapper
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 287, in _authdebug_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 250, in _secured_view
+    raise HTTPForbidden(msg, result=result)
+pyramid.httpexceptions.HTTPForbidden: debug_authorization of url http://localhost:6545/ecoReleve-Core/projects/?criteria=%5B%5D&page=1&per_page=200&offset=0&order_by=%5B%5D&typeObj=1 (view name '' against context <ecoreleve_be_server.Views.project.ProjectsView object at 0x7feca7a40a98>): ACLDenied permission 'read' via ACE '<default deny>' in ACL [('Allow', 'system.Authenticated', 'read'), ('Allow', 'system.Authenticated', 'all'), ('Allow', 'group:admin', 'admin'), ('Allow', 'group:admin', 'superUser'), ('Allow', 'group:admin', 'all'), ('Allow', 'group:superUser', 'superUser'), ('Allow', 'group:superUser', 'all')] on context <ecoreleve_be_server.Views.project.ProjectsView object at 0x7feca7a40a98> for principals ['system.Everyone']
+2018-05-28 10:44:15,727 ERROR [pyramid_debugtoolbar][waitress] Squashed Exception at http://localhost:6545/ecoReleve-Core/security/has_access
+traceback url: http://localhost:6545/_debug_toolbar/313430363534343030343736343936/exception
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 287, in _authdebug_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 250, in _secured_view
+    raise HTTPForbidden(msg, result=result)
+pyramid.httpexceptions.HTTPForbidden: debug_authorization of url http://localhost:6545/ecoReleve-Core/security/has_access (view name '' against context <ecoreleve_be_server.controllers.security.SecurityRoot object at 0x7feca7857098>): ACLDenied permission 'read' via ACE '<default deny>' in ACL [('Allow', 'system.Authenticated', 'read'), ('Allow', 'system.Authenticated', 'all'), ('Allow', 'group:admin', 'admin'), ('Allow', 'group:admin', 'superUser'), ('Allow', 'group:admin', 'all'), ('Allow', 'group:superUser', 'superUser'), ('Allow', 'group:superUser', 'all')] on context <ecoreleve_be_server.controllers.security.SecurityRoot object at 0x7feca7857098> for principals ['system.Everyone']
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+init stations ID :  376
+init stations ID :  376
+init stations ID :  376
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+ini project  {'userlanguage': 'fr', 'login': 't@t.com', 'fullname': 'Adminstrator  ', 'app_roles': {'ecoreleve': 'Administrateur'}, 'iss': '23'}  ref  :  14
+not a client
+photos created
+dbconfig /var/www/mediasFiles
+item path 346/1527502516600.jpg
+url :  /var/www/mediasFiles/346/1527502516600.jpg
+init stations ID :  380
+init stations ID :  380
+init stations ID :  380
+init stations ID :  379
+init stations ID :  379
+init stations ID :  379
+init stations ID :  380
+init stations ID :  380
+init stations ID :  380
+init stations ID :  370
+init stations ID :  370
+init stations ID :  370
+ini project  {'userlanguage': 'fr', 'login': 't@t.com', 'fullname': 'Adminstrator  ', 'app_roles': {'ecoreleve': 'Administrateur'}, 'iss': '23'}  ref  :  14
+not a client
+ini project  {'userlanguage': 'fr', 'login': 't@t.com', 'fullname': 'Adminstrator  ', 'app_roles': {'ecoreleve': 'Administrateur'}, 'iss': '23'}  ref  :  14
+not a client
+ini project  {'userlanguage': 'fr', 'login': 't@t.com', 'fullname': 'Adminstrator  ', 'app_roles': {'ecoreleve': 'Administrateur'}, 'iss': '23'}  ref  :  14
+not a client
+init stations ID :  356
+init stations ID :  356
+init stations ID :  356
+2018-05-31 08:54:02,200 ERROR [pyramid_debugtoolbar][waitress] Squashed Exception at http://localhost:6545/ecoReleve-Core/projects/?criteria=%5B%5D&page=1&per_page=200&offset=0&order_by=%5B%5D&typeObj=1
+traceback url: http://localhost:6545/_debug_toolbar/313430363534343035363336303438/exception
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 596, in __call__
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 329, in attr_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 305, in predicate_wrapper
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 287, in _authdebug_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 250, in _secured_view
+    raise HTTPForbidden(msg, result=result)
+pyramid.httpexceptions.HTTPForbidden: debug_authorization of url http://localhost:6545/ecoReleve-Core/projects/?criteria=%5B%5D&page=1&per_page=200&offset=0&order_by=%5B%5D&typeObj=1 (view name '' against context <ecoreleve_be_server.Views.project.ProjectsView object at 0x7feca7d8c728>): ACLDenied permission 'read' via ACE '<default deny>' in ACL [('Allow', 'system.Authenticated', 'read'), ('Allow', 'system.Authenticated', 'all'), ('Allow', 'group:admin', 'admin'), ('Allow', 'group:admin', 'superUser'), ('Allow', 'group:admin', 'all'), ('Allow', 'group:superUser', 'superUser'), ('Allow', 'group:superUser', 'all')] on context <ecoreleve_be_server.Views.project.ProjectsView object at 0x7feca7d8c728> for principals ['system.Everyone']
+2018-05-31 10:49:28,385 ERROR [pyramid_debugtoolbar][waitress] Squashed Exception at http://localhost:6545/ecoReleve-Core/projects/?criteria=%5B%5D&page=1&per_page=200&offset=0&order_by=%5B%5D&typeObj=1
+traceback url: http://localhost:6545/_debug_toolbar/313430363534343035363537313532/exception
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 596, in __call__
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 329, in attr_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 305, in predicate_wrapper
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 287, in _authdebug_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 250, in _secured_view
+    raise HTTPForbidden(msg, result=result)
+pyramid.httpexceptions.HTTPForbidden: debug_authorization of url http://localhost:6545/ecoReleve-Core/projects/?criteria=%5B%5D&page=1&per_page=200&offset=0&order_by=%5B%5D&typeObj=1 (view name '' against context <ecoreleve_be_server.Views.project.ProjectsView object at 0x7feca7dd2e08>): ACLDenied permission 'read' via ACE '<default deny>' in ACL [('Allow', 'system.Authenticated', 'read'), ('Allow', 'system.Authenticated', 'all'), ('Allow', 'group:admin', 'admin'), ('Allow', 'group:admin', 'superUser'), ('Allow', 'group:admin', 'all'), ('Allow', 'group:superUser', 'superUser'), ('Allow', 'group:superUser', 'all')] on context <ecoreleve_be_server.Views.project.ProjectsView object at 0x7feca7dd2e08> for principals ['system.Everyone']
+ini project  {'userlanguage': 'fr', 'login': 'dimitri.davignon@auddice.com', 'fullname': 'DAVIGNON Dimitri', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '34'}  ref  :  23
+not a client
+2018-06-01 08:31:49,447 ERROR [pyramid_debugtoolbar][waitress] Squashed Exception at http://localhost:6545/ecoReleve-Core/projects/?criteria=%5B%5D&page=1&per_page=200&offset=0&order_by=%5B%5D&typeObj=1
+traceback url: http://localhost:6545/_debug_toolbar/313430363534343035363537333230/exception
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 596, in __call__
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 329, in attr_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 305, in predicate_wrapper
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 287, in _authdebug_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 250, in _secured_view
+    raise HTTPForbidden(msg, result=result)
+pyramid.httpexceptions.HTTPForbidden: debug_authorization of url http://localhost:6545/ecoReleve-Core/projects/?criteria=%5B%5D&page=1&per_page=200&offset=0&order_by=%5B%5D&typeObj=1 (view name '' against context <ecoreleve_be_server.Views.project.ProjectsView object at 0x7feca73a94f8>): ACLDenied permission 'read' via ACE '<default deny>' in ACL [('Allow', 'system.Authenticated', 'read'), ('Allow', 'system.Authenticated', 'all'), ('Allow', 'group:admin', 'admin'), ('Allow', 'group:admin', 'superUser'), ('Allow', 'group:admin', 'all'), ('Allow', 'group:superUser', 'superUser'), ('Allow', 'group:superUser', 'all')] on context <ecoreleve_be_server.Views.project.ProjectsView object at 0x7feca73a94f8> for principals ['system.Everyone']
+2018-06-01 10:56:52,428 ERROR [pyramid_debugtoolbar][waitress] Squashed Exception at http://localhost:6545/ecoReleve-Core/security/has_access
+traceback url: http://localhost:6545/_debug_toolbar/313430363534363039393437363136/exception
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 287, in _authdebug_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 250, in _secured_view
+    raise HTTPForbidden(msg, result=result)
+pyramid.httpexceptions.HTTPForbidden: debug_authorization of url http://localhost:6545/ecoReleve-Core/security/has_access (view name '' against context <ecoreleve_be_server.controllers.security.SecurityRoot object at 0x7fecb40fe688>): ACLDenied permission 'read' via ACE '<default deny>' in ACL [('Allow', 'system.Authenticated', 'read'), ('Allow', 'system.Authenticated', 'all'), ('Allow', 'group:admin', 'admin'), ('Allow', 'group:admin', 'superUser'), ('Allow', 'group:admin', 'all'), ('Allow', 'group:superUser', 'superUser'), ('Allow', 'group:superUser', 'all')] on context <ecoreleve_be_server.controllers.security.SecurityRoot object at 0x7fecb40fe688> for principals ['system.Everyone']
+ini project  {'userlanguage': 'fr', 'login': 'delphine.crespel@auddice.com', 'fullname': 'CRESPEL Delphine', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '33'}  ref  :  22
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'delphine.crespel@auddice.com', 'fullname': 'CRESPEL Delphine', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '33'}  ref  :  22
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'delphine.crespel@auddice.com', 'fullname': 'CRESPEL Delphine', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '33'}  ref  :  22
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'delphine.crespel@auddice.com', 'fullname': 'CRESPEL Delphine', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '33'}  ref  :  22
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'delphine.crespel@auddice.com', 'fullname': 'CRESPEL Delphine', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '33'}  ref  :  22
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'delphine.crespel@auddice.com', 'fullname': 'CRESPEL Delphine', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '33'}  ref  :  22
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'delphine.crespel@auddice.com', 'fullname': 'CRESPEL Delphine', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '33'}  ref  :  22
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'delphine.crespel@auddice.com', 'fullname': 'CRESPEL Delphine', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '33'}  ref  :  22
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'delphine.crespel@auddice.com', 'fullname': 'CRESPEL Delphine', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '33'}  ref  :  22
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'delphine.crespel@auddice.com', 'fullname': 'CRESPEL Delphine', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '33'}  ref  :  22
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'delphine.crespel@auddice.com', 'fullname': 'CRESPEL Delphine', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '33'}  ref  :  22
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'delphine.crespel@auddice.com', 'fullname': 'CRESPEL Delphine', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '33'}  ref  :  22
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'delphine.crespel@auddice.com', 'fullname': 'CRESPEL Delphine', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '33'}  ref  :  22
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'delphine.crespel@auddice.com', 'fullname': 'CRESPEL Delphine', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '33'}  ref  :  22
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'delphine.crespel@auddice.com', 'fullname': 'CRESPEL Delphine', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '33'}  ref  :  22
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'delphine.crespel@auddice.com', 'fullname': 'CRESPEL Delphine', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '33'}  ref  :  22
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'delphine.crespel@auddice.com', 'fullname': 'CRESPEL Delphine', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '33'}  ref  :  22
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'delphine.crespel@auddice.com', 'fullname': 'CRESPEL Delphine', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '33'}  ref  :  22
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'delphine.crespel@auddice.com', 'fullname': 'CRESPEL Delphine', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '33'}  ref  :  22
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'delphine.crespel@auddice.com', 'fullname': 'CRESPEL Delphine', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '33'}  ref  :  22
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'delphine.crespel@auddice.com', 'fullname': 'CRESPEL Delphine', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '33'}  ref  :  22
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'delphine.crespel@auddice.com', 'fullname': 'CRESPEL Delphine', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '33'}  ref  :  22
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'delphine.crespel@auddice.com', 'fullname': 'CRESPEL Delphine', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '33'}  ref  :  22
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'delphine.crespel@auddice.com', 'fullname': 'CRESPEL Delphine', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '33'}  ref  :  22
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'delphine.crespel@auddice.com', 'fullname': 'CRESPEL Delphine', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '33'}  ref  :  22
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'delphine.crespel@auddice.com', 'fullname': 'CRESPEL Delphine', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '33'}  ref  :  22
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'delphine.crespel@auddice.com', 'fullname': 'CRESPEL Delphine', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '33'}  ref  :  22
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'delphine.crespel@auddice.com', 'fullname': 'CRESPEL Delphine', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '33'}  ref  :  22
+not a client
+filters on foreign ref :  Station@FK_Project
+filters on foreign ref :  Station@FK_Project
+filters on foreign ref :  Station@FK_Project
+filters on foreign ref :  Station@FK_Project
+filters on foreign ref :  Station@FK_Project
+Column Name not exists !
+Column LAT not exists !
+Column StationDate not exists !
+Column LON not exists !
+filters on foreign ref :  Station@FK_Project
+filters on foreign ref :  Station@FK_Project
+filters on foreign ref :  Station@FK_Project
+filters on foreign ref :  Station@FK_Project
+filters on foreign ref :  Station@FK_Project
+Column Name not exists !
+Column LAT not exists !
+Column StationDate not exists !
+Column LON not exists !
+filters on foreign ref :  Station@FK_Project
+filters on foreign ref :  Station@FK_Project
+filters on foreign ref :  Station@FK_Project
+filters on foreign ref :  Station@FK_Project
+filters on foreign ref :  Station@FK_Project
+filters on foreign ref :  Station@FK_Project
+filters on foreign ref :  Station@FK_Project
+filters on foreign ref :  Station@StationDate
+2018-06-01 11:12:58,265 ERROR [pyramid_debugtoolbar][waitress] Uncaught Exception at http://localhost:6545/ecoReleve-Core/export/projects/22/observations?geo=true&protocolType=6&criteria=%5B%7B%22Column%22%3A%22Station%40StationDate%22%2C%22Operator%22%3A%22%3D%22%2C%22Value%22%3A%2231%2F05%2F2018+11%3A12%3A51%22%7D%5D
+traceback url: http://localhost:6545/_debug_toolbar/313430363534333936323230383634/exception
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/engine/base.py", line 1182, in _execute_context
+    context)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/engine/default.py", line 470, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.DataError: date/time field value out of range: "31/05/2018 11:12:51"
+LINE 3: ..."FK_Project" = '22' AND "Station"."StationDate" = '31/05/201...
+                                                             ^
+HINT:  Perhaps you need a different "datestyle" setting.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 596, in __call__
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 329, in attr_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 305, in predicate_wrapper
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 287, in _authdebug_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 245, in _secured_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 355, in rendered_view
+    result = view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 491, in _class_view
+    response = getattr(inst, attr)()
+  File "/srv/ecoReleve-BE/Back/ecoreleve_be_server/Views/__init__.py", line 486, in get
+    return self.context.retrieve()
+  File "/srv/ecoReleve-BE/Back/ecoreleve_be_server/Views/export.py", line 101, in retrieve
+    return self.get_geoJSON(geoJson_properties=['taxon'])
+  File "/srv/ecoReleve-BE/Back/ecoreleve_be_server/Views/export.py", line 108, in get_geoJSON
+    countResult = self.count_()
+  File "/srv/ecoReleve-BE/Back/ecoreleve_be_server/Views/export.py", line 144, in count_
+    count = self.CollectionEngine._count(filters=filters)
+  File "/srv/ecoReleve-BE/Back/ecoreleve_be_server/GenericObjets/SearchEngine.py", line 229, in _count
+    queryResult = self.session.execute(query).scalar()
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/orm/session.py", line 1139, in execute
+    bind, close_with_result=True).execute(clause, params or {})
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/engine/base.py", line 945, in execute
+    return meth(self, multiparams, params)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/sql/elements.py", line 263, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/engine/base.py", line 1053, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/engine/base.py", line 1189, in _execute_context
+    context)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/engine/base.py", line 1402, in _handle_dbapi_exception
+    exc_info
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/util/compat.py", line 203, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/util/compat.py", line 186, in reraise
+    raise value.with_traceback(tb)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/engine/base.py", line 1182, in _execute_context
+    context)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/engine/default.py", line 470, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.DataError: (psycopg2.DataError) date/time field value out of range: "31/05/2018 11:12:51"
+LINE 3: ..."FK_Project" = '22' AND "Station"."StationDate" = '31/05/201...
+                                                             ^
+HINT:  Perhaps you need a different "datestyle" setting.
+ [SQL: 'SELECT count(*) AS count_1 \nFROM "Observation" LEFT OUTER JOIN "Station" ON "Observation"."FK_Station" = "Station"."ID" \nWHERE "Station"."FK_Project" = %(param_1)s AND "Station"."StationDate" = %(param_2)s AND "Observation"."FK_ProtocoleType" = %(FK_ProtocoleType_1)s'] [parameters: {'param_2': '31/05/2018 11:12:51', 'param_1': '22', 'FK_ProtocoleType_1': '6'}]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_debugtoolbar/toolbar.py", line 247, in toolbar_tween
+    response = _handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_debugtoolbar/panels/performance.py", line 58, in resource_timer_handler
+    result = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_tm/compat.py", line 36, in reraise
+    raise value
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/tweens.py", line 46, in excview_tween
+    response = view_callable(exc, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 287, in _authdebug_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 404, in viewresult_to_response
+    raise ValueError(msg % (view_description(view), result))
+ValueError: Could not convert return value of the view callable function ecoreleve_be_server.Views.error_view into a response object. The value returned was DataError('(psycopg2.DataError) date/time field value out of range: "31/05/2018 11:12:51"\nLINE 3: ..."FK_Project" = \'22\' AND "Station"."StationDate" = \'31/05/201...\n                                                             ^\nHINT:  Perhaps you need a different "datestyle" setting.\n',).
+filters on foreign ref :  Station@FK_Project
+filters on foreign ref :  Station@StationDate
+2018-06-01 11:13:00,367 ERROR [pyramid_debugtoolbar][waitress] Uncaught Exception at http://localhost:6545/ecoReleve-Core/export/projects/22/observations?geo=true&protocolType=6&criteria=%5B%7B%22Column%22%3A%22Station%40StationDate%22%2C%22Operator%22%3A%22%3D%22%2C%22Value%22%3A%2231%2F05%2F2018+11%3A12%3A51%22%7D%5D
+traceback url: http://localhost:6545/_debug_toolbar/313430363534333936383139313034/exception
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/engine/base.py", line 1182, in _execute_context
+    context)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/engine/default.py", line 470, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.DataError: date/time field value out of range: "31/05/2018 11:12:51"
+LINE 3: ..."FK_Project" = '22' AND "Station"."StationDate" = '31/05/201...
+                                                             ^
+HINT:  Perhaps you need a different "datestyle" setting.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 596, in __call__
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 329, in attr_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 305, in predicate_wrapper
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 287, in _authdebug_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 245, in _secured_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 355, in rendered_view
+    result = view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 491, in _class_view
+    response = getattr(inst, attr)()
+  File "/srv/ecoReleve-BE/Back/ecoreleve_be_server/Views/__init__.py", line 486, in get
+    return self.context.retrieve()
+  File "/srv/ecoReleve-BE/Back/ecoreleve_be_server/Views/export.py", line 101, in retrieve
+    return self.get_geoJSON(geoJson_properties=['taxon'])
+  File "/srv/ecoReleve-BE/Back/ecoreleve_be_server/Views/export.py", line 108, in get_geoJSON
+    countResult = self.count_()
+  File "/srv/ecoReleve-BE/Back/ecoreleve_be_server/Views/export.py", line 144, in count_
+    count = self.CollectionEngine._count(filters=filters)
+  File "/srv/ecoReleve-BE/Back/ecoreleve_be_server/GenericObjets/SearchEngine.py", line 229, in _count
+    queryResult = self.session.execute(query).scalar()
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/orm/session.py", line 1139, in execute
+    bind, close_with_result=True).execute(clause, params or {})
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/engine/base.py", line 945, in execute
+    return meth(self, multiparams, params)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/sql/elements.py", line 263, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/engine/base.py", line 1053, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/engine/base.py", line 1189, in _execute_context
+    context)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/engine/base.py", line 1402, in _handle_dbapi_exception
+    exc_info
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/util/compat.py", line 203, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/util/compat.py", line 186, in reraise
+    raise value.with_traceback(tb)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/engine/base.py", line 1182, in _execute_context
+    context)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/engine/default.py", line 470, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.DataError: (psycopg2.DataError) date/time field value out of range: "31/05/2018 11:12:51"
+LINE 3: ..."FK_Project" = '22' AND "Station"."StationDate" = '31/05/201...
+                                                             ^
+HINT:  Perhaps you need a different "datestyle" setting.
+ [SQL: 'SELECT count(*) AS count_1 \nFROM "Observation" LEFT OUTER JOIN "Station" ON "Observation"."FK_Station" = "Station"."ID" \nWHERE "Station"."FK_Project" = %(param_1)s AND "Station"."StationDate" = %(param_2)s AND "Observation"."FK_ProtocoleType" = %(FK_ProtocoleType_1)s'] [parameters: {'param_2': '31/05/2018 11:12:51', 'param_1': '22', 'FK_ProtocoleType_1': '6'}]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_debugtoolbar/toolbar.py", line 247, in toolbar_tween
+    response = _handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_debugtoolbar/panels/performance.py", line 58, in resource_timer_handler
+    result = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_tm/compat.py", line 36, in reraise
+    raise value
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/tweens.py", line 46, in excview_tween
+    response = view_callable(exc, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 287, in _authdebug_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 404, in viewresult_to_response
+    raise ValueError(msg % (view_description(view), result))
+ValueError: Could not convert return value of the view callable function ecoreleve_be_server.Views.error_view into a response object. The value returned was DataError('(psycopg2.DataError) date/time field value out of range: "31/05/2018 11:12:51"\nLINE 3: ..."FK_Project" = \'22\' AND "Station"."StationDate" = \'31/05/201...\n                                                             ^\nHINT:  Perhaps you need a different "datestyle" setting.\n',).
+filters on foreign ref :  Station@FK_Project
+filters on foreign ref :  Station@StationDate
+2018-06-01 11:13:02,814 ERROR [pyramid_debugtoolbar][waitress] Uncaught Exception at http://localhost:6545/ecoReleve-Core/export/projects/22/observations?geo=true&protocolType=6&criteria=%5B%7B%22Column%22%3A%22Station%40StationDate%22%2C%22Operator%22%3A%22%3D%22%2C%22Value%22%3A%2231%2F05%2F2018+11%3A12%3A51%22%7D%5D
+traceback url: http://localhost:6545/_debug_toolbar/313430363534363130343734303430/exception
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/engine/base.py", line 1182, in _execute_context
+    context)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/engine/default.py", line 470, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.DataError: date/time field value out of range: "31/05/2018 11:12:51"
+LINE 3: ..."FK_Project" = '22' AND "Station"."StationDate" = '31/05/201...
+                                                             ^
+HINT:  Perhaps you need a different "datestyle" setting.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 596, in __call__
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 329, in attr_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 305, in predicate_wrapper
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 287, in _authdebug_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 245, in _secured_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 355, in rendered_view
+    result = view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 491, in _class_view
+    response = getattr(inst, attr)()
+  File "/srv/ecoReleve-BE/Back/ecoreleve_be_server/Views/__init__.py", line 486, in get
+    return self.context.retrieve()
+  File "/srv/ecoReleve-BE/Back/ecoreleve_be_server/Views/export.py", line 101, in retrieve
+    return self.get_geoJSON(geoJson_properties=['taxon'])
+  File "/srv/ecoReleve-BE/Back/ecoreleve_be_server/Views/export.py", line 108, in get_geoJSON
+    countResult = self.count_()
+  File "/srv/ecoReleve-BE/Back/ecoreleve_be_server/Views/export.py", line 144, in count_
+    count = self.CollectionEngine._count(filters=filters)
+  File "/srv/ecoReleve-BE/Back/ecoreleve_be_server/GenericObjets/SearchEngine.py", line 229, in _count
+    queryResult = self.session.execute(query).scalar()
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/orm/session.py", line 1139, in execute
+    bind, close_with_result=True).execute(clause, params or {})
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/engine/base.py", line 945, in execute
+    return meth(self, multiparams, params)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/sql/elements.py", line 263, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/engine/base.py", line 1053, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/engine/base.py", line 1189, in _execute_context
+    context)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/engine/base.py", line 1402, in _handle_dbapi_exception
+    exc_info
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/util/compat.py", line 203, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/util/compat.py", line 186, in reraise
+    raise value.with_traceback(tb)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/engine/base.py", line 1182, in _execute_context
+    context)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/engine/default.py", line 470, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.DataError: (psycopg2.DataError) date/time field value out of range: "31/05/2018 11:12:51"
+LINE 3: ..."FK_Project" = '22' AND "Station"."StationDate" = '31/05/201...
+                                                             ^
+HINT:  Perhaps you need a different "datestyle" setting.
+ [SQL: 'SELECT count(*) AS count_1 \nFROM "Observation" LEFT OUTER JOIN "Station" ON "Observation"."FK_Station" = "Station"."ID" \nWHERE "Station"."FK_Project" = %(param_1)s AND "Station"."StationDate" = %(param_2)s AND "Observation"."FK_ProtocoleType" = %(FK_ProtocoleType_1)s'] [parameters: {'param_2': '31/05/2018 11:12:51', 'param_1': '22', 'FK_ProtocoleType_1': '6'}]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_debugtoolbar/toolbar.py", line 247, in toolbar_tween
+    response = _handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_debugtoolbar/panels/performance.py", line 58, in resource_timer_handler
+    result = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_tm/compat.py", line 36, in reraise
+    raise value
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/tweens.py", line 46, in excview_tween
+    response = view_callable(exc, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 287, in _authdebug_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 404, in viewresult_to_response
+    raise ValueError(msg % (view_description(view), result))
+ValueError: Could not convert return value of the view callable function ecoreleve_be_server.Views.error_view into a response object. The value returned was DataError('(psycopg2.DataError) date/time field value out of range: "31/05/2018 11:12:51"\nLINE 3: ..."FK_Project" = \'22\' AND "Station"."StationDate" = \'31/05/201...\n                                                             ^\nHINT:  Perhaps you need a different "datestyle" setting.\n',).
+filters on foreign ref :  Station@FK_Project
+filters on foreign ref :  Station@StationDate
+2018-06-01 11:13:14,831 ERROR [pyramid_debugtoolbar][waitress] Uncaught Exception at http://localhost:6545/ecoReleve-Core/export/projects/22/observations/?objectType=6&criteria=%5B%7B%22Column%22%3A%22Station%40StationDate%22%2C%22Operator%22%3A%22%3D%22%2C%22Value%22%3A%2231%2F05%2F2018+11%3A12%3A51%22%7D%5D
+traceback url: http://localhost:6545/_debug_toolbar/313430363534333936313630323038/exception
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/engine/base.py", line 1182, in _execute_context
+    context)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/engine/default.py", line 470, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.DataError: date/time field value out of range: "31/05/2018 11:12:51"
+LINE 3: ..."FK_Project" = '22' AND "Station"."StationDate" = '31/05/201...
+                                                             ^
+HINT:  Perhaps you need a different "datestyle" setting.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 596, in __call__
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 329, in attr_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 305, in predicate_wrapper
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 287, in _authdebug_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 245, in _secured_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 355, in rendered_view
+    result = view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 491, in _class_view
+    response = getattr(inst, attr)()
+  File "/srv/ecoReleve-BE/Back/ecoreleve_be_server/Views/__init__.py", line 486, in get
+    return self.context.retrieve()
+  File "/srv/ecoReleve-BE/Back/ecoreleve_be_server/Views/export.py", line 102, in retrieve
+    result = self.search()
+  File "/srv/ecoReleve-BE/Back/ecoreleve_be_server/Views/export.py", line 156, in search
+    return self.session.execute(query).fetchall()
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/orm/session.py", line 1139, in execute
+    bind, close_with_result=True).execute(clause, params or {})
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/engine/base.py", line 945, in execute
+    return meth(self, multiparams, params)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/sql/elements.py", line 263, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/engine/base.py", line 1053, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/engine/base.py", line 1189, in _execute_context
+    context)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/engine/base.py", line 1402, in _handle_dbapi_exception
+    exc_info
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/util/compat.py", line 203, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/util/compat.py", line 186, in reraise
+    raise value.with_traceback(tb)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/engine/base.py", line 1182, in _execute_context
+    context)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/sqlalchemy/engine/default.py", line 470, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.DataError: (psycopg2.DataError) date/time field value out of range: "31/05/2018 11:12:51"
+LINE 3: ..."FK_Project" = '22' AND "Station"."StationDate" = '31/05/201...
+                                                             ^
+HINT:  Perhaps you need a different "datestyle" setting.
+ [SQL: 'SELECT "Station"."LAT", "Station"."LON", "Station"."StationDate", "Station".creator, "Observation"."ID", "Observation"."FK_Station", "Observation"."creationDate", "Observation"."Parent_Observation", "Observation"."Comments", "Observation"."FK_Individual", "Observation".original_id, "Observation".taxon, "Observation"."FK_ProtocoleType" \nFROM "Observation" LEFT OUTER JOIN "Station" ON "Observation"."FK_Station" = "Station"."ID" \nWHERE "Station"."FK_Project" = %(param_1)s AND "Station"."StationDate" = %(param_2)s AND "Observation"."FK_ProtocoleType" = %(FK_ProtocoleType_1)s'] [parameters: {'param_2': '31/05/2018 11:12:51', 'param_1': '22', 'FK_ProtocoleType_1': '6'}]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_debugtoolbar/toolbar.py", line 247, in toolbar_tween
+    response = _handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_debugtoolbar/panels/performance.py", line 58, in resource_timer_handler
+    result = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_tm/compat.py", line 36, in reraise
+    raise value
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/tweens.py", line 46, in excview_tween
+    response = view_callable(exc, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 287, in _authdebug_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 404, in viewresult_to_response
+    raise ValueError(msg % (view_description(view), result))
+ValueError: Could not convert return value of the view callable function ecoreleve_be_server.Views.error_view into a response object. The value returned was DataError('(psycopg2.DataError) date/time field value out of range: "31/05/2018 11:12:51"\nLINE 3: ..."FK_Project" = \'22\' AND "Station"."StationDate" = \'31/05/201...\n                                                             ^\nHINT:  Perhaps you need a different "datestyle" setting.\n',).
+filters on foreign ref :  Station@FK_Project
+filters on foreign ref :  Station@FK_Project
+filters on foreign ref :  Station@FK_Project
+Column Name not exists !
+Column LAT not exists !
+Column StationDate not exists !
+Column LON not exists !
+Column ELE not exists !
+filters on foreign ref :  Station@FK_Project
+2018-06-04 14:06:07,249 ERROR [pyramid_debugtoolbar][waitress] Squashed Exception at http://localhost:6545/ecoReleve-Core/security/has_access
+traceback url: http://localhost:6545/_debug_toolbar/313430363534333937313433373532/exception
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 287, in _authdebug_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 250, in _secured_view
+    raise HTTPForbidden(msg, result=result)
+pyramid.httpexceptions.HTTPForbidden: debug_authorization of url http://localhost:6545/ecoReleve-Core/security/has_access (view name '' against context <ecoreleve_be_server.controllers.security.SecurityRoot object at 0x7feca77b79f8>): ACLDenied permission 'read' via ACE '<default deny>' in ACL [('Allow', 'system.Authenticated', 'read'), ('Allow', 'system.Authenticated', 'all'), ('Allow', 'group:admin', 'admin'), ('Allow', 'group:admin', 'superUser'), ('Allow', 'group:admin', 'all'), ('Allow', 'group:superUser', 'superUser'), ('Allow', 'group:superUser', 'all')] on context <ecoreleve_be_server.controllers.security.SecurityRoot object at 0x7feca77b79f8> for principals ['system.Everyone']
+init stations ID :  381
+init stations ID :  381
+init stations ID :  381
+init stations ID :  381
+init stations ID :  382
+init stations ID :  382
+init stations ID :  382
+init stations ID :  384
+init stations ID :  384
+init stations ID :  384
+ini project  {'userlanguage': 'fr', 'login': 't@t.com', 'fullname': 'Adminstrator  ', 'app_roles': {'ecoreleve': 'Administrateur'}, 'iss': '23'}  ref  :  22
+not a client
+ini project  {'userlanguage': 'fr', 'login': 't@t.com', 'fullname': 'Adminstrator  ', 'app_roles': {'ecoreleve': 'Administrateur'}, 'iss': '23'}  ref  :  22
+not a client
+ini project  {'userlanguage': 'fr', 'login': 't@t.com', 'fullname': 'Adminstrator  ', 'app_roles': {'ecoreleve': 'Administrateur'}, 'iss': '23'}  ref  :  22
+not a client
+init stations ID :  370
+init stations ID :  370
+init stations ID :  370
+init stations ID :  381
+init stations ID :  381
+init stations ID :  381
+init stations ID :  382
+init stations ID :  382
+init stations ID :  382
+init stations ID :  386
+init stations ID :  386
+init stations ID :  386
+init stations ID :  395
+init stations ID :  395
+init stations ID :  395
+2018-06-04 21:20:49,776 ERROR [pyramid_debugtoolbar][waitress] Squashed Exception at http://localhost:6545/ecoReleve-Core/projects/?criteria=%5B%5D&page=1&per_page=200&offset=0&order_by=%5B%5D&typeObj=1
+traceback url: http://localhost:6545/_debug_toolbar/313430363534333833303037393532/exception
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 596, in __call__
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 329, in attr_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 305, in predicate_wrapper
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 287, in _authdebug_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 250, in _secured_view
+    raise HTTPForbidden(msg, result=result)
+pyramid.httpexceptions.HTTPForbidden: debug_authorization of url http://localhost:6545/ecoReleve-Core/projects/?criteria=%5B%5D&page=1&per_page=200&offset=0&order_by=%5B%5D&typeObj=1 (view name '' against context <ecoreleve_be_server.Views.project.ProjectsView object at 0x7feca7985908>): ACLDenied permission 'read' via ACE '<default deny>' in ACL [('Allow', 'system.Authenticated', 'read'), ('Allow', 'system.Authenticated', 'all'), ('Allow', 'group:admin', 'admin'), ('Allow', 'group:admin', 'superUser'), ('Allow', 'group:admin', 'all'), ('Allow', 'group:superUser', 'superUser'), ('Allow', 'group:superUser', 'all')] on context <ecoreleve_be_server.Views.project.ProjectsView object at 0x7feca7985908> for principals ['system.Everyone']
+2018-06-06 08:20:35,832 ERROR [pyramid_debugtoolbar][waitress] Squashed Exception at http://localhost:6545/ecoReleve-Core/projects/?criteria=%5B%5D&page=1&per_page=200&offset=0&order_by=%5B%5D&typeObj=1
+traceback url: http://localhost:6545/_debug_toolbar/313430363534333833303631363438/exception
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 596, in __call__
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 329, in attr_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 305, in predicate_wrapper
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 287, in _authdebug_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 250, in _secured_view
+    raise HTTPForbidden(msg, result=result)
+pyramid.httpexceptions.HTTPForbidden: debug_authorization of url http://localhost:6545/ecoReleve-Core/projects/?criteria=%5B%5D&page=1&per_page=200&offset=0&order_by=%5B%5D&typeObj=1 (view name '' against context <ecoreleve_be_server.Views.project.ProjectsView object at 0x7feca67c2ae8>): ACLDenied permission 'read' via ACE '<default deny>' in ACL [('Allow', 'system.Authenticated', 'read'), ('Allow', 'system.Authenticated', 'all'), ('Allow', 'group:admin', 'admin'), ('Allow', 'group:admin', 'superUser'), ('Allow', 'group:admin', 'all'), ('Allow', 'group:superUser', 'superUser'), ('Allow', 'group:superUser', 'all')] on context <ecoreleve_be_server.Views.project.ProjectsView object at 0x7feca67c2ae8> for principals ['system.Everyone']
+ini project  {'userlanguage': 'fr', 'login': 'elodie.delacourt@auddice.com', 'fullname': 'DELACOURT Elodie', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '37'}  ref  :  13
+not a client
+2018-06-06 16:47:46,691 ERROR [pyramid_debugtoolbar][waitress] Squashed Exception at http://localhost:6545/ecoReleve-Core/projects/?criteria=%5B%5D&page=1&per_page=200&offset=0&order_by=%5B%5D&typeObj=1
+traceback url: http://localhost:6545/_debug_toolbar/313430363534333832323633343838/exception
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 596, in __call__
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 329, in attr_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 305, in predicate_wrapper
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 287, in _authdebug_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 250, in _secured_view
+    raise HTTPForbidden(msg, result=result)
+pyramid.httpexceptions.HTTPForbidden: debug_authorization of url http://localhost:6545/ecoReleve-Core/projects/?criteria=%5B%5D&page=1&per_page=200&offset=0&order_by=%5B%5D&typeObj=1 (view name '' against context <ecoreleve_be_server.Views.project.ProjectsView object at 0x7feca679cc78>): ACLDenied permission 'read' via ACE '<default deny>' in ACL [('Allow', 'system.Authenticated', 'read'), ('Allow', 'system.Authenticated', 'all'), ('Allow', 'group:admin', 'admin'), ('Allow', 'group:admin', 'superUser'), ('Allow', 'group:admin', 'all'), ('Allow', 'group:superUser', 'superUser'), ('Allow', 'group:superUser', 'all')] on context <ecoreleve_be_server.Views.project.ProjectsView object at 0x7feca679cc78> for principals ['system.Everyone']
+2018-06-07 10:13:32,831 ERROR [pyramid_debugtoolbar][waitress] Squashed Exception at http://localhost:6545/ecoReleve-Core/security/has_access
+traceback url: http://localhost:6545/_debug_toolbar/313430363534333832313639313638/exception
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 287, in _authdebug_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 250, in _secured_view
+    raise HTTPForbidden(msg, result=result)
+pyramid.httpexceptions.HTTPForbidden: debug_authorization of url http://localhost:6545/ecoReleve-Core/security/has_access (view name '' against context <ecoreleve_be_server.controllers.security.SecurityRoot object at 0x7fecb4047458>): ACLDenied permission 'read' via ACE '<default deny>' in ACL [('Allow', 'system.Authenticated', 'read'), ('Allow', 'system.Authenticated', 'all'), ('Allow', 'group:admin', 'admin'), ('Allow', 'group:admin', 'superUser'), ('Allow', 'group:admin', 'all'), ('Allow', 'group:superUser', 'superUser'), ('Allow', 'group:superUser', 'all')] on context <ecoreleve_be_server.controllers.security.SecurityRoot object at 0x7fecb4047458> for principals ['system.Everyone']
+2018-06-07 10:15:50,029 ERROR [pyramid_debugtoolbar][waitress] Squashed Exception at http://localhost:6545/ecoReleve-Core/projects/?criteria=%5B%5D&page=1&per_page=200&offset=0&order_by=%5B%5D&typeObj=1
+traceback url: http://localhost:6545/_debug_toolbar/313430363534333938343932343536/exception
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 596, in __call__
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 329, in attr_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 305, in predicate_wrapper
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 287, in _authdebug_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 250, in _secured_view
+    raise HTTPForbidden(msg, result=result)
+pyramid.httpexceptions.HTTPForbidden: debug_authorization of url http://localhost:6545/ecoReleve-Core/projects/?criteria=%5B%5D&page=1&per_page=200&offset=0&order_by=%5B%5D&typeObj=1 (view name '' against context <ecoreleve_be_server.Views.project.ProjectsView object at 0x7feca6950a98>): ACLDenied permission 'read' via ACE '<default deny>' in ACL [('Allow', 'system.Authenticated', 'read'), ('Allow', 'system.Authenticated', 'all'), ('Allow', 'group:admin', 'admin'), ('Allow', 'group:admin', 'superUser'), ('Allow', 'group:admin', 'all'), ('Allow', 'group:superUser', 'superUser'), ('Allow', 'group:superUser', 'all')] on context <ecoreleve_be_server.Views.project.ProjectsView object at 0x7feca6950a98> for principals ['system.Everyone']
+filters on foreign ref :  Station@FK_Project
+filters on foreign ref :  Station@FK_Project
+filters on foreign ref :  Station@FK_Project
+Column Name not exists !
+Column LAT not exists !
+Column StationDate not exists !
+Column LON not exists !
+Column ELE not exists !
+Column Name not exists !
+Column LAT not exists !
+Column StationDate not exists !
+Column LON not exists !
+Column ELE not exists !
+filters on foreign ref :  Station@FK_Project
+filters on foreign ref :  Station@FK_Project
+filters on foreign ref :  Station@FK_Project
+filters on foreign ref :  Station@FK_Project
+filters on foreign ref :  Station@FK_Project
+ini project  {'userlanguage': 'fr', 'login': 'maxime.depinoy@auddice.com', 'fullname': 'DEPINOY Maxime', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '46'}  ref  :  13
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'maxime.depinoy@auddice.com', 'fullname': 'DEPINOY Maxime', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '46'}  ref  :  13
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'maxime.depinoy@auddice.com', 'fullname': 'DEPINOY Maxime', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '46'}  ref  :  13
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'maxime.depinoy@auddice.com', 'fullname': 'DEPINOY Maxime', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '46'}  ref  :  13
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'maxime.depinoy@auddice.com', 'fullname': 'DEPINOY Maxime', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '46'}  ref  :  13
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'maxime.depinoy@auddice.com', 'fullname': 'DEPINOY Maxime', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '46'}  ref  :  13
+not a client
+Prop dyn inconnue
+Prop dyn inconnue
+ini project  {'userlanguage': 'fr', 'login': 'maxime.depinoy@auddice.com', 'fullname': 'DEPINOY Maxime', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '46'}  ref  :  13
+not a client
+Prop dyn inconnue
+Prop dyn inconnue
+ini project  {'userlanguage': 'fr', 'login': 'maxime.depinoy@auddice.com', 'fullname': 'DEPINOY Maxime', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '46'}  ref  :  13
+not a client
+init stations ID :  413
+ini project  {'userlanguage': 'fr', 'login': 'maxime.depinoy@auddice.com', 'fullname': 'DEPINOY Maxime', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '46'}  ref  :  13
+not a client
+init stations ID :  413
+ini project  {'userlanguage': 'fr', 'login': 'maxime.depinoy@auddice.com', 'fullname': 'DEPINOY Maxime', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '46'}  ref  :  13
+not a client
+init stations ID :  413
+ini project  {'userlanguage': 'fr', 'login': 'maxime.depinoy@auddice.com', 'fullname': 'DEPINOY Maxime', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '46'}  ref  :  13
+not a client
+init stations ID :  412
+ini project  {'userlanguage': 'fr', 'login': 'maxime.depinoy@auddice.com', 'fullname': 'DEPINOY Maxime', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '46'}  ref  :  13
+not a client
+init stations ID :  412
+ini project  {'userlanguage': 'fr', 'login': 'maxime.depinoy@auddice.com', 'fullname': 'DEPINOY Maxime', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '46'}  ref  :  13
+not a client
+init stations ID :  412
+ini project  {'userlanguage': 'fr', 'login': 'maxime.depinoy@auddice.com', 'fullname': 'DEPINOY Maxime', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '46'}  ref  :  13
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'maxime.depinoy@auddice.com', 'fullname': 'DEPINOY Maxime', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '46'}  ref  :  13
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'maxime.depinoy@auddice.com', 'fullname': 'DEPINOY Maxime', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '46'}  ref  :  13
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'maxime.depinoy@auddice.com', 'fullname': 'DEPINOY Maxime', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '46'}  ref  :  13
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'maxime.depinoy@auddice.com', 'fullname': 'DEPINOY Maxime', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '46'}  ref  :  13
+not a client
+Prop dyn inconnue
+Prop dyn inconnue
+ini project  {'userlanguage': 'fr', 'login': 'maxime.depinoy@auddice.com', 'fullname': 'DEPINOY Maxime', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '46'}  ref  :  13
+not a client
+filters on foreign ref :  Station@FK_Project
+filters on foreign ref :  Station@FK_Project
+filters on foreign ref :  Station@FK_Project
+Column Name not exists !
+Column LAT not exists !
+Column StationDate not exists !
+Column LON not exists !
+Column ELE not exists !
+Column Name not exists !
+Column LAT not exists !
+Column StationDate not exists !
+Column LON not exists !
+Column ELE not exists !
+filters on foreign ref :  Station@FK_Project
+filters on foreign ref :  Station@FK_Project
+ini project  {'userlanguage': 'fr', 'login': 'maxime.depinoy@auddice.com', 'fullname': 'DEPINOY Maxime', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '46'}  ref  :  13
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'maxime.depinoy@auddice.com', 'fullname': 'DEPINOY Maxime', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '46'}  ref  :  13
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'maxime.depinoy@auddice.com', 'fullname': 'DEPINOY Maxime', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '46'}  ref  :  13
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'maxime.depinoy@auddice.com', 'fullname': 'DEPINOY Maxime', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '46'}  ref  :  13
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'maxime.depinoy@auddice.com', 'fullname': 'DEPINOY Maxime', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '46'}  ref  :  13
+not a client
+ini project  {'userlanguage': 'fr', 'login': 'maxime.depinoy@auddice.com', 'fullname': 'DEPINOY Maxime', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '46'}  ref  :  13
+not a client
+Prop dyn inconnue
+Prop dyn inconnue
+ini project  {'userlanguage': 'fr', 'login': 'maxime.depinoy@auddice.com', 'fullname': 'DEPINOY Maxime', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '46'}  ref  :  13
+not a client
+Prop dyn inconnue
+Prop dyn inconnue
+2018-06-07 10:56:46,140 ERROR [pyramid_debugtoolbar][waitress] Uncaught Exception at http://localhost:6545/ecoReleve-Core/protocols
+traceback url: http://localhost:6545/_debug_toolbar/313430363534363039393736323838/exception
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 596, in __call__
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 329, in attr_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 305, in predicate_wrapper
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 287, in _authdebug_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 245, in _secured_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 355, in rendered_view
+    result = view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 491, in _class_view
+    response = getattr(inst, attr)()
+  File "/srv/ecoReleve-BE/Back/ecoreleve_be_server/Views/__init__.py", line 490, in post
+    return self.context.create()
+  File "/srv/ecoReleve-BE/Back/ecoreleve_be_server/Views/__init__.py", line 382, in create
+    return self.insert()
+  File "/srv/ecoReleve-BE/Back/ecoreleve_be_server/Views/protocols.py", line 145, in insert
+    Path = photo['name'],
+TypeError: string indices must be integers
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_debugtoolbar/toolbar.py", line 247, in toolbar_tween
+    response = _handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_debugtoolbar/panels/performance.py", line 58, in resource_timer_handler
+    result = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_tm/compat.py", line 36, in reraise
+    raise value
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/tweens.py", line 46, in excview_tween
+    response = view_callable(exc, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 287, in _authdebug_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 404, in viewresult_to_response
+    raise ValueError(msg % (view_description(view), result))
+ValueError: Could not convert return value of the view callable function ecoreleve_be_server.Views.error_view into a response object. The value returned was TypeError('string indices must be integers',).
+2018-06-07 10:57:12,971 ERROR [pyramid_debugtoolbar][waitress] Uncaught Exception at http://localhost:6545/ecoReleve-Core/protocols
+traceback url: http://localhost:6545/_debug_toolbar/313430363534333837323839363732/exception
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 596, in __call__
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 329, in attr_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 305, in predicate_wrapper
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 287, in _authdebug_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 245, in _secured_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 355, in rendered_view
+    result = view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 491, in _class_view
+    response = getattr(inst, attr)()
+  File "/srv/ecoReleve-BE/Back/ecoreleve_be_server/Views/__init__.py", line 490, in post
+    return self.context.create()
+  File "/srv/ecoReleve-BE/Back/ecoreleve_be_server/Views/__init__.py", line 382, in create
+    return self.insert()
+  File "/srv/ecoReleve-BE/Back/ecoreleve_be_server/Views/protocols.py", line 145, in insert
+    Path = photo['name'],
+TypeError: string indices must be integers
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_debugtoolbar/toolbar.py", line 247, in toolbar_tween
+    response = _handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_debugtoolbar/panels/performance.py", line 58, in resource_timer_handler
+    result = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_tm/compat.py", line 36, in reraise
+    raise value
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/tweens.py", line 46, in excview_tween
+    response = view_callable(exc, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 287, in _authdebug_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 404, in viewresult_to_response
+    raise ValueError(msg % (view_description(view), result))
+ValueError: Could not convert return value of the view callable function ecoreleve_be_server.Views.error_view into a response object. The value returned was TypeError('string indices must be integers',).
+2018-06-07 10:57:33,058 ERROR [pyramid_debugtoolbar][waitress] Squashed Exception at http://localhost:6545/ecoReleve-Core/security/has_access
+traceback url: http://localhost:6545/_debug_toolbar/313430363534333931323235373630/exception
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 287, in _authdebug_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 250, in _secured_view
+    raise HTTPForbidden(msg, result=result)
+pyramid.httpexceptions.HTTPForbidden: debug_authorization of url http://localhost:6545/ecoReleve-Core/security/has_access (view name '' against context <ecoreleve_be_server.controllers.security.SecurityRoot object at 0x7feca74501d8>): ACLDenied permission 'read' via ACE '<default deny>' in ACL [('Allow', 'system.Authenticated', 'read'), ('Allow', 'system.Authenticated', 'all'), ('Allow', 'group:admin', 'admin'), ('Allow', 'group:admin', 'superUser'), ('Allow', 'group:admin', 'all'), ('Allow', 'group:superUser', 'superUser'), ('Allow', 'group:superUser', 'all')] on context <ecoreleve_be_server.controllers.security.SecurityRoot object at 0x7feca74501d8> for principals ['system.Everyone']
+2018-06-07 10:57:45,257 ERROR [pyramid_debugtoolbar][waitress] Uncaught Exception at http://localhost:6545/ecoReleve-Core/protocols
+traceback url: http://localhost:6545/_debug_toolbar/313430363534333936393738323332/exception
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 596, in __call__
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 329, in attr_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 305, in predicate_wrapper
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 287, in _authdebug_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 245, in _secured_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 355, in rendered_view
+    result = view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 491, in _class_view
+    response = getattr(inst, attr)()
+  File "/srv/ecoReleve-BE/Back/ecoreleve_be_server/Views/__init__.py", line 490, in post
+    return self.context.create()
+  File "/srv/ecoReleve-BE/Back/ecoreleve_be_server/Views/__init__.py", line 382, in create
+    return self.insert()
+  File "/srv/ecoReleve-BE/Back/ecoreleve_be_server/Views/protocols.py", line 145, in insert
+    Path = photo['name'],
+TypeError: string indices must be integers
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_debugtoolbar/toolbar.py", line 247, in toolbar_tween
+    response = _handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_debugtoolbar/panels/performance.py", line 58, in resource_timer_handler
+    result = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_tm/compat.py", line 36, in reraise
+    raise value
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/tweens.py", line 46, in excview_tween
+    response = view_callable(exc, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 287, in _authdebug_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 404, in viewresult_to_response
+    raise ValueError(msg % (view_description(view), result))
+ValueError: Could not convert return value of the view callable function ecoreleve_be_server.Views.error_view into a response object. The value returned was TypeError('string indices must be integers',).
+ini project  {'userlanguage': 'fr', 'login': 'maxime.depinoy@auddice.com', 'fullname': 'DEPINOY Maxime', 'app_roles': {'ecoreleve': 'Utilisateur'}, 'iss': '46'}  ref  :  13
+not a client
+2018-06-07 11:00:35,242 ERROR [pyramid_debugtoolbar][waitress] Squashed Exception at http://localhost:6545/ecoReleve-Core/security/has_access
+traceback url: http://localhost:6545/_debug_toolbar/313430363534343036303637393834/exception
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 287, in _authdebug_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 250, in _secured_view
+    raise HTTPForbidden(msg, result=result)
+pyramid.httpexceptions.HTTPForbidden: debug_authorization of url http://localhost:6545/ecoReleve-Core/security/has_access (view name '' against context <ecoreleve_be_server.controllers.security.SecurityRoot object at 0x7feca7dfb1d8>): ACLDenied permission 'read' via ACE '<default deny>' in ACL [('Allow', 'system.Authenticated', 'read'), ('Allow', 'system.Authenticated', 'all'), ('Allow', 'group:admin', 'admin'), ('Allow', 'group:admin', 'superUser'), ('Allow', 'group:admin', 'all'), ('Allow', 'group:superUser', 'superUser'), ('Allow', 'group:superUser', 'all')] on context <ecoreleve_be_server.controllers.security.SecurityRoot object at 0x7feca7dfb1d8> for principals ['system.Everyone']
+2018-06-07 11:00:49,894 ERROR [pyramid_debugtoolbar][waitress] Uncaught Exception at http://localhost:6545/ecoReleve-Core/protocols
+traceback url: http://localhost:6545/_debug_toolbar/313430363534333930383937353736/exception
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 596, in __call__
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 329, in attr_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 305, in predicate_wrapper
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 287, in _authdebug_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 245, in _secured_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 355, in rendered_view
+    result = view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 491, in _class_view
+    response = getattr(inst, attr)()
+  File "/srv/ecoReleve-BE/Back/ecoreleve_be_server/Views/__init__.py", line 490, in post
+    return self.context.create()
+  File "/srv/ecoReleve-BE/Back/ecoreleve_be_server/Views/__init__.py", line 382, in create
+    return self.insert()
+  File "/srv/ecoReleve-BE/Back/ecoreleve_be_server/Views/protocols.py", line 145, in insert
+    Path = photo['name'],
+TypeError: string indices must be integers
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_debugtoolbar/toolbar.py", line 247, in toolbar_tween
+    response = _handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_debugtoolbar/panels/performance.py", line 58, in resource_timer_handler
+    result = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_tm/compat.py", line 36, in reraise
+    raise value
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/tweens.py", line 46, in excview_tween
+    response = view_callable(exc, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 287, in _authdebug_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 404, in viewresult_to_response
+    raise ValueError(msg % (view_description(view), result))
+ValueError: Could not convert return value of the view callable function ecoreleve_be_server.Views.error_view into a response object. The value returned was TypeError('string indices must be integers',).
+init stations ID :  416
+init stations ID :  416
+init stations ID :  416
+init stations ID :  416
+init stations ID :  416
+init stations ID :  416
+2018-06-07 23:52:29,108 ERROR [pyramid_debugtoolbar][waitress] Squashed Exception at http://localhost:6545/ecoReleve-Core/security/has_access
+traceback url: http://localhost:6545/_debug_toolbar/313430363534333931373733323234/exception
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 287, in _authdebug_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 250, in _secured_view
+    raise HTTPForbidden(msg, result=result)
+pyramid.httpexceptions.HTTPForbidden: debug_authorization of url http://localhost:6545/ecoReleve-Core/security/has_access (view name '' against context <ecoreleve_be_server.controllers.security.SecurityRoot object at 0x7feca7058598>): ACLDenied permission 'read' via ACE '<default deny>' in ACL [('Allow', 'system.Authenticated', 'read'), ('Allow', 'system.Authenticated', 'all'), ('Allow', 'group:admin', 'admin'), ('Allow', 'group:admin', 'superUser'), ('Allow', 'group:admin', 'all'), ('Allow', 'group:superUser', 'superUser'), ('Allow', 'group:superUser', 'all')] on context <ecoreleve_be_server.controllers.security.SecurityRoot object at 0x7feca7058598> for principals ['system.Everyone']
+filters on foreign ref :  Station@FK_Project
+filters on foreign ref :  Station@FK_Project
+filters on foreign ref :  Station@FK_Project
+Column Name not exists !
+Column LAT not exists !
+Column StationDate not exists !
+Column LON not exists !
+Column ELE not exists !
+filters on foreign ref :  Station@FK_Project
+Column Name not exists !
+Column LAT not exists !
+Column StationDate not exists !
+Column LON not exists !
+Column ELE not exists !
+filters on foreign ref :  Station@FK_Project
+[<sqlalchemy.sql.elements.Label object at 0x7feca7e24240>, <sqlalchemy.sql.elements.Label object at 0x7feca7d5e8d0>, <sqlalchemy.sql.elements.Label object at 0x7feca7d5e470>, <sqlalchemy.orm.attributes.InstrumentedAttribute object at 0x7fecb83cb830>, <sqlalchemy.orm.attributes.InstrumentedAttribute object at 0x7fecb83cb8e0>, <sqlalchemy.orm.attributes.InstrumentedAttribute object at 0x7fecb83cb6d0>, <sqlalchemy.orm.attributes.InstrumentedAttribute object at 0x7fecb83cbba0>, <sqlalchemy.orm.attributes.InstrumentedAttribute object at 0x7fecb8417258>, <sqlalchemy.orm.attributes.InstrumentedAttribute object at 0x7fecb8417308>, <sqlalchemy.sql.elements.Label object at 0x7feca75cbf98>]
+filters on foreign ref :  Station@FK_Project
+2018-06-08 10:08:16,611 ERROR [pyramid_debugtoolbar][waitress] Squashed Exception at http://localhost:6545/ecoReleve-Core/projects/?criteria=%5B%5D&page=1&per_page=200&offset=0&order_by=%5B%5D&typeObj=1
+traceback url: http://localhost:6545/_debug_toolbar/313430363534333738343632373932/exception
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/tweens.py", line 21, in excview_tween
+    response = handler(request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/router.py", line 163, in handle_request
+    response = view_callable(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 596, in __call__
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 329, in attr_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 305, in predicate_wrapper
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 287, in _authdebug_view
+    return view(context, request)
+  File "/root/miniconda3/envs/erd_be/lib/python3.5/site-packages/pyramid-1.5.7-py3.5.egg/pyramid/config/views.py", line 250, in _secured_view
+    raise HTTPForbidden(msg, result=result)
+pyramid.httpexceptions.HTTPForbidden: debug_authorization of url http://localhost:6545/ecoReleve-Core/projects/?criteria=%5B%5D&page=1&per_page=200&offset=0&order_by=%5B%5D&typeObj=1 (view name '' against context <ecoreleve_be_server.Views.project.ProjectsView object at 0x7feca7998908>): ACLDenied permission 'read' via ACE '<default deny>' in ACL [('Allow', 'system.Authenticated', 'read'), ('Allow', 'system.Authenticated', 'all'), ('Allow', 'group:admin', 'admin'), ('Allow', 'group:admin', 'superUser'), ('Allow', 'group:admin', 'all'), ('Allow', 'group:superUser', 'superUser'), ('Allow', 'group:superUser', 'all')] on context <ecoreleve_be_server.Views.project.ProjectsView object at 0x7feca7998908> for principals ['system.Everyone']
