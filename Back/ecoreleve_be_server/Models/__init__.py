@@ -4,9 +4,12 @@ from sqlalchemy import select
 from sqlalchemy.exc import TimeoutError
 import pandas as pd
 from traceback import print_exc
-
+import os
 AppConfig = configparser.ConfigParser()
-AppConfig.read('././development.ini')
+
+absPath = os.path.abspath( os.path.join(os.path.dirname(__file__),'../../development.ini'))
+AppConfig.read(absPath)
+# AppConfig.read('././development.ini')
 print(AppConfig['app:main']['sensor_schema'])
 
 pendingSensorData = []
