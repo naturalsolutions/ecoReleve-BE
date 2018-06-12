@@ -4,6 +4,7 @@
         "manual-import": "Import",
         "history-import": "Historique des Imports",
         "export": "Exporter",
+        "exportSinp": "Téléverser (SINP)",
         "sites": "Sites monitorés",
         "individuals": "Individus",
         "validation": "Validation",

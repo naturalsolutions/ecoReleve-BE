@@ -57,6 +57,16 @@ define([
             this.model.set('fileType', $(e.target).val());
             // this.model.set('fileType', exportType);
 
+
+            if (exportType === 'sinp') {
+                $('.sinpMetadata').removeClass('hidden');
+                //$('#btnNext').attr('disabled', 'disabled');
+            } else {
+                $('.sinpMetadata').addClass('hidden');
+                //$('#btnNext').removeAttr('disabled');
+                $('#sinpref').val('');
+            }
+
             // if (exportType === 'sinp') {
             //     $('.sinpMetadata').removeClass('hidden');
             //     $('#btnNext').attr('disabled', 'disabled');
@@ -65,6 +75,7 @@ define([
             //     $('#btnNext').removeAttr('disabled');
             //     $('#sinpref').val('');
             // }
+
 
 
         },
