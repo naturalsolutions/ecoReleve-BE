@@ -350,16 +350,17 @@ define([
 
                 var elemGallery = document.createElement('div');
                 elemGallery.className = 'gallery'
-                for (var i = 0; i < listOfImages.length; i++) {
-                    var imgCur = document.createElement('img')
-                    imgCur.className = 'imgcontent';
-                    imgCur.id = i;
-                    imgCur.src = listOfImages[i].url;
-                    imgCur.height = '200'
-                    imgCur.width = '200'
-                    imgCur.onclick = function() {
-                        window.open(imgCur.src);
-                    }
+
+                for( var i = 0 ; i < listOfImages.length ; i++ ) {
+                        var imgCur = document.createElement('img')
+                        imgCur.className = 'imgcontent';
+                        imgCur.id = i;
+                        imgCur.src = listOfImages[i].url;
+                        imgCur.height = '200'
+                        imgCur.width ='200'
+                        imgCur.onclick = function(){
+                            window.open(this.src);
+                        }
 
                     if (this.displayMode == 'edit') {
                         var wrapper = document.createElement('div');

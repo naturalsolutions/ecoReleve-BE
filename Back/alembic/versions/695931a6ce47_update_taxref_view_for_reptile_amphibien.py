@@ -43,7 +43,7 @@ def schema_upgrades():
     WHERE "TAXREF"."GROUP2_INPN"::text IN ('Reptiles'::text, 'Amphibiens'::text ) AND "TAXREF"."FR"::text = 'P'::text AND "TAXREF"."CD_NOM" = "TAXREF"."CD_REF" AND ("TAXREF"."RANG"::text = ANY (ARRAY['ES'::character varying::text, 'GN'::character varying::text]));
 
     ALTER TABLE public.reptil_view
-        OWNER TO postgres;
+        OWNER TO nsapp;
     '''
     op.execute(query)
 
