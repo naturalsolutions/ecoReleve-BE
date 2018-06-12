@@ -22,11 +22,12 @@ class ObservationCollection():
 
      def extend_from(self, _from):
         station_columns = [
-            # Station.Name,
+            Station.Name,
             Station.LAT,
             Station.LON,
             Station.StationDate,
-            Station.creator
+            Station.creator,
+            Station.ELE
             ]
 
         self.selectable.extend(station_columns)
