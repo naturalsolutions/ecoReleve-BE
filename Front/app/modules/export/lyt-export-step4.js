@@ -57,10 +57,10 @@ define([
 
             if (exportType === 'sinp') {
                 $('.sinpMetadata').removeClass('hidden');
-                $('#btnNext').attr('disabled', 'disabled');
+                //$('#btnNext').attr('disabled', 'disabled');
             } else {
                 $('.sinpMetadata').addClass('hidden');
-                $('#btnNext').removeAttr('disabled');
+                //$('#btnNext').removeAttr('disabled');
                 $('#sinpref').val('');
             }
 
