@@ -352,7 +352,7 @@ class ExportObservationProjectView(CustomExportView):
             'nomCite', #nom complet taxon 
             'cdNom',
             'cdRef',
-            'datedet', #date de determination definitive du taxon
+            # 'datedet', #date de determination definitive du taxon
             'dateDebut',
             'dateFin',
             'dSPublique', #default value = "Pr" (privé)
@@ -365,27 +365,28 @@ class ExportObservationProjectView(CustomExportView):
         ]
 
         recommanded_columns = [
-            'ocMethDet', ## correspondra au type d'inventaire fourni par le bureau d'étude
+            # 'ocMethDet', ## correspondra au type d'inventaire fourni par le bureau d'étude
         ]
 
         point_wkt = 'POINT({LONG} {LAT})'
         out_dataframe = pd.DataFrame(columns=required_columns.extend(recommanded_columns))
 
-        out_dataframe['datedet'] = dataframe['StationDate'].apply(lambda x: x.strftime("%d/%m/%Y"))
+        # out_dataframe['datedet'] = dataframe['StationDate'].apply(lambda x: x.strftime("%d/%m/%Y"))
         out_dataframe['dateDebut'] = dataframe['StationDate'].apply(lambda x: x.strftime("%d/%m/%Y"))
         out_dataframe['dateFin'] = dataframe['StationDate'].apply(lambda x: x.strftime("%d/%m/%Y"))
+        out_dataframe['dSPublique'] = 'Pr'
+        out_dataframe['natObjGeo'] = 'St'
+        out_dataframe['nomCite'] = dataframe['taxon']
+        out_dataframe['obsId'] = dataframe[['Lastname','Firstname']].apply(lambda r: self.without_accent(r[0],True).upper() + self.without_accent(r[1],title=True).title() or 'Inconnu', axis=1)
+        out_dataframe['obsNomOrg'] = self.without_accent('INCONNU')
+        out_dataframe['orgGestDat'] =  dataframe['ClientName'].apply(lambda x: self.without_accent(x) or 'Inconnu') 
         out_dataframe['WKT'] = dataframe[['LON', 'LAT']].apply(lambda r : point_wkt.format(LONG=r[0], LAT=r[1]), axis=1)
         out_dataframe['statObs'] = 'Pr'
-        out_dataframe['dSPublique'] = 'Pr'
-        out_dataframe['orgGestDat'] = dataframe['ClientName'].apply(lambda x: self.without_accent(x))
-        out_dataframe['obsNomOrg'] = self.without_accent('Auddicé Environnement')
-        out_dataframe['obsId'] = dataframe[['Lastname','Firstname']].apply(lambda r: self.without_accent(r[0],True) + self.without_accent(r[1],title=True), axis=1)
         out_dataframe['statSource'] = 'Te'
-        out_dataframe['natObjGeo'] = 'St'
         out_dataframe['cdNom'] = dataframe['taxref_id']
-        out_dataframe['cdRef'] = dataframe['taxref_id']
-        out_dataframe['nomCite'] = dataframe['taxon']
-        out_dataframe['ocMethDet'] = dataframe['type_inventaire'].apply(lambda x: self.without_accent(x))
+        out_dataframe['permId'] = 'test' #dataframe['obsId']
+        # out_dataframe['cdRef'] = dataframe['taxref_id']
+        # out_dataframe['ocMethDet'] = dataframe['type_inventaire'].apply(lambda x: self.without_accent(x))
 
         return out_dataframe.to_csv(index=False, sep=';')
 

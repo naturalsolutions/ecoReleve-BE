@@ -68,8 +68,14 @@ define([
         },
         activateNext: function(e) {
             var ref = $('#sinpref').val();
-            if (ref) {
+            if ( /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(ref) ) {
+                $('#sinpref').removeClass('error');
                 $('#btnNext').removeAttr('disabled');
+            }
+            else {
+                $('#sinpref').addClass('error');
+                $('#sinpref').val('');
+                $('#sinpref').val("L'identifiant non conforme!");
             }
 
         },
