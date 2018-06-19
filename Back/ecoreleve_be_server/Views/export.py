@@ -22,11 +22,12 @@ class ObservationCollection():
 
      def extend_from(self, _from):
         station_columns = [
-            # Station.Name,
+            Station.Name,
             Station.LAT,
             Station.LON,
             Station.StationDate,
-            Station.creator
+            Station.creator,
+            Station.ELE
             ]
 
         self.selectable.extend(station_columns)
@@ -44,6 +45,9 @@ class SinpObservationCollection():
             Station.StationDate,
             Station.creator
             ]
+        observation_columns = [
+            Observation.ID.label('observation_id')
+        ]
         Taxref = Base.metadata.tables['TAXREF']
         # taxref_id_column = self.get_column_by_name('taxref_id')
         # join_table = outerjoin(_from, Taxref, taxref_id_column == Taxref.c['CD_NOM'])
@@ -53,6 +57,7 @@ class SinpObservationCollection():
         join_table = outerjoin(join_table, Client, Project.FK_Client == Client.ID)
         self.fk_join_list.append(Station.__table__)
         self.selectable.extend(station_columns)
+        self.selectable.extend(observation_columns)
         self.selectable.extend([User.Lastname,
                                 User.Firstname,
                                 Client.Name.label('ClientName')])
@@ -342,7 +347,7 @@ class ExportObservationProjectView(CustomExportView):
         ]
 
         CollectionEngine = SinpObservationCollection(session=self.session, object_type=self.type_obj)
-        query = CollectionEngine.build_query(selectable=['taxref_id', 'type_inventaire', 'taxon'], filters=filters)
+        query = CollectionEngine.build_query(selectable=['taxref_id', 'type_inventaire', 'taxon','nom_vernaculaire'], filters=filters)
         
         protocol_name = self.session.query(ProcoleType).get(self.type_obj).Name
         project_name = self.session.query(Project).get(self.parent.id_).Name
@@ -362,6 +367,7 @@ class ExportObservationProjectView(CustomExportView):
             'natObjGeo', #default value = "St", si polygon => "In"
             'obsNomOrg', #nom de l'organisme ayant effectué l'observation
             'obsId', #nom de l'observateur, s'il ne veut pas etre renseigné mettre "ANONYME", format : NOM Prenom
+            'permId' #identifiant permanent de notre coté de l'app (id de l'observation)
         ]
 
         recommanded_columns = [
@@ -371,24 +377,23 @@ class ExportObservationProjectView(CustomExportView):
         point_wkt = 'POINT({LONG} {LAT})'
         out_dataframe = pd.DataFrame(columns=required_columns.extend(recommanded_columns))
 
-        # out_dataframe['datedet'] = dataframe['StationDate'].apply(lambda x: x.strftime("%d/%m/%Y"))
         out_dataframe['dateDebut'] = dataframe['StationDate'].apply(lambda x: x.strftime("%d/%m/%Y"))
         out_dataframe['dateFin'] = dataframe['StationDate'].apply(lambda x: x.strftime("%d/%m/%Y"))
         out_dataframe['dSPublique'] = 'Pr'
         out_dataframe['natObjGeo'] = 'St'
-        out_dataframe['nomCite'] = dataframe['taxon']
-        out_dataframe['obsId'] = dataframe[['Lastname','Firstname']].apply(lambda r: self.without_accent(r[0],True).upper() + self.without_accent(r[1],title=True).title() or 'Inconnu', axis=1)
+        out_dataframe['nomCite'] = dataframe['nom_vernaculaire'].dropna().apply(lambda x : x) #dataframe['taxon'].dropna().apply(lambda x : x)
+        out_dataframe['obsId'] = dataframe[['Lastname','Firstname']].apply(lambda r: self.without_accent(r[0],True) + self.without_accent(r[1],title=True) or 'Inconnu', axis=1)
         out_dataframe['obsNomOrg'] = self.without_accent('INCONNU')
-        out_dataframe['orgGestDat'] =  dataframe['ClientName'].apply(lambda x: self.without_accent(x) or 'Inconnu') 
+        out_dataframe['orgGestDat'] = dataframe['ClientName'].apply(lambda x: self.without_accent(x) or 'Inconnu')
         out_dataframe['WKT'] = dataframe[['LON', 'LAT']].apply(lambda r : point_wkt.format(LONG=r[0], LAT=r[1]), axis=1)
         out_dataframe['statObs'] = 'Pr'
         out_dataframe['statSource'] = 'Te'
-        out_dataframe['cdNom'] = dataframe['taxref_id']
-        out_dataframe['permId'] = 'test' #dataframe['obsId']
+        out_dataframe['cdNom'] = dataframe['taxref_id'].apply(lambda x: int(x) if x == x else "") #.fillna(0.0).astype(int) #.apply(lambda x : None if x==0 else int(x) )
+        out_dataframe['permId'] = dataframe['observation_id'].apply(lambda x: x)
+        out_dataframe['ocMethDet'] = dataframe['type_inventaire'].apply(lambda x: self.without_accent(x))
         # out_dataframe['cdRef'] = dataframe['taxref_id']
-        # out_dataframe['ocMethDet'] = dataframe['type_inventaire'].apply(lambda x: self.without_accent(x))
 
-        return out_dataframe.to_csv(index=False, sep=';')
+        return out_dataframe.to_csv(index=False, sep=';',encoding='utf-8')
 
     def without_accent(self, text, upper=False, title=False):
         import unicodedata

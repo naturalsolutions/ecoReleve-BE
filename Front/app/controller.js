@@ -38,6 +38,8 @@ define([
     './modules/clients/clients.new.view',
     './modules/importHistory/history.view',
 
+    './modules/sinp/sinp.view',
+
 ], function(
     Marionette,
     LytHome,
@@ -55,7 +57,9 @@ define([
     LytMonitoredSite, LytMonitoredSites, LytMonitoredSitesNew,
     LytProject, LytProjects, LytProjectsNew,
     LytClient, LytClients, LytClientsNew,
-    LytImportHistory
+    LytImportHistory,
+
+    LytSINP
 
 ) {
     'use strict';
@@ -282,6 +286,9 @@ define([
         export: function() {
             this.rgMain.show(new LytExport());
         },
-
+        sinp: function() {
+            this.rgMain.show(new LytSINP());
+            console.log('+++++');
+        }
     });
 });

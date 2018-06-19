@@ -24,8 +24,9 @@ define([
         },
 
         events: {
-            'change input.exportValue': 'changeValue',
-            'change #sinpref ': 'activateNext'
+            'change input' :'changeValue',
+            // 'change input.exportValue': 'changeValue',
+            // 'change #sinpref ': 'activateNext'
         },
 
         initialize: function(options) {
@@ -47,37 +48,42 @@ define([
         },
 
         changeValue: function(e) {
-            var exportType = $(e.target).val();
+            // var exportType = $(e.target).val();
             this.$el.find('label.tile-inside').each(function() {
                 $(this).removeClass('active');
             });
 
             $(e.target).parent().addClass('active');
-            this.model.set('fileType', exportType);
+            this.model.set('fileType', $(e.target).val());
+            // this.model.set('fileType', exportType);
+
 
             if (exportType === 'sinp') {
                 $('.sinpMetadata').removeClass('hidden');
-                $('#btnNext').attr('disabled', 'disabled');
+                //$('#btnNext').attr('disabled', 'disabled');
             } else {
                 $('.sinpMetadata').addClass('hidden');
-                $('#btnNext').removeAttr('disabled');
+                //$('#btnNext').removeAttr('disabled');
                 $('#sinpref').val('');
             }
+
+            // if (exportType === 'sinp') {
+            //     $('.sinpMetadata').removeClass('hidden');
+            //     $('#btnNext').attr('disabled', 'disabled');
+            // } else {
+            //     $('.sinpMetadata').addClass('hidden');
+            //     $('#btnNext').removeAttr('disabled');
+            //     $('#sinpref').val('');
+            // }
+
 
 
         },
         activateNext: function(e) {
-            var ref = $('#sinpref').val();
-            if ( /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(ref) ) {
-                $('#sinpref').removeClass('error');
-                $('#btnNext').removeAttr('disabled');
-            }
-            else {
-                $('#sinpref').addClass('error');
-                $('#sinpref').val('');
-                $('#sinpref').val("L'identifiant non conforme!");
-            }
-
+            // var ref = $('#sinpref').val();
+            // if (ref) {
+            //     $('#btnNext').removeAttr('disabled');
+            // }
         },
         validate: function() {
             return this.model;

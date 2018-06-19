@@ -54,7 +54,9 @@ define(['jquery', 'marionette', 'backbone', 'config', 'sweetAlert'],
                 'validate/:type(/)': 'validateType',
                 'validate/:type/:dataset(/)': 'validateDetail',
 
+                'sinp(/)': 'sinp',
                 '*route(/:page)': 'home',
+
             },
 
             initialize: function(opt) {
@@ -71,6 +73,7 @@ define(['jquery', 'marionette', 'backbone', 'config', 'sweetAlert'],
                     { label: 'Sensors', href: 'sensors', icon: 'reneco-sensors' },
                     { label: 'Monitored Sites', href: 'monitoredSites', icon: 'reneco-sensors' },
                     { label: 'Export', href: 'export', icon: 'reneco-export' },
+                    { label: 'SINP', href: 'sinp', icon: 'reneco-export' },
                 ]);
             },
 
