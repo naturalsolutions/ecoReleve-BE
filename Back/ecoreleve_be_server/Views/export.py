@@ -371,22 +371,19 @@ class ExportObservationProjectView(CustomExportView):
         ]
 
         recommanded_columns = [
-            'ocMethDet', ## correspondra au type d'inventaire fourni par le bureau d'étude
+            # 'ocMethDet', ## correspondra au type d'inventaire fourni par le bureau d'étude
         ]
 
         point_wkt = 'POINT({LONG} {LAT})'
         out_dataframe = pd.DataFrame(columns=required_columns.extend(recommanded_columns))
 
-        # print(dataframe['nom_vernaculaire'])
-
-        # out_dataframe['datedet'] = dataframe['StationDate'].apply(lambda x: x.strftime("%d/%m/%Y"))
         out_dataframe['dateDebut'] = dataframe['StationDate'].apply(lambda x: x.strftime("%d/%m/%Y"))
         out_dataframe['dateFin'] = dataframe['StationDate'].apply(lambda x: x.strftime("%d/%m/%Y"))
         out_dataframe['dSPublique'] = 'Pr'
         out_dataframe['natObjGeo'] = 'St'
         out_dataframe['nomCite'] = dataframe['nom_vernaculaire'].dropna().apply(lambda x : x) #dataframe['taxon'].dropna().apply(lambda x : x)
         out_dataframe['obsId'] = dataframe[['Lastname','Firstname']].apply(lambda r: self.without_accent(r[0],True) + self.without_accent(r[1],title=True) or 'Inconnu', axis=1)
-        out_dataframe['obsNomOrg'] = 'Auddicé Environnement'
+        out_dataframe['obsNomOrg'] = self.without_accent('INCONNU')
         out_dataframe['orgGestDat'] = dataframe['ClientName'].apply(lambda x: self.without_accent(x) or 'Inconnu')
         out_dataframe['WKT'] = dataframe[['LON', 'LAT']].apply(lambda r : point_wkt.format(LONG=r[0], LAT=r[1]), axis=1)
         out_dataframe['statObs'] = 'Pr'
