@@ -485,15 +485,27 @@ class DynamicPropertiesQueryEngine(QueryEngine):
             prop_in_select = list(filter(lambda x: x.element == self.get_column_by_name(prop['Name']) ,self.selectable))
 
             if not prop_in_select :
-                continue
-
-            _alias, column = self.get_alias_property_values(prop)
-            join_table = outerjoin(
+                _alias, column = self.get_alias_property_values(prop)
+                join_table = outerjoin(
                         join_table, _alias,
                         and_(self.pk_model == _alias.c['FK_'+self.model.__tablename__],
                              _alias.c[self.model.fk_table_DynProp_name] == prop['ID'])
                     )
-            selectable.append(column.label(prop['Name']))
+                selectable.append(column.label(prop['Name']))
+            else:
+                continue
+
+
+            # if not prop_in_select :
+            #     continue
+
+            # _alias, column = self.get_alias_property_values(prop)
+            # join_table = outerjoin(
+            #             join_table, _alias,
+            #             and_(self.pk_model == _alias.c['FK_'+self.model.__tablename__],
+            #                  _alias.c[self.model.fk_table_DynProp_name] == prop['ID'])
+            #         )
+            # selectable.append(column.label(prop['Name']))
         return join_table, selectable
 
     def get_alias_property_values(self, _property):
