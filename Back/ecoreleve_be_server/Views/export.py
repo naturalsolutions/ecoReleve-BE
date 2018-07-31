@@ -11,6 +11,7 @@ from ..Views import CustomView
 from ..controllers.security import RootCore
 from ..GenericObjets.SearchEngine import Query_engine
 from traceback import print_exc
+import uuid
 
 ProcoleType = Observation.TypeClass
 
@@ -389,7 +390,8 @@ class ExportObservationProjectView(CustomExportView):
         out_dataframe['statObs'] = 'Pr'
         out_dataframe['statSource'] = 'Te'
         out_dataframe['cdNom'] = dataframe['taxref_id'].apply(lambda x: int(x) if x == x else "") #.fillna(0.0).astype(int) #.apply(lambda x : None if x==0 else int(x) )
-        out_dataframe['permId'] = dataframe['observation_id'].apply(lambda x: x)
+        out_dataframe['permId'] = [ uuid.uuid4() for _ in range(len(out_dataframe.index)) ]
+        out_dataframe['idOrigine'] = dataframe['observation_id'].apply(lambda x: x)
         out_dataframe['ocMethDet'] = dataframe['type_inventaire'].apply(lambda x: self.without_accent(x))
         # out_dataframe['cdRef'] = dataframe['taxref_id']
 
