@@ -11,6 +11,7 @@ from ..Views import CustomView
 from ..controllers.security import RootCore
 from ..GenericObjets.SearchEngine import Query_engine
 from traceback import print_exc
+import uuid
 
 ProcoleType = Observation.TypeClass
 
@@ -157,6 +158,9 @@ class ExportObservationProjectView(CustomExportView):
         if 'criteria' in params:
             filters.extend(json.loads(params['criteria']))
 
+        if len(selectable) == 0:
+            selectable = self.getFieldsWithPrefix()
+
         query = self.CollectionEngine.build_query(filters=filters, selectable=selectable)
         return self.session.execute(query).fetchall()
 
@@ -190,7 +194,8 @@ class ExportObservationProjectView(CustomExportView):
         fileType = self.request.params.get('fileType', None)
         columns = json.loads(params['columns'])
 
-        rows = self.search(selectable=columns)
+        columns = self.getFieldsWithPrefix()
+        rows = self.search(selectable = columns)
         protocol_name = self.session.query(ProcoleType).get(self.type_obj).Name
         project_name = self.session.query(Project).get(self.parent.id_).Name
 
@@ -241,6 +246,18 @@ class ExportObservationProjectView(CustomExportView):
                 'cell': 'string',
             }
             column_fields.append(column)
+        return column_fields
+    
+    def getFieldsWithPrefix(self):
+        all_fields = self.getForm()
+        column_fields = []
+
+        prefix= ['','','Station@']
+        for field in all_fields:
+            colAlliased = getattr(field,'Name')
+            # if getattr(field,'Module_ID') == 2:
+            #     colAlliased = prefix[2]+colAlliased
+            column_fields.append(colAlliased)
         return column_fields
 
     def getFilters(self):
@@ -371,28 +388,26 @@ class ExportObservationProjectView(CustomExportView):
         ]
 
         recommanded_columns = [
-            'ocMethDet', ## correspondra au type d'inventaire fourni par le bureau d'étude
+            # 'ocMethDet', ## correspondra au type d'inventaire fourni par le bureau d'étude
         ]
 
         point_wkt = 'POINT({LONG} {LAT})'
         out_dataframe = pd.DataFrame(columns=required_columns.extend(recommanded_columns))
 
-        # print(dataframe['nom_vernaculaire'])
-
-        # out_dataframe['datedet'] = dataframe['StationDate'].apply(lambda x: x.strftime("%d/%m/%Y"))
         out_dataframe['dateDebut'] = dataframe['StationDate'].apply(lambda x: x.strftime("%d/%m/%Y"))
         out_dataframe['dateFin'] = dataframe['StationDate'].apply(lambda x: x.strftime("%d/%m/%Y"))
         out_dataframe['dSPublique'] = 'Pr'
         out_dataframe['natObjGeo'] = 'St'
         out_dataframe['nomCite'] = dataframe['nom_vernaculaire'].dropna().apply(lambda x : x) #dataframe['taxon'].dropna().apply(lambda x : x)
         out_dataframe['obsId'] = dataframe[['Lastname','Firstname']].apply(lambda r: self.without_accent(r[0],True) + self.without_accent(r[1],title=True) or 'Inconnu', axis=1)
-        out_dataframe['obsNomOrg'] = 'Auddicé Environnement'
+        out_dataframe['obsNomOrg'] = self.without_accent('INCONNU')
         out_dataframe['orgGestDat'] = dataframe['ClientName'].apply(lambda x: self.without_accent(x) or 'Inconnu')
         out_dataframe['WKT'] = dataframe[['LON', 'LAT']].apply(lambda r : point_wkt.format(LONG=r[0], LAT=r[1]), axis=1)
         out_dataframe['statObs'] = 'Pr'
         out_dataframe['statSource'] = 'Te'
         out_dataframe['cdNom'] = dataframe['taxref_id'].apply(lambda x: int(x) if x == x else "") #.fillna(0.0).astype(int) #.apply(lambda x : None if x==0 else int(x) )
-        out_dataframe['permId'] = dataframe['observation_id'].apply(lambda x: x)
+        out_dataframe['permId'] = [ uuid.uuid4() for _ in range(len(out_dataframe.index)) ]
+        out_dataframe['idOrigine'] = dataframe['observation_id'].apply(lambda x: x)
         out_dataframe['ocMethDet'] = dataframe['type_inventaire'].apply(lambda x: self.without_accent(x))
         # out_dataframe['cdRef'] = dataframe['taxref_id']
 

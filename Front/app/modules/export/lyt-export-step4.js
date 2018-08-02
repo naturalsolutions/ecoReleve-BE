@@ -84,7 +84,6 @@ define([
             // if (ref) {
             //     $('#btnNext').removeAttr('disabled');
             // }
-
         },
         validate: function() {
             return this.model;

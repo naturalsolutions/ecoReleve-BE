@@ -63,6 +63,11 @@ class StationList(CollectionEngine):
             aggregate_order_by(literal_column("','"), Station.ID
         )).label('nom_vernaculaire'))
 
+        self.selectable.append(
+            func.string_agg(
+            ObservationTable.c['taxon'],
+            aggregate_order_by(literal_column("','"), Station.ID
+        )).label('nom_latin'))
 
 
 
