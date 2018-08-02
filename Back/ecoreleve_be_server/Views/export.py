@@ -11,6 +11,7 @@ from ..Views import CustomView
 from ..controllers.security import RootCore
 from ..GenericObjets.SearchEngine import Query_engine
 from traceback import print_exc
+import uuid
 
 ProcoleType = Observation.TypeClass
 
@@ -157,6 +158,9 @@ class ExportObservationProjectView(CustomExportView):
         if 'criteria' in params:
             filters.extend(json.loads(params['criteria']))
 
+        if len(selectable) == 0:
+            selectable = self.getFieldsWithPrefix()
+
         query = self.CollectionEngine.build_query(filters=filters, selectable=selectable)
         return self.session.execute(query).fetchall()
 
@@ -190,7 +194,8 @@ class ExportObservationProjectView(CustomExportView):
         fileType = self.request.params.get('fileType', None)
         columns = json.loads(params['columns'])
 
-        rows = self.search(selectable=columns)
+        columns = self.getFieldsWithPrefix()
+        rows = self.search(selectable = columns)
         protocol_name = self.session.query(ProcoleType).get(self.type_obj).Name
         project_name = self.session.query(Project).get(self.parent.id_).Name
 
@@ -241,6 +246,18 @@ class ExportObservationProjectView(CustomExportView):
                 'cell': 'string',
             }
             column_fields.append(column)
+        return column_fields
+    
+    def getFieldsWithPrefix(self):
+        all_fields = self.getForm()
+        column_fields = []
+
+        prefix= ['','','Station@']
+        for field in all_fields:
+            colAlliased = getattr(field,'Name')
+            # if getattr(field,'Module_ID') == 2:
+            #     colAlliased = prefix[2]+colAlliased
+            column_fields.append(colAlliased)
         return column_fields
 
     def getFilters(self):
@@ -389,7 +406,8 @@ class ExportObservationProjectView(CustomExportView):
         out_dataframe['statObs'] = 'Pr'
         out_dataframe['statSource'] = 'Te'
         out_dataframe['cdNom'] = dataframe['taxref_id'].apply(lambda x: int(x) if x == x else "") #.fillna(0.0).astype(int) #.apply(lambda x : None if x==0 else int(x) )
-        out_dataframe['permId'] = dataframe['observation_id'].apply(lambda x: x)
+        out_dataframe['permId'] = [ uuid.uuid4() for _ in range(len(out_dataframe.index)) ]
+        out_dataframe['idOrigine'] = dataframe['observation_id'].apply(lambda x: x)
         out_dataframe['ocMethDet'] = dataframe['type_inventaire'].apply(lambda x: self.without_accent(x))
         # out_dataframe['cdRef'] = dataframe['taxref_id']
 
