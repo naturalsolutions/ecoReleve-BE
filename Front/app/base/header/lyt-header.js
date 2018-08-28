@@ -116,6 +116,7 @@ define([
                         $this.val($(this).attr('rel'));
                         $list.hide();
                         _this.setContextProject($(this).attr('rel'));
+                        Backbone.history.loadUrl();
                     });
 
                     $(document).click(function() {
