@@ -42,9 +42,9 @@ def data_upgrades():
     INSERT INTO public."ModuleGrids"(
 	"ID","Module_ID", "TypeObj", "Name", "Label", "GridRender", "GridSize", "CellType", "GridOrder", "QueryName", "Options", "FilterOrder", "FilterSize", "IsSearchable", "FilterDefaultValue", "FilterRender", "FilterType", "FilterClass", "Status", "ColumnParams")
 	VALUES 
-	(300,23,NULL,'ID','ID',2,'{"width": 120,"maxWidth": 350,"minWidth": 100}','integer',1,NULL,NULL,10,2,true,NULL,4,'Text',NULL,NULL,'{"pinned" : "left" }'),
-	(301,23,NULL,'Name','Nom',2,'{"width": 120,"maxWidth": 350,"minWidth": 100}','string',2,NULL,'{"source": "autocomplete/clients/Name", "minLength":3}',10,2,true,NULL,4,'AutocompleteEditor',NULL,NULL,NULL),
-	(302,23,NULL,'description','Description',2,'{"width": 120,"maxWidth": 750,"minWidth": 100}','string',3,NULL,'{"source": "autocomplete/clients/description", "minLength":3}',10,2,true,NULL,4,'AutocompleteEditor',NULL,NULL,NULL);
+	(300,23,NULL,'ID','ID',2,'{"width" : 120,"maxWidth" : 350,"minWidth" : 100}','integer',1,NULL,NULL,10,2,true,NULL,4,'Text',NULL,NULL,'{"pinned" : "left" }'),
+	(301,23,NULL,'Name','Nom',2,'{"width" : 120,"maxWidth" : 350,"minWidth" : 100}','string',2,NULL,'{"source": "autocomplete/clients/Name", "minLength" : 3}',10,2,true,NULL,4,'AutocompleteEditor',NULL,NULL,NULL),
+	(302,23,NULL,'description','Description',2,'{"width" : 120,"maxWidth" : 750,"minWidth" : 100}','string',3,NULL,'{"source" : "autocomplete/clients/description", "minLength" : 3}',10,2,true,NULL,4,'AutocompleteEditor',NULL,NULL,NULL);
     '''
     op.execute(query)
 
