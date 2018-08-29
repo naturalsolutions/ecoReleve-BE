@@ -64,8 +64,8 @@ def data_upgrades():
     (1,3,'minimum','Minimum',0,1,1,'Checkbox','form-control',NULL,NULL,7,6,'Obligatoire',NULL,NULL,'0',NULL),
     (1,4,'minimum','Minimum',0,1,1,'Checkbox','form-control',NULL,NULL,7,6,'Obligatoire',NULL,NULL,'0',NULL),
     (1,5,'minimum','Minimum',0,1,1,'Checkbox','form-control',NULL,NULL,7,6,'Obligatoire',NULL,NULL,'0',NULL),
-    (1,6,'estimated','Estimé',0,1,1,'Checkbox','form-control',NULL,NULL,7,30,'Facultatif',NULL,NULL,'0',NULL),
-    (1,6,'minimum','Minimum',0,1,1,'Checkbox','form-control',NULL,NULL,7,31,'Facultatif',NULL,NULL,'0',NULL),
+    (1,6,'estimated','Estimé',0,1,1,'Checkbox','form-control',NULL,NULL,7,31,'Facultatif',NULL,NULL,'0',NULL),
+    (1,6,'minimum','Minimum',0,1,1,'Checkbox','form-control',NULL,NULL,7,32,'Facultatif',NULL,NULL,'0',NULL),
     (1,7,'estimated','Estimé',0,1,1,'Checkbox','form-control',NULL,NULL,7,6,'Obligatoire',NULL,NULL,'0',NULL),
     (1,7,'minimum','Minimum',0,1,1,'Checkbox','form-control',NULL,NULL,7,7,'Obligatoire',NULL,NULL,'0',NULL);
 
