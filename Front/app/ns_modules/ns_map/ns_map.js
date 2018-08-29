@@ -274,14 +274,14 @@ define([
 
         },
 
-        enableDrawingControl: function(){
+        enableDrawingControl: function() {
             var button = $('.leaflet-draw-section');
             var markerButtons = button.find('a');
             button.removeClass('disabled-draw-control');
             markerButtons.removeClass('leaflet-disabled');
             button.removeAttr('disabled');
 
-            if(this.drawnItems.getLayers().length){
+            if (this.drawnItems.getLayers().length) {
                 var draw_button = button.find("a[class^='leaflet-draw-draw'],a[class*=' leaflet-draw-draw']");
                 draw_button.addClass('leaflet-disabled');
                 draw_button.parent().attr('disabled', 'disabled');
@@ -290,7 +290,7 @@ define([
             }
         },
 
-        disableDrawingControl: function(){
+        disableDrawingControl: function() {
             var button = $('.leaflet-draw-section');
             var markerButtons = button.find('a');
             button.addClass('disabled-draw-control');
@@ -479,7 +479,7 @@ define([
             });
 
             var disableClusteringAtZoom = 16; //16 (scale at 200m), maxZomm at 18 (scale at 20m)
-            if (geoJson.features.length < 500) {
+            if (geoJson && (geoJson.features.length < 500)) {
                 disableClusteringAtZoom = 2; //minZoom
             }
 
@@ -492,7 +492,10 @@ define([
         },
 
         addClusterLayers: function() {
-            this.clusterLayer.addLayers(this.markerList);
+            if (this.markerList) {
+                this.clusterLayer.addLayers(this.markerList);
+            }
+
 
             this.lControl.addOverlay(this.clusterLayer, 'clusters')
             if (!this.playerDisplayed) {
@@ -561,6 +564,10 @@ define([
         },
 
         setMarkerListFromGeoJson: function(geoJson) {
+
+            if (!geoJson) {
+                return 0;
+            }
             var _this = this;
 
             var marker, prop;
@@ -568,8 +575,13 @@ define([
             var i = 0;
 
             var markerList = [];
+            var features;
 
-            var features = geoJson.features;
+            if (geoJson) {
+                features = geoJson.features;
+            }
+
+
             var feature, latlng;
 
             for (var j = 0; j < features.length; j++) {
@@ -891,10 +903,10 @@ define([
                 }
                 if (icon) {
                     m.setIcon(icon);
-                } 
-                if(!layer){
+                }
+                if (!layer) {
                     m.addTo(this.map);
-                } else{
+                } else {
                     layer.addLayer(m);
                 }
             }
