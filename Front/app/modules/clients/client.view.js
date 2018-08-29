@@ -53,14 +53,20 @@ define([
         },
 
         displayStationsGrid: function() {
-            this.rgStationsGrid.show(this.stationsGrid = new GridView({
-                columns: this.model.get('stationsColumnDefs'),
-                type: this.model.get('type'),
-                url: this.model.get('type') + '/' + this.model.get('id') + '/projects',
-                clientSide: true,
-            }));
-            this.gridViews.push(this.stationsGrid);
+            if (this.rgStationsGrid) {
+                this.rgStationsGrid.show(this.stationsGrid = new GridView({
+                    columns: this.model.get('stationsColumnDefs'),
+                    type: this.model.get('type'),
+                    url: this.model.get('type') + '/' + this.model.get('id') + '/projects',
+                    clientSide: true,
+                }));
+
+                this.gridViews.push(this.stationsGrid);
+
+            }
+
         },
+
 
     });
 });
