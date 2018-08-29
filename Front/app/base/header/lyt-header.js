@@ -128,7 +128,7 @@ define([
             },
 
             setContextProject: function(project_id) {
-                if (project_id) {
+                if (project_id && project_id != "0") {
                     window.curent_project_url = 'projects/' + project_id + '/';
                 } else {
                     window.curent_project_url = '';
