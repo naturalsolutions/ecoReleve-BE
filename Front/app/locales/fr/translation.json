@@ -15,7 +15,8 @@
         "sensors": "Capteurs",
         "release": "Relaché",
         "projects": "Les projets",
-        "clients": "Clients"
+        "clients": "Les clients",
+        "users": "Les utilisateurs"
     },
     "stepper": {
         "btnNext": "Suivant",

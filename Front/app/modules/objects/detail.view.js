@@ -97,6 +97,11 @@ define([
                 zoom: 3,
                 popup: true,
             });
+            //center map on France
+            this.map.map.fitBounds([
+                [41.959891, -4.077587],
+                [51.276321, 8.698981]
+            ])
         },
 
         onRender: function() {

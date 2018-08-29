@@ -346,21 +346,21 @@ define([
             if (listOfImages) {
                 var fieldSetElem = document.createElement('fieldset')
                 var legendElem = document.createElement('legend')
-                legendElem.innerHTML = 'Gallery'
+                legendElem.innerHTML = 'Galerie'
 
                 var elemGallery = document.createElement('div');
                 elemGallery.className = 'gallery'
 
-                for( var i = 0 ; i < listOfImages.length ; i++ ) {
-                        var imgCur = document.createElement('img')
-                        imgCur.className = 'imgcontent';
-                        imgCur.id = i;
-                        imgCur.src = listOfImages[i].url;
-                        imgCur.height = '200'
-                        imgCur.width ='200'
-                        imgCur.onclick = function(){
-                            window.open(this.src);
-                        }
+                for (var i = 0; i < listOfImages.length; i++) {
+                    var imgCur = document.createElement('img')
+                    imgCur.className = 'imgcontent';
+                    imgCur.id = i;
+                    imgCur.src = listOfImages[i].url;
+                    imgCur.height = '200'
+                    imgCur.width = '200'
+                    imgCur.onclick = function() {
+                        window.open(this.src);
+                    }
 
                     if (this.displayMode == 'edit') {
                         var wrapper = document.createElement('div');
@@ -371,7 +371,7 @@ define([
                         wrapper.appendChild(spanRemove);
                         elemGallery.appendChild(wrapper);
                         spanRemove.onclick = function() {
-                            var res = confirm('remove img ?')
+                            var res = confirm('Voulez-vous supprimer cette photo ?')
                             if (res == true) {
                                 var tmpTab = _this.model.get('images');
                                 var indexImg = Number(this.previousElementSibling.id);
