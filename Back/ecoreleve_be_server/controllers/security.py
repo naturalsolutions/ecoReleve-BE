@@ -177,7 +177,7 @@ context_permissions = {
 
     'observations': [
         (Allow, 'group:admin', ALL_PERMISSIONS),
-        (Allow, 'group:superUser', ALL_PERMISSIONS),
+        (Allow, 'group:superUser', ('create', 'update', 'read')),
         (Allow, 'group:user', ALL_PERMISSIONS),
         (Deny, 'group:client', ALL_PERMISSIONS)
         
@@ -217,7 +217,7 @@ context_permissions = {
 
     'projects': [
         (Allow, 'group:admin', ALL_PERMISSIONS),
-        (Allow, 'group:superUser', 'read'),
+        (Allow, 'group:superUser', ('create', 'update', 'read')),
         (Allow, 'group:user', 'read'),
         (Allow, 'group:client', 'read')
         
@@ -225,7 +225,7 @@ context_permissions = {
 
     'project': [
         (Allow, 'group:admin', ALL_PERMISSIONS),
-        (Allow, 'group:superUser', 'read'),
+        (Allow, 'group:superUser', ('create', 'update', 'read')),
         (Allow, 'group:user', 'read'),
         (Deny, 'group:client', ALL_PERMISSIONS)
         
@@ -233,7 +233,7 @@ context_permissions = {
 
     'clients': [
         (Allow, 'group:admin', ALL_PERMISSIONS),
-        (Allow, 'group:superUser', 'read'),
+        (Allow, 'group:superUser', ('create', 'update', 'read')),
         (Allow, 'group:user', 'read'),
         (Deny, 'group:client', ALL_PERMISSIONS)
         
