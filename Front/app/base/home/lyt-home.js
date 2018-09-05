@@ -148,6 +148,9 @@ define(['marionette',
                         if (role == "user") {
                             $('.projTile').addClass('hidden');
                         }
+                        if (role == "superUser") {
+                            $('.clientsTile').removeClass('hidden');
+                        }
                         $('.tile.last').css('margin-left', '30px');
 
                     }
