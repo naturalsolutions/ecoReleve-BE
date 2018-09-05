@@ -189,8 +189,8 @@ class StationsView(DynamicObjectCollectionView):
                 geoJson.append({
                     'type': 'Feature',
                     'properties': {
-                        'name': row['Name'],
-                        'date': row['StationDate']},
+                        'Nom': row['nom_vernaculaire'],
+                        'Date': row['StationDate']},
                     'geometry': {
                         'type': 'Point',
                         'coordinates': [row['LAT'], row['LON']]}

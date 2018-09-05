@@ -605,7 +605,11 @@ define([
                     if (_this.popup) {
                         prop = feature.properties;
                         for (var p in prop) {
-                            infos += '<b>' + p + ' : ' + prop[p] + '</b><br />';
+                            var value = prop[p];
+                            if (!value) {
+                                value = "";
+                            }
+                            infos += '<b>' + p + ' </b>: ' + value + '<br />';
                         }
                         marker.bindPopup(infos);
                     }
