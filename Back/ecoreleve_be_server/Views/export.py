@@ -297,11 +297,31 @@ class ExportObservationProjectView(CustomExportView):
             filter_['options'] = [
                 {'label': 'True', 'val': 1}, {'label': 'False', 'val': 0}]
 
-        if (field.InputType == 'TaxRefEditor'
-                and field.Options is not None and field.Options != ''):
-            option = json.loads(field.Options)
-            filter_['options'] = filter_['options']
-            filter_['options']['iconFont'] = 'reneco reneco-autocomplete'
+        if (field.InputType == 'TaxRefEditor'):
+            if( field.Options is not None and field.Options != ''):
+                option = json.loads(field.Options)
+                filter_['options'] = filter_['options']
+                filter_['options']['iconFont'] = 'reneco reneco-autocomplete'
+            elif( field.Options is None or field.Options == '' ) :
+                typeObj_dbView = {
+                    1:'oiseau',
+                    3:'reptile',
+                    4:'mammal',
+                    5:'chiroptera',
+                    6:'flore',
+                    7:'insecte'
+                }
+                try:
+                    valObj = int(self.type_obj)
+                except:
+                    valObj = None
+                dbViewStr = typeObj_dbView.get(valObj)
+                if dbViewStr :
+                    filter_['options'] = { 
+                        "type" : "vernaculaire",
+                        "taxaList" : dbViewStr,
+                        "vernaStrict" : True
+                    }
 
         return filter_
 
