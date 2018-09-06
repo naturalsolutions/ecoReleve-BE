@@ -64,7 +64,13 @@ define([
 
             this.autocompleteSource.change = function(event,ui){
               var valueFound = ui.item;
-              if (!valueFound){
+              var nocheck = false;
+
+              if ( 'vernaStrict' in _this.options.schema.options && _this.options.schema.options.vernaStrict == true ) {
+                nocheck = true;
+              }
+
+              if (!valueFound && !nocheck){
                 _this.isTermError = true;
                 _this.displayErrorMsg(true);
               }
@@ -115,6 +121,9 @@ define([
       if (this.isTermError) {
         return null ;
       }
+      if ( 'vernaStrict' in this.options.schema.options && this.options.schema.options.vernaStrict == true ) {
+        return this.$input.val(); //this.form.model.get('nom_vernaculaire');
+      }
       if (this.noAutocomp){
         return this.$input.val();
       }
@@ -161,6 +170,7 @@ define([
       var _this = this;
       var taxref_value = this.model.get('taxref_id');
       var data_value;
+
       // if (value) {
       //     $.ajax({
       //         url : this.url+'/'+value,
@@ -183,8 +193,13 @@ define([
           iconFont:_this.iconFont,
           key : this.options.schema.title
       });
+      
 
       this.setElement($el);
+      if ( 'vernaStrict' in this.options.schema.options && this.options.schema.options.vernaStrict == true ) {
+        this.$el.find('input[id="'+this.cid+'"]')[0].style = '';
+        this.$el.find('select').hide();
+       }
       if(this.options.schema.validators && this.options.schema.validators[0] == "required"){
         this.$el.find('input').addClass('required');
       }

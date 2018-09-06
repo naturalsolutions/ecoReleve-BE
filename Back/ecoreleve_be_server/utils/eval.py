@@ -41,10 +41,10 @@ class Eval():
         return op1.in_(l)
 
     def _contains(self,op1,op2):
-        return op1.like('%'+op2+'%')
+        return op1.ilike('%'+op2+'%')
 
     def not_contains(self,op1,op2):
-        return not_(op1.like('%'+op2+'%'))
+        return not_(op1.ilike('%'+op2+'%'))
 
     def checked(self,op1,op2):
         if '-1' in op2:
@@ -52,10 +52,10 @@ class Eval():
         return op1.in_(op2)
 
     def begin_with(self,op1,op2):
-        return op1.like(op2+'%')
+        return op1.ilike(op2+'%')
 
     def end_with(self,op1,op2):
-        return op1.like('%'+op2)
+        return op1.ilike('%'+op2)
 
     def is_null (self,op1,op2):
         return op1.is_null()
