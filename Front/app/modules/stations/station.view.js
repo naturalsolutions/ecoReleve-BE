@@ -50,6 +50,7 @@ define([
             this.model = new this.ModelPrototype();
             this.com = new Com();
             this.model.set('id', options.id);
+            this.map = null;
 
             this.model.set('stationId', options.id);
 
@@ -88,7 +89,7 @@ define([
 
         displayMap: function() {
             var self = this;
-            var map = this.map = new NsMap({
+            this.map = new NsMap({
                 zoom: 3,
                 popup: true,
                 drawable: true,
@@ -121,6 +122,22 @@ define([
               this.map.map.on('draw:deleted', function () {
                 self.removeLatLngMakrer(true);
               });
+
+                //this.rgProtocol.currentView.rgObservation.currentView
+            if (this.rgProtocol) {
+                if(this.rgProtocol.currentView) {
+                    if(this.rgProtocol.currentView.rgObservation) {
+                        if(this.rgProtocol.currentView.rgObservation.currentView) {
+                            var newItem = this.rgProtocol.currentView.rgObservation.currentView.model;
+                            var geom = newItem.get('geom')
+                            if (geom) {
+                                this.map.addGeometry(geom, true);
+                                this.map.disableDrawingControl();
+                            }
+                        }
+                    }
+                }
+            }
         },
 
         initMarker: function(){

@@ -20,6 +20,8 @@ from pyramid.security import (
     Allow,
     Authenticated,
     ALL_PERMISSIONS)
+import json
+import geojson
 
 class ObservationView(DynamicObjectView):
 
@@ -134,7 +136,11 @@ class ObservationsView(DynamicObjectCollectionView):
 
         data = {}
         for items, value in json_body.items():
-            data[items] = value
+            if items in ('trace'):
+                jsonTrace = json.loads(value)
+                data['geom'] = jsonTrace
+            else:
+                data[items] = value
 
         if data.get('type_name', None):
             data['type_name'] = data['type_name'].title()

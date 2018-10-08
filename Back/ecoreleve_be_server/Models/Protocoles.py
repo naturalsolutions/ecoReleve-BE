@@ -13,6 +13,7 @@ from sqlalchemy import (
     event,
     select,
     Boolean)
+import json
 from sqlalchemy.orm import relationship
 from datetime import datetime, timedelta
 from sqlalchemy.ext.hybrid import hybrid_property
@@ -20,6 +21,11 @@ from ..utils.parseValue import isNumeric
 from sqlalchemy.ext.declarative import declared_attr
 from ..GenericObjets.OrmModelsMixin import HasDynamicProperties, GenericType, HasStaticProperties
 from ..utils.parseValue import formatValue
+from geoalchemy2 import Geometry
+from shapely import wkt, wkb
+from shapely.geometry import shape
+import geojson
+from sqlalchemy.ext.hybrid import hybrid_property
 
 
 class Observation(HasDynamicProperties, Base):
@@ -36,6 +42,7 @@ class Observation(HasDynamicProperties, Base):
     FK_Individual = Column(Integer, ForeignKey('Individual.ID'))
     original_id = Column(String(250))
     taxon = Column(String(255))
+    trace = Column(Geometry('LineString'))
 
     Observation_children = relationship(
         "Observation", cascade="all, delete-orphan", order_by='Observation.ID')
@@ -49,6 +56,29 @@ class Observation(HasDynamicProperties, Base):
     Station = relationship("Station")
     Individual = relationship('Individual')
     Images = relationship('MediasFiles', back_populates='Observation', cascade="all, delete-orphan")
+
+    @hybrid_property
+    def geom(self):
+        return self.trace
+
+    @geom.setter
+    def geom(self, geoJSON_received):
+        if geoJSON_received:
+            self.trace = self.convert_geojson_to_wkt(
+                geoJSON_received['geometry'])
+        else:
+            self.trace = None
+   
+    def convert_geojson_to_wkt(self, geoJson):
+        strJson = json.dumps(geoJson)
+        g1 = geojson.loads(strJson)
+        geom = shape(g1)
+        return geom.wkt
+
+    def as_dict(self):
+        values = super().as_dict()
+        del values['trace']
+        return values
 
     @declared_attr
     def table_type_name(cls):
