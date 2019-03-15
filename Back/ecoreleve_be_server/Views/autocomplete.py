@@ -77,6 +77,7 @@ def autocompleteTaxon(request):
         'insecte': Base.metadata.tables['insect_view'],
         'chiroptera': Base.metadata.tables['chiroptera_view'],
         'flore': Base.metadata.tables['phyto_view'],
+        'mortalite': Base.metadata.tables['mortalite_view']
     }
 
     # prop_name = {'vernaculaire': 'NOM_VERN',

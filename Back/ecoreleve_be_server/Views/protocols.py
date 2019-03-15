@@ -136,8 +136,10 @@ class ObservationsView(DynamicObjectCollectionView):
 
         data = {}
         for items, value in json_body.items():
-            if items in ('trace'):
-                jsonTrace = json.loads(value)
+            if items in ('trace') :
+                jsonTrace = None
+                if value not in (None , ''):
+                    jsonTrace = json.loads(value)
                 data['geom'] = jsonTrace
             else:
                 data[items] = value
@@ -215,8 +217,7 @@ class ObservationsView(DynamicObjectCollectionView):
             self.session.rollback()
             self.request.response.status_code = 409
             responseBody['response'] = type(e)
-            sendLog(logLevel=1, domaine=3,
-                    msg_number=self.request.response.status_code)
+            #sendLog(logLevel=1, domaine=3,msg_number=self.request.response.status_code)
         return responseBody
 
     def batch(self):

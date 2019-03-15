@@ -104,7 +104,7 @@ class Generator :
                 type_f = self.dictFilter[db_type]
                 if type_f == 'DateTimePickerEditor':
                     if db_type == 'TIME':
-                        options ={'format':'hh:mm:ss'}
+                        options ={'format':'HH:mm'}
                     elif db_type == 'DATE':
                         options ={'format':'DD/MM/YYYY'}
                     else : 

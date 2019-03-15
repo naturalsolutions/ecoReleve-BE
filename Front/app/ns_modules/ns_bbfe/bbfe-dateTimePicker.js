@@ -35,7 +35,8 @@ define([
         this.dictFormat = {
             'DD/MM/YYYY HH:mm:ss' : 'datetime',
             'DD/MM/YYYY' : 'date',
-            'HH:mm:ss' : 'time'
+            'HH:mm:ss' : 'time',
+		'HH:mm':'time'
         }
         if (options.schema.options){
             this.format = options.schema.options.format;
@@ -54,7 +55,7 @@ define([
         }
 
         this.classIcon = 'reneco-calendar reneco';
-        if (this.format && (this.format.toLowerCase() == 'hh:mm:ss')) {
+        if (this.format && (this.format.toLowerCase() == 'hh:mm:ss' || this.format.toLowerCase() == 'hh:mm' )) {
             this.classIcon = 'glyphicon-time glyphicon';
         }
     },
@@ -86,7 +87,7 @@ define([
             required = options.schema.validators[0];
         }
 
-        if (options.model && this.format && this.format.toLowerCase() == 'hh:mm:ss') {
+        if (options.model && this.format && (this.format.toLowerCase() == 'hh:mm:ss' || this.format.toLowerCase() == 'hh:mm')) {
             var val = options.model.get(this.options.key);
             if (val){
               var tab = val.split(" ");

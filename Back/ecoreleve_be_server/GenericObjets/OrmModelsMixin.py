@@ -652,14 +652,12 @@ class HasDynamicProperties(HasStaticProperties):
             del dict_['ID']
         if self.fk_table_type_name not in dict_ and 'type_id' not in dict_ and not self.type_id and 'type_name' not in dict_:
             raise Exception('object type not exists')
-
         if 'type_name' in dict_:
             self.type_name = dict_.get('type_name')
         else:
             type_id = dict_.get(self.fk_table_type_name, None) or dict_.get(
                 'type_id', None) or self.type_id
             self._type = self.session.query(self.TypeClass).get(type_id)
-
         useDate = parser(dict_.get('__useDate__', None)
                         )
         for prop, value in dict_.items():

@@ -32,6 +32,7 @@ def dateParser(stringDate):
                '%d/%m/%Y%H:%M:%S',
                '%d/%m/%Y',
                '%H:%M:%S',
+               '%H:%M',
                '%Y-%m-%d %H:%M:%S']
     dateValue = stringDate
     for format_ in formats:
