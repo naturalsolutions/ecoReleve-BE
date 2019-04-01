@@ -1,4 +1,5 @@
 from sqlalchemy import select, join, exists, func, and_, text, or_, outerjoin
+from sqlalchemy.types import TIMESTAMP
 import json
 import pandas as pd
 from ..Models import BaseExport, Project, Observation, Station, ModuleForms, FrontModules, Base, User, Client, Project
@@ -30,9 +31,33 @@ class ObservationCollection():
             Station.creator,
             Station.ELE
             ]
+        observation_columns = [
+            Observation.ID.label('observation_id')
+        ]
+
+        project_columns = [
+            Project.Name.label('Projet')
+        ]
 
         self.selectable.extend(station_columns)
-        return _from
+
+
+
+        join_table = outerjoin(_from, Station,Observation.FK_Station == Station.ID)
+        join_table = outerjoin( join_table, User, Station.creator == User.id) 
+        join_table = outerjoin(join_table, Project, Station.FK_Project == Project.ID)
+        join_table = outerjoin(join_table, Client, Project.FK_Client == Client.ID)
+        self.fk_join_list.append(Station.__table__)
+        self.selectable.extend(station_columns)
+        self.selectable.extend(observation_columns)
+        self.selectable.extend(project_columns)
+        
+        # self.selectable.extend([User.Lastname,
+        #                         User.Firstname,
+        #                         Client.Name.label('ClientName')])
+
+        # join_table = outerjoin(_from, )
+        return join_table
 
 
 @Query_engine(Observation)
@@ -102,11 +127,30 @@ class ExportObservationProjectView(CustomExportView):
             self.type_obj = self.request.params.get('typeObj', self.request.params.get('objectType',None))
         self.CollectionEngine = ObservationCollection(session=self.session, object_type=self.type_obj)
 
+    def format_result(self,result):
+        response = []
+        for row in result:
+            tempdict = {}
+            listKeys = list(row.keys())
+            # listKeysOrdered.sort()
+            listKeysSorted = sorted(listKeys, key=lambda s: s.lower())
+            # for col, value in row.items().sort():
+            for item in listKeysSorted:
+                if isinstance(row._keymap[item][1][0].type,TIMESTAMP):
+                    tempdict[item] = row[item].strftime('%H:%M:%S')
+                else:
+                    tempdict[item] = row[item]
+            response.append(tempdict)
+        return listKeysSorted,response
+
+
     def retrieve(self):
         if self.request.params.get('geo', None):
             return self.get_geoJSON(geoJson_properties=['taxon'])
         result = self.search()
-        return [dict(row) for row in result]
+        _ , response = self.format_result(result)
+
+        return response
 
     def get_geoJSON(self,geoJson_properties = None) :
         result=[]
@@ -117,7 +161,8 @@ class ExportObservationProjectView(CustomExportView):
         geoJson=[]
 
         if countResult <= 100000 :
-            exceed = False
+            exceed = True
+            return {'type':'FeatureCollection', 'features': geoJson,'exceed': exceed, 'total':countResult}
             try :
                 data=self.search()
             except :
@@ -193,16 +238,19 @@ class ExportObservationProjectView(CustomExportView):
         criteria = json.loads(params['criteria'])
         fileType = self.request.params.get('fileType', None)
         columns = json.loads(params['columns'])
-
+        
         columns = self.getFieldsWithPrefix()
-        rows = self.search(selectable = columns)
+        columnsSorted = sorted(columns, key=lambda s: s.lower())
+        result = self.search(selectable = columnsSorted)
+
+        columnsSorted,rows = self.format_result(result)
         protocol_name = self.session.query(ProcoleType).get(self.type_obj).Name
         project_name = self.session.query(Project).get(self.parent.id_).Name
 
         self.filename = project_name + '_'+ protocol_name + '_'
         self.request.response.content_disposition = 'attachment;filename=' + self.filename
 
-        value = {'header': columns, 'rows': rows}
+        value = {'header': columnsSorted, 'rows': rows}
 
         io_export = self.actions[fileType](value)
         return io_export
@@ -216,6 +264,10 @@ class ExportObservationProjectView(CustomExportView):
         return frontModule
 
     def getForm(self):
+        project_fields = self.session.query(ModuleForms
+                                    ).filter(ModuleForms.Module_ID == self.getConf('ProjectForm').ID
+                                    ).filter(ModuleForms.Name.in_(['Name'])).all()
+
         observation_fields = self.session.query(ModuleForms
                                     ).filter(
             and_(ModuleForms.Module_ID == self.getConf().ID,
@@ -273,6 +325,8 @@ class ExportObservationProjectView(CustomExportView):
         prefix = ''
         if field.Module_ID == 2:
             prefix = 'Station@'
+        if field.Module_ID == 5:
+            prefix = 'Project@'
         filter_ = {
             'name': prefix+field.Name,
             'type': field.InputType,
@@ -328,7 +382,7 @@ class ExportObservationProjectView(CustomExportView):
     def export_csv(self, value):
         # df = pd.DataFrame(data=value['rows'], columns=value['header'])
         df = pd.DataFrame.from_records(value['rows'],
-                                       columns=value['rows'][0].keys(),
+                                       columns=value['header'],
                                        coerce_float=True)
 
         # fout = io.BytesIO()
@@ -359,7 +413,7 @@ class ExportObservationProjectView(CustomExportView):
     def export_excel(self, value):
         # df = pd.DataFrame(data=value['rows'], columns=value['header'])
         df = pd.DataFrame.from_records(value['rows'],
-                                       columns=value['rows'][0].keys(),
+                                       columns=value['header'],
                                        coerce_float=True)
 
         fout = io.BytesIO()
