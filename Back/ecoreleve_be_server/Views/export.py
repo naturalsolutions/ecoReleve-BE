@@ -13,6 +13,7 @@ from ..controllers.security import RootCore
 from ..GenericObjets.SearchEngine import Query_engine
 from traceback import print_exc
 import uuid
+from geoalchemy2.shape import to_shape
 
 ProcoleType = Observation.TypeClass
 
@@ -32,7 +33,8 @@ class ObservationCollection():
             Station.ELE
             ]
         observation_columns = [
-            Observation.ID.label('observation_id')
+            Observation.ID.label('observation_id'),
+            Observation.trace
         ]
 
         project_columns = [
@@ -138,6 +140,8 @@ class ExportObservationProjectView(CustomExportView):
             for item in listKeysSorted:
                 if isinstance(row._keymap[item][1][0].type,TIMESTAMP):
                     tempdict[item] = row[item].strftime('%H:%M:%S')
+                if item == 'trace' and row[item] is not None:
+                    tempdict[item] = to_shape(row[item]).to_wkt()
                 else:
                     tempdict[item] = row[item]
             response.append(tempdict)
