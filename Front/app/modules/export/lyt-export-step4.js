@@ -24,7 +24,7 @@ define([
         },
 
         events: {
-            'change input' :'changeValue',
+            'change input': 'changeValue',
             // 'change input.exportValue': 'changeValue',
             // 'change #sinpref ': 'activateNext'
         },
@@ -48,42 +48,16 @@ define([
         },
 
         changeValue: function(e) {
-            // var exportType = $(e.target).val();
+
             this.$el.find('label.tile-inside').each(function() {
                 $(this).removeClass('active');
             });
 
             $(e.target).parent().addClass('active');
             this.model.set('fileType', $(e.target).val());
-            // this.model.set('fileType', exportType);
-
-
-            if (exportType === 'sinp') {
-                $('.sinpMetadata').removeClass('hidden');
-                //$('#btnNext').attr('disabled', 'disabled');
-            } else {
-                $('.sinpMetadata').addClass('hidden');
-                //$('#btnNext').removeAttr('disabled');
-                $('#sinpref').val('');
-            }
-
-            // if (exportType === 'sinp') {
-            //     $('.sinpMetadata').removeClass('hidden');
-            //     $('#btnNext').attr('disabled', 'disabled');
-            // } else {
-            //     $('.sinpMetadata').addClass('hidden');
-            //     $('#btnNext').removeAttr('disabled');
-            //     $('#sinpref').val('');
-            // }
-
-
-
         },
         activateNext: function(e) {
-            // var ref = $('#sinpref').val();
-            // if (ref) {
-            //     $('#btnNext').removeAttr('disabled');
-            // }
+
         },
         validate: function() {
             return this.model;

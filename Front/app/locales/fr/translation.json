@@ -15,7 +15,8 @@
         "sensors": "Capteurs",
         "release": "Relaché",
         "projects": "Les projets",
-        "clients": "Clients"
+        "clients": "Les clients",
+        "users": "Les utilisateurs"
     },
     "stepper": {
         "btnNext": "Suivant",
@@ -78,7 +79,7 @@
             "finishTitleMsg": " Bien fait !",
             "succes": "Succès",
             "createNew": "création de nouveau(elle)",
-            "createAnother": "céer autre ",
+            "createAnother": "créer autre ",
             "areYouSure": "Vous êtes sur(e)?",
             "yesDelete": "Oui, à supprimer.",
             "error": "Erreur",

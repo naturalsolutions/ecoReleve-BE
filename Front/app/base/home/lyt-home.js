@@ -1,14 +1,12 @@
 define(['marionette',
-        'ns_map/ns_map',
+
         './views/curveGraph',
         './views/donutGraph',
         './views/info',
-        'requirejs-text!base/home/tpl/tpl-dounutGraph.html',
-        'requirejs-text!base/home/tpl/tpl-dounutGraph2.html',
         'config',
         'i18n'
     ],
-    function(Marionette, NsMap, CurveGraphView, DonutGraphView, InfoView, TplGraph1, TplGraph2, config) {
+    function(Marionette, CurveGraphView, DonutGraphView, InfoView, config) {
         'use strict';
 
         return Marionette.LayoutView.extend({
@@ -97,7 +95,7 @@ define(['marionette',
                 //   this.ui.donuts.html(this.donutGraphs.el);
                 //   $('.hello').addClass('masqued');
                 // } else {
-                //   this.getUser();
+                this.getUser();
                 //   $('#siteName').addClass('masqued');
                 // }
                 // this.info.show(this.infoStat);
@@ -137,8 +135,24 @@ define(['marionette',
                 user.url = config.coreUrl + 'currentUser';
                 user.fetch({
                     success: function(md) {
-                        _this.ui.userFirst.html(user.get('Firstname'));
-                        _this.ui.userLast.html(user.get('Lastname'));
+                        /*_this.ui.userFirst.html(user.get('Firstname'));
+                        _this.ui.userLast.html(user.get('Lastname'));*/
+                        console.log('*** user ****');
+                        var role = user.get('role');
+                        if (role == "admin") {
+                            $('.admin-tile').removeClass('hidden');
+                            $('.tile.small_tile').css('width', '140px');
+                            $('.user-tile').addClass('hidden');
+
+                        }
+                        if (role == "user") {
+                            $('.projTile').addClass('hidden');
+                        }
+                        if (role == "superUser") {
+                            $('.clientsTile').removeClass('hidden');
+                        }
+                        $('.tile.last').css('margin-left', '30px');
+
                     }
                 });
             }
