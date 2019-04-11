@@ -108,6 +108,7 @@ define([
 
       this.$input.attr('data_value',item.latin);
       this.$input.attr('taxref_value',item.taxref_id);
+      this.$input.attr('nom_vernaculaire', item.vernaculaire);
       this.matchedValue = item;
       this.form.model.set('taxref_id', item.taxref_id);
       this.form.model.set('nom_vernaculaire', item.vernaculaire);
@@ -127,7 +128,7 @@ define([
       if (this.noAutocomp){
         return this.$input.val();
       }
-      return this.$input.attr('data_value');
+      return this.$input.attr('nom_vernaculaire') || '';
     },
 
     getDisplayValue: function() {
