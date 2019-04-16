@@ -11,8 +11,8 @@ define([
 
     return Backbone.Model.extend({
         defaults: {
-            label: 'projets',
-            single: 'projet',
+            label: 'secteurs',
+            single: 'secteur',
             type: 'projects',
 
             icon: 'reneco-site',
@@ -35,7 +35,7 @@ define([
 
                 {
                     name: 'stations',
-                    label: 'Stations'
+                    label: 'arbres'
                 },
             ],
 

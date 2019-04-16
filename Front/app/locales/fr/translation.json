@@ -9,12 +9,12 @@
         "individuals": "Individus",
         "validation": "Validation",
         "data": "Les observations",
-        "stations": "Stations",
+        "stations": "Arbres",
         "objects": "Objets",
-        "new-station": "Nouvelle station",
+        "new-station": "Nouvel arbre",
         "sensors": "Capteurs",
         "release": "Relaché",
-        "projects": "Les projets",
+        "projects": "Les secteurs",
         "clients": "Les clients",
         "users": "Les utilisateurs"
     },
@@ -62,9 +62,9 @@
         "gridPreview": "Aperçu (20 premières lignes)",
         "rowsPerPage": "lignes par page",
         "individuals": "individus",
-        "addProtocol": "Ajouter un protocole",
-        "newLabel": "Creation de nouveau ",
-        "new": "Nouveau (elle) ",
+        "addProtocol": "Ajouter une intervention",
+        "newLabel": "Creation  ",
+        "new": "Créer  ",
         "option": {
             "is": "est",
             "isNot": "n'est pas",
@@ -78,8 +78,8 @@
             "redoMsg": "Refaire",
             "finishTitleMsg": " Bien fait !",
             "succes": "Succès",
-            "createNew": "création de nouveau(elle)",
-            "createAnother": "céer autre ",
+            "createNew": "création de ",
+            "createAnother": "créer autre ",
             "areYouSure": "Vous êtes sur(e)?",
             "yesDelete": "Oui, à supprimer.",
             "error": "Erreur",
@@ -91,33 +91,33 @@
     },
     "input": {
         "stepper": {
-            "step1inputLabel": "Type de station",
-            "step2inputLabel": "Details de station",
-            "step3inputLabel": "Saisie de protocoles"
+            "step1inputLabel": "Type",
+            "step2inputLabel": "Details d'arbre",
+            "step3inputLabel": "Saisie d'interventions"
         },
         "step1Label": "Sélectionnez une action",
-        "step1NewSt": "Créer une nouvelle station",
-        "step1ImpSt": "Dernières stations importées",
-        "step1ExistSt": "Stations existantes",
+        "step1NewSt": "Créer un nouvel arbre",
+        "step1ImpSt": "Derniers arbres importées",
+        "step1ExistSt": "Arbres existants",
         "step1NewStCoords": "Avec coordonnées",
         "step1NewStWitoutCoords": "Sans coordonnées",
         "step1NewStMonitoredSite": "Site suivi",
-        "step1ImpStLbel": "stations importées",
-        "step1ExistStLabel": "stations existantes",
+        "step1ImpStLbel": "arbres importées",
+        "step1ExistStLabel": "arbres existants",
         "step1ExistSitesLabel": "sites suivis",
         "newStLocation": "position",
         "newStLocationRegion": "région*",
         "newStLocationAccuracy": "précision(m)*",
-        "newStName": "nom de station*",
+        "newStName": "nom*",
         "newSiteType": "type de site*",
         "newSiteName": "nom de site*",
         "fieldCaracteristics": "caractéristiques",
         "allStFilterMonitoredSitesType": "type de site suivi",
         "allStFilterName": "Nom",
-        "stationNavigationAlert": "Pas de station suivante ou précédente pour les données filtrés",
-        "stationNavigationTitle": "Mise à jour de station",
-        "importStMsg": "Pas de stations importées.",
-        "labelAddNewProto": "Ajouter un protocole"
+        "stationNavigationAlert": "Pas d'arbre suivant ou précédent pour les données filtrés",
+        "stationNavigationTitle": "Mise à jour de données d'arbre",
+        "importStMsg": "Pas d'arbres importés.",
+        "labelAddNewProto": "Ajouter une intervention"
     },
     "import": {
         "stepper": {
@@ -158,16 +158,16 @@
     },
     "home": {
         "hello": "Bonjour",
-        "graph-label": "Nombre des nouvelles stations"
+        "graph-label": "Nombre des nouveaux arbres"
     },
     "stations": {
         "search": "Rechercher",
-        "all-tab": "Toutes les stations",
-        "imported-tab": "Stations importées",
+        "all-tab": "Tous les arbres",
+        "imported-tab": "Arbres importées",
         "coords-tab": "Avec coordonnées",
         "no-coords-tab": "Sans coordonnées",
         "total-label": "Total :",
-        "new": " Nouvelle station"
+        "new": " Nouvel arbre"
     },
     "sensors": {
         "new": " Nouveau capteur"
@@ -177,7 +177,7 @@
     },
 
     "projects": {
-        "new": " Nouveau projet"
+        "new": " Nouveau secteur"
     },
 
     "clients": {
@@ -192,8 +192,8 @@
         "locations": "Positions"
     },
     "export": {
-        "legend-theme": "Choisissez votre projet",
-        "legend-view": "Choisissez votre protocole",
+        "legend-theme": "Choisissez votre secteur",
+        "legend-view": "Choisissez votre intervention",
         "legend-columns": "Choisissez vos colonnes",
         "legend-preview": "Aperçu",
         "legend-rows": "premières lignes",
@@ -202,7 +202,7 @@
         "excel-file": "fichier Excel",
         "sinp-file": "fichier SINP/GINCO",
         "gpx-file": "fichier GPX",
-        "step1-label": "Choix de protocole",
+        "step1-label": "Choix d'intervention",
         "step2-label": "Filtre",
         "step3-label": "Aperçu",
         "step4-label": "Type de fichier",

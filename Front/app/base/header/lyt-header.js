@@ -64,7 +64,7 @@ define([
                         console.log(window.app.user)
                         if (window.app.user.get('role') != 'client') {
 
-                            $('#js-select-project').append(new Option('Tous les projets', 0));
+                            $('#js-select-project').append(new Option('Tous les secteurs', 0));
                         } else {
                             window.curent_project_url = 'projects/' + project_list[0].ID + '/';
                         }

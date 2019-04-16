@@ -10,8 +10,8 @@ define([
         defaults: {
             displayMap: true,
 
-            label: 'stations',
-            single: 'station',
+            label: 'arbres',
+            single: 'arbre',
             type: 'stations',
 
             uiGridConfs: [{
@@ -20,7 +20,7 @@ define([
                 },
                 {
                     name: 'protocols',
-                    label: 'Protocoles'
+                    label: 'Interventions'
                 },
             ],
 
