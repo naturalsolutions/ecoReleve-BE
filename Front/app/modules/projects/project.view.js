@@ -52,7 +52,7 @@ define([
                 element: 'map',
                 popup: true,
                 // cluster: true,
-                disableCentering: true,
+               // disableCentering: true,
                 drawable: true,
             });
 
@@ -78,8 +78,13 @@ define([
                         _this.map.drawnItems.clearLayers();
                     }
                     if (geom) {
+                        setTimeout(function() {  
                         _this.map.addGeometry(geom, true);
                         _this.map.disableDrawingControl();
+                    
+                    }, 200); 
+                        
+
                     }
                 });
             });
@@ -109,13 +114,21 @@ define([
         },
 
         displayStationsGrid: function() {
-            this.rgStationsGrid.show(this.stationsGrid = new GridView({
-                columns: this.model.get('stationsColumnDefs'),
-                type: this.model.get('type'),
-                url: this.model.get('type') + '/' + this.model.get('id') + '/stations',
-                clientSide: true,
-            }));
-            this.gridViews.push(this.stationsGrid);
+
+            if(this.rgStationsGrid) {
+                this.rgStationsGrid.show(this.stationsGrid = new GridView({
+                    columns: this.model.get('stationsColumnDefs'),
+                    type: this.model.get('type'),
+                    url: this.model.get('type') + '/' + this.model.get('id') + '/stations',
+                    clientSide: true,
+                }));
+                this.gridViews.push(this.stationsGrid);
+
+
+            }
+
+
+
         },
 
     });
