@@ -89,7 +89,7 @@ define([
         displayMap: function() {
             var self = this;
             var map = this.map = new NsMap({
-                zoom: 3,
+                zoom: 14,
                 popup: true,
                 drawable: true,
                 drawOptions: {
@@ -137,6 +137,11 @@ define([
                     false,
                     false,
                     this.map.drawnItems);
+
+                    var center = this.currentLayer.getLatLng();
+                    this.map.map.setView(center, 18);  //zoom = 18
+
+                    
             }
         },
 
