@@ -479,7 +479,7 @@ define([
             });
 
             var disableClusteringAtZoom = 16; //16 (scale at 200m), maxZomm at 18 (scale at 20m)
-            if (geoJson && (geoJson.features.length < 500)) {
+            if (geoJson && (geoJson.features.length < 5)) {
                 disableClusteringAtZoom = 2; //minZoom
             }
 
