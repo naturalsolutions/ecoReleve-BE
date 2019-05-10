@@ -115,5 +115,5 @@ def getTaxon(request):
     return {
             'taxref_id': result['CD_NOM'],
             'vernaculaire': result['NOM_VERN'],
-            'latin': result['NOM_VALIDE']
+            'latin': result['LB_NOM']
             }
