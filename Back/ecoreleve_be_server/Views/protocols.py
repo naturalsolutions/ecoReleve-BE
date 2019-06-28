@@ -137,7 +137,9 @@ class ObservationsView(DynamicObjectCollectionView):
         data = {}
         for items, value in json_body.items():
             if items in ('trace'):
-                jsonTrace = json.loads(value)
+                jsonTrace = None
+                if value not in (None, ''):
+                    jsonTrace = json.loads(value)
                 data['geom'] = jsonTrace
             else:
                 data[items] = value
