@@ -138,10 +138,12 @@ class ObservationsView(DynamicObjectCollectionView):
         data = {}
         forceCreateStation = False
         fromMobileAPP = False
+        correctUUID = None
         for items, value in json_body.items():
-            if items in ('id'):
+            if items in ('id') and value not in (None, ''):
                 try :
                     fromMobileAPP = True
+                    print("la super value $$$"+str(value)+"$$$")
                     correctUUID = UUID(value)
                 except ValueError:
                     fromMobileAPP = False
