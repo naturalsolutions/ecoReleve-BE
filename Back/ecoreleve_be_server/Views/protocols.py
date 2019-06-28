@@ -22,6 +22,7 @@ from pyramid.security import (
     ALL_PERMISSIONS)
 import json
 import geojson
+from uuid import UUID
 
 class ObservationView(DynamicObjectView):
 
@@ -135,7 +136,18 @@ class ObservationsView(DynamicObjectCollectionView):
             json_body = self.request.json_body
 
         data = {}
+        forceCreateStation = False
+        fromMobileAPP = False
         for items, value in json_body.items():
+            if items in ('id'):
+                try :
+                    fromMobileAPP = True
+                    correctUUID = UUID(value)
+                except ValueError:
+                    fromMobileAPP = False
+                    correctUUID = None
+                    pass
+
             if items in ('trace'):
                 jsonTrace = None
                 if value not in (None, ''):
@@ -181,11 +193,22 @@ class ObservationsView(DynamicObjectCollectionView):
                     listOfSubProtocols = value
 
         data['Observation_childrens'] = listOfSubProtocols
+        data['original_id'] = correctUUID
         ###
 
         responseBody = {}
 
         try:
+            if correctUUID is not None:
+                existingObs = self.session.query(Observation).filter(Observation.original_id == str(correctUUID)).all()
+                if len(existingObs) > 0:
+                    responseBody['id'] = existingObs[0].ID
+                    self.session.rollback()
+                    return responseBody
+
+            if forceCreateStation:
+                self.session.add(sta)
+                self.session.flush()
             curObs.values = data
             curObs.Station = sta
             self.session.add(curObs)
