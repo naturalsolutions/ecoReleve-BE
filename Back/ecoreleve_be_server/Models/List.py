@@ -56,9 +56,14 @@ class StationList(CollectionEngine):
         joinTable = outerjoin(joinTable,
                                 ObservationTable,
                                 ObservationTable.c['FK_Station'] == Station.ID)
-        joinTable = outerjoin(joinTable,
-                                obsValTable,
-                                and_(ObservationTable.c['ID'] == obsValTable.c['FK_Observation'], obsValTable.c['Name'] == 'nom_vernaculaire'))
+        # joinTable = outerjoin(
+        #     joinTable,
+        #     obsValTable,
+        #     and_(
+        #         ObservationTable.c['ID'] == obsValTable.c['FK_Observation'],
+        #         obsValTable.c['Name'] == 'nom_vernaculaire'
+        #         )
+        #     )
 
         # self.selectable.append(
         #     func.string_agg(
