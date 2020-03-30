@@ -47,7 +47,7 @@ def data_upgrades():
 
     DELETE FROM public."ModuleGrids"
     WHERE
-    Module_ID" = 3
+    "Module_ID" = 3
     AND
     "Name" = 'nom_latin';
     '''
