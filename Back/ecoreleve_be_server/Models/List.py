@@ -56,21 +56,31 @@ class StationList(CollectionEngine):
         joinTable = outerjoin(joinTable,
                                 ObservationTable,
                                 ObservationTable.c['FK_Station'] == Station.ID)
-        joinTable = outerjoin(joinTable,
-                                obsValTable,
-                                and_(ObservationTable.c['ID'] == obsValTable.c['FK_Observation'], obsValTable.c['Name'] == 'nom_vernaculaire'))
-                                
-        self.selectable.append(
-            func.string_agg(
-            obsValTable.c['ValueString'],
-            aggregate_order_by(literal_column("','"), Station.ID
-        )).label('nom_vernaculaire'))
+        # joinTable = outerjoin(
+        #     joinTable,
+        #     obsValTable,
+        #     and_(
+        #         ObservationTable.c['ID'] == obsValTable.c['FK_Observation'],
+        #         obsValTable.c['Name'] == 'nom_vernaculaire'
+        #         )
+        #     )
+
+        # self.selectable.append(
+        #     func.string_agg(
+        #     obsValTable.c['ValueString'],
+        #     aggregate_order_by(literal_column("','"), Station.ID
+        # )).label('nom_vernaculaire'))
+
+        # self.selectable.append(
+        #     func.string_agg(
+        #     ObservationTable.c['taxon'],
+        #     aggregate_order_by(literal_column("','"), Station.ID
+        # )).label('nom_latin'))
 
         self.selectable.append(
-            func.string_agg(
-            ObservationTable.c['taxon'],
-            aggregate_order_by(literal_column("','"), Station.ID
-        )).label('nom_latin'))
+            func.count(
+            ObservationTable.c['ID']
+            ).label('nbObs'))
 
 
 
